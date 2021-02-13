@@ -6,11 +6,11 @@
 /*   By: jescully <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 07:14:36 by jescully          #+#    #+#             */
-/*   Updated: 2021/02/11 11:18:10 by jescully         ###   ########.fr       */
+/*   Updated: 2021/02/12 15:53:36 by jescully         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <mlx.h>
+#include "mlx_linux/mlx.h"
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -65,7 +65,6 @@ int		init_struct(t_vars *vars)
 void            my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
 	char    *dst;
-
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
 	*(unsigned int*)dst = color;
 }
@@ -77,7 +76,7 @@ int             key_hook(int keycode, t_vars *vars)
 	int *img_height;
 	int *img_width;
 
-	if (keycode == 123)
+	if (keycode == 65363)
 	{
 		vars->position->angle += 1.5708;
 		if (vars->position->angle > 6.283)
@@ -87,7 +86,7 @@ int             key_hook(int keycode, t_vars *vars)
 		vars->position->sin = sin(vars->position->angle);
 		//		printf("the cos is %f \n", vars->position->cos);
 	}
-	if (keycode == 126)
+	if (keycode == 65362)
 	{
 		vars->position->x += 10 * vars->position->cos;
 		if (vars->position->y > 600)
@@ -97,7 +96,7 @@ int             key_hook(int keycode, t_vars *vars)
 			vars->position->y = 0;
 		//		printf("the sin is now is %f \n", vars->position->sin);
 	}
-	if (keycode == 125)
+	if (keycode == 65364)
 	{
 		vars->position->x -= 10 * vars->position->cos;
 		if (vars->position->x > 600)
@@ -107,7 +106,7 @@ int             key_hook(int keycode, t_vars *vars)
 			vars->position->y = 0;
 		//		printf("the x now is %i \n", vars->position->x);
 	}
-	if (keycode == 124)
+	if (keycode == 65361)
 	{
 		vars->position->angle -= 1.5708;
 		if (vars->position->angle > 6.283)
@@ -158,7 +157,7 @@ int             main(void)
 	vars.mlx = mlx_init();
 	vars.win = mlx_new_window(vars.mlx, L, H, "Hello world!");
 	init_struct(&vars);
-	mlx_hook(vars.win, 2, 0, &key_hook, &vars);
+	mlx_hook(vars.win, 2, 1L << 0, &key_hook, &vars);
 	//	vars.img = mlx_xpm_file_to_image(vars.mlx, "./pacman/pacman.xpm", &img_width, &img_height);
 	//	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
 	//	my_mlx_pixel_put(&img, vars.position->x, vars.position->y, 111);
@@ -177,7 +176,6 @@ int             main(void)
   int offset;
   t_data	img;
   t_vars vars;
-
   vars.mlx = mlx_init();
   vars.win = mlx_new_window(vars.mlx, H, L, "test window");
   img.img = mlx_new_image(vars.mlx, H, L);
@@ -189,4 +187,3 @@ mlx_put_image_to_window(vars.win, vars.mlx, img.img, 0, 0);
 mlx_loop(vars.mlx);
 return 0;
 }*/
-
