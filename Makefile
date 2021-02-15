@@ -1,6 +1,9 @@
 NAME = cub3D
 
 SRCS = raycasting.c \
+	utils/pixel_put.c \
+	utils/line_put.c \
+	utils/render_next_frame.c \
 
 OBJS = $(SRCS:.c=.o)
 
