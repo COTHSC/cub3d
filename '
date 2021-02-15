@@ -106,30 +106,30 @@ int     render_next_frame(t_vars *vars)
 
 int worldMap[mapWidth][mapHeight]=
 {
-  {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,2,2,2,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
-  {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,3,0,0,0,3,0,0,0,1},
-  {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,2,2,0,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,0,0,0,0,5,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,0,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
+	{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,4,0,0,0,0,5,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,4,0,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
 };
 
 int		init_position(t_vars *vars)
@@ -140,14 +140,14 @@ int		init_position(t_vars *vars)
 	vars->pos->dirY = 0;
 	vars->pos->planeX =  0;
 	vars->pos->planeY = 0.66;
-	vars->pos->move_speed = 0.05;
-	vars->pos->rot_speed = 0.05;
+	vars->pos->move_speed = 0.5;
+	vars->pos->rot_speed = 0.005;
 }
 
 int		draw_frame(t_vars *vars)
 {
 
-	int w = 640;
+	int w = 500;
 	int i = 0;
 	int color;
 
@@ -178,13 +178,11 @@ int		draw_frame(t_vars *vars)
 	printf("this is I %i \n", i);
 	while (i++ < w)
 	{
-		cameraX = (2 * i) / ((double)w - 1);
+		cameraX = 2 * i / w - 1;
 		rayDirX = vars->pos->dirX + vars->pos->planeX * cameraX;
 		rayDirY = vars->pos->dirY + vars->pos->planeY * cameraX;
 
-//		printf("this is dirY %f \n", vars->pos->dirY);
-//		printf("this is planeY %f \n", vars->pos->planeY);
-//		printf("this is cameraX %f \n", cameraX);
+		printf("this is dirY %f \n", rayDirY);
 		
 		mapX = (int)vars->pos->posX;
 		mapY = (int)vars->pos->posY;
@@ -215,12 +213,12 @@ int		draw_frame(t_vars *vars)
 		}
 		
 //		printf("this is raydirX %f \n", rayDirX);
-//		printf("this is raydirY %f \n", rayDirY);
+		printf("this is raydirY %f \n", rayDirY);
 //		printf("this is stepX %i \n", stepX);
-	//	printf("this is stepY %i \n", stepY);
+//		printf("this is stepY %i \n", stepY);
 
-//		printf("this is mapX %i \n", mapX);
-//		printf("this is mapY %i \n", mapY);
+	//	printf("this is mapX %i \n", mapX);
+	//	printf("this is mapY %i \n", mapY);
 		while (hit == 0)
 		{
 			if (sideDistX < sideDistY)
@@ -241,15 +239,16 @@ int		draw_frame(t_vars *vars)
 		if (side == 0)
 			perpWallDist = (mapX - vars->pos->posX + (1 - stepX) / 2) / rayDirX;
 		else
+		lineHeight = 0;
 			perpWallDist = (mapY - vars->pos->posY + (1 - stepY) / 2) / rayDirY;
 		lineHeight = (int)(h / perpWallDist);
 		
-//		printf("this is posX %f \n", vars->pos->posX);
-//		printf("this is posY %f \n", vars->pos->posY);
+	//	printf("this is posX %f \n", vars->pos->posX);
+	//	printf("this is posY %f \n", vars->pos->posY);
 //		printf("this is stepX %i \n", stepX);
 //		printf("this is stepY %i \n", stepY);
 //		printf("this is line height %i \n", lineHeight);
-//		printf("this is perpwalldist %f \n", perpWallDist);
+		printf("this is perpwalldist %f \n", perpWallDist);
 		drawStart = -lineHeight / 2 + h / 2;
 		if (drawStart < 0)
 			drawStart = 0;
@@ -286,22 +285,18 @@ int             key_hook(int keycode, t_vars *vars)
 	double oldPlaneX;
 	double oldPlaneY;
 
-	printf("this is the keycode %i \n", keycode);
-    if (keycode == 65362) //linux 65263 right
+	printf("im in the key hook now\n");
+    if (keycode == 126) //linux 65263 right
     {
 		if(worldMap[(int)(vars->pos->posX - vars->pos->posY * vars->pos->move_speed)][(int)(vars->pos->posY)] == 0)
-			vars->pos->posX += vars->pos->dirX * vars->pos->move_speed;		
-		if(worldMap[(int)(vars->pos->posX)][(int)(vars->pos->posY - vars->pos->dirY * vars->pos->move_speed)] == 0)
-			vars->pos->posY += vars->pos->dirY * vars->pos->move_speed;
+			vars->pos->posX += vars->pos->dirX * vars->pos->move_speed;
     }
-    if (keycode == 65364) // linux 65362 up/front
+    if (keycode == 125) // linux 65362 up/front
     {
 		if(worldMap[(int)(vars->pos->posX - vars->pos->posY * vars->pos->move_speed)][(int)(vars->pos->posY)] == 0)
 			vars->pos->posX -= vars->pos->dirX * vars->pos->move_speed;
-		if(worldMap[(int)(vars->pos->posX)][(int)(vars->pos->posY - vars->pos->dirY * vars->pos->move_speed)] == 0)
-			vars->pos->posY -= vars->pos->dirY * vars->pos->move_speed;
     }
-    if (keycode == 65363) //linux 65364 down/back
+    if (keycode == 124) //linux 65364 down/back
     {
 		oldDirX = vars->pos->dirX;
 
@@ -311,20 +306,20 @@ int             key_hook(int keycode, t_vars *vars)
 		vars->pos->planeX = vars->pos->planeX * cos(-1 *(vars->pos->rot_speed)) - vars->pos->planeY * sin(-1 * (vars->pos->rot_speed));
 		vars->pos->planeY = oldPlaneX * sin(-1 * vars->pos->rot_speed) + vars->pos->planeY * cos(-1 * vars->pos->rot_speed);
     }
-    if (keycode == 65361) //linux 65361 left
+    if (keycode == 123) //linux 65361 left
     {
 		oldDirX = vars->pos->dirX;
 
 		vars->pos->dirX = vars->pos->dirX * cos(vars->pos->rot_speed) - vars->pos->dirY *sin(vars->pos->rot_speed);
-		vars->pos->dirY = oldDirX * sin(vars->pos->rot_speed) + vars->pos->dirY * cos(-vars->pos->rot_speed);
+		vars->pos->dirY = oldDirX * sin(-vars->pos->rot_speed) + vars->pos->dirY * cos(-vars->pos->rot_speed);
 		oldPlaneX = vars->pos->planeX;	
 		vars->pos->planeX = vars->pos->planeX * cos(vars->pos->rot_speed) - vars->pos->planeY * sin(vars->pos->rot_speed);
 		vars->pos->planeY = oldPlaneX * sin(vars->pos->rot_speed) + vars->pos->planeY * cos(vars->pos->rot_speed);
     }
     if (keycode == 53)
         mlx_destroy_window(vars->mlx, vars->win);
-	
-    draw_frame(vars);
+	printf("this is my position x: %f and y: %f \n", vars->pos->posX, vars->pos->posY);
+	draw_frame(vars);
 //	render_next_frame(vars);
 }
 
