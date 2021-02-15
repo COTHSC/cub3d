@@ -6,7 +6,7 @@
 /*   By: jescully <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 07:14:36 by jescully          #+#    #+#             */
-/*   Updated: 2021/02/12 15:53:36 by jescully         ###   ########.fr       */
+/*   Updated: 2021/02/15 09:24:39 by jescully         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int             key_hook(int keycode, t_vars *vars)
 	int *img_height;
 	int *img_width;
 
-	if (keycode == 65363)
+	if (keycode == 124) //linux 65263 
 	{
 		vars->position->angle += 1.5708;
 		if (vars->position->angle > 6.283)
@@ -86,7 +86,7 @@ int             key_hook(int keycode, t_vars *vars)
 		vars->position->sin = sin(vars->position->angle);
 		//		printf("the cos is %f \n", vars->position->cos);
 	}
-	if (keycode == 65362)
+	if (keycode == 126) // linux 65362
 	{
 		vars->position->x += 10 * vars->position->cos;
 		if (vars->position->y > 600)
@@ -96,7 +96,7 @@ int             key_hook(int keycode, t_vars *vars)
 			vars->position->y = 0;
 		//		printf("the sin is now is %f \n", vars->position->sin);
 	}
-	if (keycode == 65364)
+	if (keycode == 125) //linux 65364
 	{
 		vars->position->x -= 10 * vars->position->cos;
 		if (vars->position->x > 600)
@@ -106,7 +106,7 @@ int             key_hook(int keycode, t_vars *vars)
 			vars->position->y = 0;
 		//		printf("the x now is %i \n", vars->position->x);
 	}
-	if (keycode == 65361)
+	if (keycode == 123) //linux 65361
 	{
 		vars->position->angle -= 1.5708;
 		if (vars->position->angle > 6.283)
