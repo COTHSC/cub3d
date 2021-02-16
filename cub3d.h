@@ -34,8 +34,9 @@ typedef struct  s_pos {
 typedef struct  s_vars {
 	void        *mlx;
 	void        *win;
-	t_pos           *pos;
-	t_img           *img;
+	t_pos       *pos;
+	t_img       *img;
+	t_img       *background;
 }               t_vars;
 
 void		pixel_put(t_img *image, int x, int y, int color);

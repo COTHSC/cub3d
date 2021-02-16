@@ -6,7 +6,7 @@
 /*   By: jescully <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 14:14:27 by jescully          #+#    #+#             */
-/*   Updated: 2021/02/15 16:22:15 by jescully         ###   ########.fr       */
+/*   Updated: 2021/02/16 11:17:10 by jescully         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,9 +90,9 @@ int		draw_frame(t_vars *vars)
 	vars->img->data = (char *)mlx_get_data_addr(vars->img->ptr, &vars->img->bpp, &vars->img->size_l, &vars->img->endian);
 	i = 0;
 	printf("this is I %i \n", i);
-	while (i++ < w)
+	while (i++ < w - 1)
 	{
-		cameraX = (2 * i) / ((double)w - 1);
+		cameraX = (2 * i) / ((double)w) - 1;
 		rayDirX = vars->pos->dirX + vars->pos->planeX * cameraX;
 		rayDirY = vars->pos->dirY + vars->pos->planeY * cameraX;
 		
@@ -113,6 +113,7 @@ int		draw_frame(t_vars *vars)
 			stepX = 1;
 			sideDistX = (mapX + 1.0 - vars->pos->posX) * deltaDistX;
 		}
+		printf("this is raydirY %f \n", rayDirY);
 		if(rayDirY < 0)
 		{
 			stepY = -1;
@@ -177,21 +178,27 @@ int             key_hook(int keycode, t_vars *vars)
 	double oldPlaneX;
 
 	printf("this is the keycode %i \n", keycode);
-    if (keycode == 65362) //linux 65263 right
+    if (keycode == 126) //linux 65262 
     {
 		if(worldMap[(int)(vars->pos->posX - vars->pos->posY * vars->pos->move_speed)][(int)(vars->pos->posY)] == 0)
+		{
 			vars->pos->posX += vars->pos->dirX * vars->pos->move_speed;		
+			printf("this is posX: %f that\n", vars->pos->posX);
+		}
 		if(worldMap[(int)(vars->pos->posX)][(int)(vars->pos->posY - vars->pos->dirY * vars->pos->move_speed)] == 0)
+		{
 			vars->pos->posY += vars->pos->dirY * vars->pos->move_speed;
+			printf("this is posY: %f that\n", vars->pos->posY);
+		}
     }
-    if (keycode == 65364) // linux 65362 up/front
+    if (keycode == 125) // linux 65364
     {
 		if(worldMap[(int)(vars->pos->posX - vars->pos->posY * vars->pos->move_speed)][(int)(vars->pos->posY)] == 0)
 			vars->pos->posX -= vars->pos->dirX * vars->pos->move_speed;
 		if(worldMap[(int)(vars->pos->posX)][(int)(vars->pos->posY - vars->pos->dirY * vars->pos->move_speed)] == 0)
 			vars->pos->posY -= vars->pos->dirY * vars->pos->move_speed;
     }
-    if (keycode == 65363) //linux 65364 down/back
+    if (keycode == 124) //linux 65363
     {
 		oldDirX = vars->pos->dirX;
 
@@ -201,7 +208,7 @@ int             key_hook(int keycode, t_vars *vars)
 		vars->pos->planeX = vars->pos->planeX * cos(-1 *(vars->pos->rot_speed)) - vars->pos->planeY * sin(-1 * (vars->pos->rot_speed));
 		vars->pos->planeY = oldPlaneX * sin(-1 * vars->pos->rot_speed) + vars->pos->planeY * cos(-1 * vars->pos->rot_speed);
     }
-    if (keycode == 65361) //linux 65361 left
+    if (keycode == 123) //linux 65361
     {
 		oldDirX = vars->pos->dirX;
 
@@ -217,6 +224,8 @@ int             key_hook(int keycode, t_vars *vars)
     draw_frame(vars);
     return (1);
 }
+
+
 
 
 
