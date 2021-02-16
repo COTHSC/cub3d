@@ -9,7 +9,7 @@ OBJS = $(SRCS:.c=.o)
 
 HEADERS = includes
 
-MLX_REQ_LN = -Lmlx_linux -lmlx_Linux -Imlx_linux -lXext -lX11 -lm -lz
+MLX_REQ_LN = -Lmlx_linux -lmlx_Linux -Imlx_linux -lXext -lX11 -lm 
 
 MLX_REQ_OSX = -Lmlx_osx -lmlx -framework OpenGL -framework AppKit
 
@@ -24,8 +24,8 @@ DEBUG = -g
 all : $(NAME)
 
 $(NAME) : $(OBJS)
-		$(CC) -o $(NAME) $(OBJS) $(MLX_REQ_OSX)
-#	$(CC) -g -o $(NAME) $(OBJS) $(MLX_REQ_LN)
+#	$(CC) -o $(NAME) $(OBJS) $(MLX_REQ_OSX)
+	$(CC) -g -o $(NAME) $(OBJS) $(MLX_REQ_LN)
 #        $(MAKE) -C ./libft
 #        cp libft/libft.a ./$(NAME)
 #        ar rcs $@ $^

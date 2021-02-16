@@ -53,7 +53,7 @@ int		init_position(t_vars *vars)
 	vars->pos->dirY = 0;
 	vars->pos->planeX =  0;
 	vars->pos->planeY = 0.66;
-	vars->pos->move_speed = 0.05;
+	vars->pos->move_speed = 0.2;
 	vars->pos->rot_speed = 0.05;
 	return (1);
 }
@@ -89,7 +89,7 @@ int		draw_frame(t_vars *vars)
 	vars->img->ptr = mlx_new_image(vars->mlx, 640, 480);
 	vars->img->data = (char *)mlx_get_data_addr(vars->img->ptr, &vars->img->bpp, &vars->img->size_l, &vars->img->endian);
 	i = 0;
-	printf("this is I %i \n", i);
+//	printf("this is I %i \n", i);
 	while (i++ < w - 1)
 	{
 		cameraX = (2 * i) / ((double)w) - 1;
@@ -172,13 +172,24 @@ int		draw_frame(t_vars *vars)
 	return (1);
 }
 
+
+
+
+	
+
+	
+
+	
+
+
+
 int             key_hook(int keycode, t_vars *vars)
 {  
 	double oldDirX;
 	double oldPlaneX;
 
-	printf("this is the keycode %i \n", keycode);
-    if (keycode == 126) //linux 65262 
+//	printf("this is the keycode %i \n", keycode);
+    if (keycode == 65362) //linux 65362 
     {
 		if(worldMap[(int)(vars->pos->posX - vars->pos->posY * vars->pos->move_speed)][(int)(vars->pos->posY)] == 0)
 		{
@@ -188,17 +199,16 @@ int             key_hook(int keycode, t_vars *vars)
 		if(worldMap[(int)(vars->pos->posX)][(int)(vars->pos->posY - vars->pos->dirY * vars->pos->move_speed)] == 0)
 		{
 			vars->pos->posY += vars->pos->dirY * vars->pos->move_speed;
-			printf("this is posY: %f that\n", vars->pos->posY);
 		}
     }
-    if (keycode == 125) // linux 65364
+    if (keycode == 65364) // linux 65364
     {
 		if(worldMap[(int)(vars->pos->posX - vars->pos->posY * vars->pos->move_speed)][(int)(vars->pos->posY)] == 0)
 			vars->pos->posX -= vars->pos->dirX * vars->pos->move_speed;
 		if(worldMap[(int)(vars->pos->posX)][(int)(vars->pos->posY - vars->pos->dirY * vars->pos->move_speed)] == 0)
 			vars->pos->posY -= vars->pos->dirY * vars->pos->move_speed;
     }
-    if (keycode == 124) //linux 65363
+    if (keycode == 65363) //linux 65363
     {
 		oldDirX = vars->pos->dirX;
 
@@ -208,7 +218,7 @@ int             key_hook(int keycode, t_vars *vars)
 		vars->pos->planeX = vars->pos->planeX * cos(-1 *(vars->pos->rot_speed)) - vars->pos->planeY * sin(-1 * (vars->pos->rot_speed));
 		vars->pos->planeY = oldPlaneX * sin(-1 * vars->pos->rot_speed) + vars->pos->planeY * cos(-1 * vars->pos->rot_speed);
     }
-    if (keycode == 123) //linux 65361
+    if (keycode == 65361) //linux 65361
     {
 		oldDirX = vars->pos->dirX;
 
@@ -225,6 +235,20 @@ int             key_hook(int keycode, t_vars *vars)
     return (1);
 }
 
+int	load_textures(t_vars *vars)
+{
+	void *ptr;
+	int width;
+	int height;
+
+//	t_tex *tex;
+
+//	tex = malloc(sizeof(t_tex));
+//	tex->a = malloc(sizeof(t_img));
+
+	ptr = mlx_xpm_file_to_image(vars->mlx, "./pics/pacman.xpm", &width, &height);  
+	return (1);
+}
 
 
 
@@ -233,6 +257,9 @@ int             key_hook(int keycode, t_vars *vars)
 int main()
 {
 	t_vars	vars;
+//	t_tex 	*tex;
+
+
 
 	vars.pos = malloc(sizeof(t_pos));
 	init_position(&vars);
@@ -240,6 +267,8 @@ int main()
 	vars.mlx = mlx_init();
 	vars.win = mlx_new_window(vars.mlx, screenWidth, screenHeight, "Hello world!");
 	mlx_hook(vars.win, 2, 1L << 0, &key_hook, &vars);
+
+	load_textures(&vars);
 	mlx_loop(vars.mlx);
 	return 0;
 }

@@ -20,6 +20,17 @@ typedef struct  s_img {
 	int         endian;
 }			t_img;
 
+typedef struct s_tex {
+	t_img	*a;
+	t_img	*b;
+	t_img	*c;
+	t_img	*d;
+	t_img	*e;
+	t_img	*f;
+	t_img	*g;
+	t_img	*h;
+}		t_tex;
+
 typedef struct  s_pos {
 	double          posX;
 	double          posY;
