@@ -1,14 +1,14 @@
 #include "../cub3d.h"
 /*
-void            pixel_put(t_img *img, int x, int y, int color)
+void            pixel_put(t_img *img, int x, int y, char color)
 {
-    unsigned char    *src;
+    unsigned int    *src;
     unsigned char    r;
     unsigned char    g;
     unsigned char    b;
 
     printf("color %x\n", color);
-    src = (unsigned char *)&color;
+    src = (unsigned int *)&color;
     r = src[0];
     g = src[1];
     b = src[2];
@@ -19,4 +19,10 @@ void            pixel_put(t_img *img, int x, int y, int color)
     printf("post tx_addr\n");
 }
 */
-void	pixel_put(t_img *img, int x, int y, int color
+void            pixel_put(t_img *img, int x, int y, int color)
+{
+    char    *dst;
+
+    dst = img->data + (y * img->size_l + x * (img->bpp / 8));
+    *(unsigned int*)dst = color;
+}

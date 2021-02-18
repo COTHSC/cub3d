@@ -15,4 +15,3 @@ void            pixel_put(t_img *image, int x, int y, int color)
         image->data[y * image->size_l + x * image->bpp / 8 + 1] = g;
         image->data[y * image->size_l + x * image->bpp / 8 + 2] = b;
 }
-

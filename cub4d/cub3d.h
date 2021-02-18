@@ -41,6 +41,8 @@ typedef struct  s_vars {
 	void	*win;
 	t_pos	*pos;
 	t_img	*img;
+	int	**texture;
+	int	buf[480][640];
 	t_img	*background;
 	t_tex	*tex;
 }               t_vars;

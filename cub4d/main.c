@@ -152,6 +152,13 @@ int             main(void)
 
 	int img_width;
 	int img_height;
+	
+	vars.texture = (int**)malloc(sizeof(int *) * 8);
+
+	while (i < 8)
+	{
+		vars.texture[i++] = (int *)malloc(sizeof(int) * 640 * 480);
+	}
 
 
 	vars.mlx = mlx_init();
