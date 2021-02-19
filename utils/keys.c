@@ -30,9 +30,12 @@ int	key_press(int keycode, t_vars *vars)
 		vars->keys->r = 1;
 	if (keycode == 65361)
 		vars->keys->l = 1;
-
-	return (1);
+	if (keycode == 97)
+		vars->keys->a = 1;
+	if (keycode == 100)
+		vars->keys->d = 1;
 }
+
 
 int	key_release(int keycode, t_vars *vars)
 {
@@ -44,5 +47,15 @@ int	key_release(int keycode, t_vars *vars)
 		vars->keys->r = 0;
 	if (keycode == 65361)
 		vars->keys->l = 0;
+	if (keycode == 97)
+		vars->keys->a = 0;
+	if (keycode == 100)
+		vars->keys->d = 0;
+	return (1);
+}
+
+int	button_press(int buttoncode, t_vars *vars)
+{
+	printf("this is the buttoncode hopefully? %i \n", buttoncode);
 	return (1);
 }

@@ -225,6 +225,20 @@ int             key_hook(t_vars *vars)
 		if(worldMap[(int)(vars->pos->posX)][(int)(vars->pos->posY - vars->pos->dirY * vars->pos->move_speed)] == 0)
 			vars->pos->posY -= vars->pos->dirY * vars->pos->move_speed;
 	}
+/*	if (vars->keys->d)
+	{
+		if(worldMap[(int)(vars->pos->posX + (vars->pos->dirX + M_PI_2) * vars->pos->move_speed)][(int)(vars->pos->posY)] == 0)
+			vars->pos->posX += (vars->pos->dirX + M_PI_2) * vars->pos->move_speed;
+		if(worldMap[(int)(vars->pos->posX)][(int)(vars->pos->posY + (vars->pos->dirY + 1) * vars->pos->move_speed)] == 0)
+			vars->pos->posY += (vars->pos->dirY + M_PI_2) * vars->pos->move_speed;
+	}
+	if (vars->keys->a)
+	{
+		if(worldMap[(int)(vars->pos->posX + (vars->pos->dirX - 1) * vars->pos->move_speed)][(int)(vars->pos->posY)] == 0)
+			vars->pos->posX += (vars->pos->dirX - 1) * vars->pos->move_speed;
+		if(worldMap[(int)(vars->pos->posX)][(int)(vars->pos->posY - (vars->pos->dirY - 1) * vars->pos->move_speed)] == 0)
+			vars->pos->posY += (vars->pos->dirY - 1) * vars->pos->move_speed;
+	}*/
 	if (vars->keys->r)
 	{
 		oldDirX = vars->pos->dirX;
@@ -282,6 +296,7 @@ int main()
 	load_texture(&vars);
 	mlx_hook(vars.win, 2, 1L << 0, &key_press, &vars);
 	mlx_hook(vars.win, 3, 1L << 1, &key_release, &vars);
+	mlx_hook(vars.win, 8, 1L << 5, &button_press, &vars);
 	mlx_loop_hook(vars.mlx, key_hook, &vars);
 	mlx_loop(vars.mlx);
 	return 0;

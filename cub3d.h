@@ -68,5 +68,6 @@ int     	draw_floor(t_vars *vars, int x, int draw_end);
 int		draw_cieling(t_vars *vars, int x, int draw_start);
 int    key_release(int keycode, t_vars *vars);
 int    key_press(int keycode, t_vars *vars);
+int     button_press(int buttoncode, t_vars *vars);
 
 #endif
