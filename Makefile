@@ -1,8 +1,9 @@
 NAME = cub3D
 
 SRCS = raytexting2.c \
-	utils/pixel_put.c \
-	utils/line_put.c \
+	utils/reset_buffer.c \
+	utils/keys.c \
+	utils/draw_floor_cieling.c \
 	utils/render_next_frame.c \
 
 OBJS = $(SRCS:.c=.o)

@@ -12,42 +12,33 @@
 
 #include "cub3d.h"
 
-#define screenWidth 640
-#define screenHeight 480
-#define mapWidth 24
-#define mapHeight 24
-#define texHeight 64
-#define texWidth 64
-#define FCOLOR 0x0000FF00
-#define CCOLOR 0x00FFFFFF
-
-int	worldMap[mapWidth][mapHeight] =
-						{
-							{4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,7,7,7,7,7,7,7,7},
-							{4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,0,0,0,0,0,0,7},
-							{4,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7},
-							{4,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7},
-							{4,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,7,0,0,0,0,0,0,7},
-							{4,0,4,0,0,0,0,5,5,5,5,5,5,5,5,5,7,7,0,7,7,7,7,7},
-							{4,0,5,0,0,0,0,5,0,5,0,5,0,5,0,5,7,0,0,0,7,7,7,1},
-							{4,0,6,0,0,0,0,5,0,0,0,0,0,0,0,5,7,0,0,0,0,0,0,8},
-							{4,0,7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,7,7,1},
-							{4,0,8,0,0,0,0,5,0,0,0,0,0,0,0,5,7,0,0,0,0,0,0,8},
-							{4,0,0,0,0,0,0,5,0,0,0,0,0,0,0,5,7,0,0,0,7,7,7,1},
-							{4,0,0,0,0,0,0,5,5,5,5,0,5,5,5,5,7,7,7,7,7,7,7,1},
-							{6,6,6,6,6,6,6,6,6,6,6,0,6,6,6,6,6,6,6,6,6,6,6,6},
-							{8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4},
-							{6,6,6,6,6,6,0,6,6,6,6,0,6,6,6,6,6,6,6,6,6,6,6,6},
-							{4,4,4,4,4,4,0,4,4,4,6,0,6,2,2,2,2,2,2,2,3,3,3,3},
-							{4,0,0,0,0,0,0,0,0,4,6,0,6,2,0,0,0,0,0,2,0,0,0,2},
-							{4,0,0,0,0,0,0,0,0,0,0,0,6,2,0,0,5,0,0,2,0,0,0,2},
-							{4,0,0,0,0,0,0,0,0,4,6,0,6,2,0,0,0,0,0,2,2,0,2,2},
-							{4,0,6,0,6,0,0,0,0,4,6,0,0,0,0,0,5,0,0,0,0,0,0,2},
-							{4,0,0,5,0,0,0,0,0,4,6,0,6,2,0,0,0,0,0,2,2,0,2,2},
-							{4,0,6,0,6,0,0,0,0,4,6,0,6,2,0,0,5,0,0,2,0,0,0,2},
-							{4,0,0,0,0,0,0,0,0,4,6,0,6,2,0,0,0,0,0,2,0,0,0,2},
-							{4,4,4,4,4,4,4,4,4,4,1,1,1,2,2,2,2,2,2,3,3,3,3,3}
-						};
+int     worldMap[mapWidth][mapHeight] =
+{
+        {4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,7,7,7,7,7,7,7,7},
+        {4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,0,0,0,0,0,0,7},
+        {4,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7},
+        {4,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7},
+        {4,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,7,0,0,0,0,0,0,7},
+        {4,0,4,0,0,0,0,5,5,5,5,5,5,5,5,5,7,7,0,7,7,7,7,7},
+        {4,0,5,0,0,0,0,5,0,5,0,5,0,5,0,5,7,0,0,0,7,7,7,1},
+        {4,0,6,0,0,0,0,5,0,0,0,0,0,0,0,5,7,0,0,0,0,0,0,8},
+        {4,0,7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,7,7,1},
+        {4,0,8,0,0,0,0,5,0,0,0,0,0,0,0,5,7,0,0,0,0,0,0,8},
+        {4,0,0,0,0,0,0,5,0,0,0,0,0,0,0,5,7,0,0,0,7,7,7,1},
+        {4,0,0,0,0,0,0,5,5,5,5,0,5,5,5,5,7,7,7,7,7,7,7,1},
+        {6,6,6,6,6,6,6,6,6,6,6,0,6,6,6,6,6,6,6,6,6,6,6,6},
+        {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4},
+        {6,6,6,6,6,6,0,6,6,6,6,0,6,6,6,6,6,6,6,6,6,6,6,6},
+        {4,4,4,4,4,4,0,4,4,4,6,0,6,2,2,2,2,2,2,2,3,3,3,3},
+        {4,0,0,0,0,0,0,0,0,4,6,0,6,2,0,0,0,0,0,2,0,0,0,2},
+        {4,0,0,0,0,0,0,0,0,0,0,0,6,2,0,0,5,0,0,2,0,0,0,2},
+        {4,0,0,0,0,0,0,0,0,4,6,0,6,2,0,0,0,0,0,2,2,0,2,2},
+        {4,0,6,0,6,0,0,0,0,4,6,0,0,0,0,0,5,0,0,0,0,0,0,2},
+        {4,0,0,5,0,0,0,0,0,4,6,0,6,2,0,0,0,0,0,2,2,0,2,2},
+        {4,0,6,0,6,0,0,0,0,4,6,0,6,2,0,0,5,0,0,2,0,0,0,2},
+        {4,0,0,0,0,0,0,0,0,4,6,0,6,2,0,0,0,0,0,2,0,0,0,2},
+        {4,4,4,4,4,4,4,4,4,4,1,1,1,2,2,2,2,2,2,3,3,3,3,3}
+};
 
 
 
@@ -59,20 +50,9 @@ int		init_position(t_vars *vars)
 	vars->pos->dirY = 0;
 	vars->pos->planeX =  0;
 	vars->pos->planeY = 0.66;
-	vars->pos->move_speed = 0.2;
-	vars->pos->rot_speed = 0.05;
+	vars->pos->move_speed = 0.03;
+	vars->pos->rot_speed = 0.03;
 	return (1);
-}
-
-void	reset_buffer(t_vars *vars)
-{
-	for (int y = 0; y < 480; y++)
-	{
-		for (int x = 0; x < 640; x++)
-		{
-			vars->buf[y][x] = 0;
-		}
-	}
 }
 
 void	draw(t_vars *vars)
@@ -88,24 +68,6 @@ void	draw(t_vars *vars)
 
 	reset_buffer(vars);
 	mlx_put_image_to_window(vars->mlx, vars->win, vars->img->ptr, 0, 0);
-}
-
-int	draw_cieling(t_vars *vars, int x, int draw_start)
-{
-	int i = 0;
-
-	while (i < draw_start)
-		vars->buf[i++][x] = CCOLOR;
-	return (1);
-}
-
-int	draw_floor(t_vars *vars, int x, int draw_end)
-{
-	int i = draw_end;
-
-	while (i < screenHeight)
-		vars->buf[i++][x] = FCOLOR;
-	return (1);
 }
 
 int		draw_frame(t_vars *vars)
@@ -142,7 +104,7 @@ int		draw_frame(t_vars *vars)
 	int texNum;
 
 	vars->img = malloc(sizeof(t_img));
-	
+
 	vars->img->ptr = mlx_new_image(vars->mlx, screenWidth, screenHeight );
 	vars->img->data = (int *)mlx_get_data_addr(vars->img->ptr, &vars->img->bpp, &vars->img->size_l, &vars->img->endian);
 	i = 0;
@@ -151,7 +113,7 @@ int		draw_frame(t_vars *vars)
 		cameraX = (2 * i) / ((double)w) - 1;
 		rayDirX = vars->pos->dirX + vars->pos->planeX * cameraX;
 		rayDirY = vars->pos->dirY + vars->pos->planeY * cameraX;
-		
+
 		mapX = (int)vars->pos->posX;
 		mapY = (int)vars->pos->posY;
 
@@ -179,7 +141,7 @@ int		draw_frame(t_vars *vars)
 			stepY = 1;
 			sideDistY = (mapY + 1.0 - vars->pos->posY) * deltaDistY;
 		}
-		
+
 		while (hit == 0)
 		{
 			if (sideDistX < sideDistY)
@@ -208,7 +170,7 @@ int		draw_frame(t_vars *vars)
 		drawEnd = lineHeight / 2 + h / 2;
 		if (drawEnd >= h || drawEnd < 0)
 			drawEnd = h - 1;
-	
+
 		if (side == 0)
 			wallX = vars->pos->posY + perpWallDist * rayDirY;
 		else
@@ -233,39 +195,38 @@ int		draw_frame(t_vars *vars)
 			texY = (int)texPos & (texHeight -1);
 			texPos += step;
 			color = vars->text[texNum]->data[texWidth * texY + texX]; 
-		     	vars->buf[y][i] = color;	
+			vars->buf[y][i] = color;	
 			y++;
 		}
 		draw_cieling(vars, i, drawStart);
 		draw_floor(vars, i, drawEnd);
-
 		i++;
 	}
 	draw(vars);
 	return (1);
 }
 
-int             key_hook(int keycode, t_vars *vars)
+int             key_hook(t_vars *vars)
 {  
 	double oldDirX;
 	double oldPlaneX;
 
-    if (keycode == 65362) //linux 65362 
-    {
+	if (vars->keys->w) 
+	{
 		if(worldMap[(int)(vars->pos->posX + vars->pos->dirX * vars->pos->move_speed)][(int)(vars->pos->posY)] == 0)
 			vars->pos->posX += vars->pos->dirX * vars->pos->move_speed;		
 		if(worldMap[(int)(vars->pos->posX)][(int)(vars->pos->posY + vars->pos->dirY * vars->pos->move_speed)] == 0)
 			vars->pos->posY += vars->pos->dirY * vars->pos->move_speed;
-    }
-    if (keycode == 65364) // linux 65364
-    {
+	}
+	if (vars->keys->s)
+	{
 		if(worldMap[(int)(vars->pos->posX - vars->pos->dirX * vars->pos->move_speed)][(int)(vars->pos->posY)] == 0)
 			vars->pos->posX -= vars->pos->dirX * vars->pos->move_speed;
 		if(worldMap[(int)(vars->pos->posX)][(int)(vars->pos->posY - vars->pos->dirY * vars->pos->move_speed)] == 0)
 			vars->pos->posY -= vars->pos->dirY * vars->pos->move_speed;
-    }
-    if (keycode == 65363) //linux 65363
-    {
+	}
+	if (vars->keys->r)
+	{
 		oldDirX = vars->pos->dirX;
 
 		vars->pos->dirX = vars->pos->dirX * cos(-1 * vars->pos->rot_speed) - vars->pos->dirY *sin(-1 * vars->pos->rot_speed);
@@ -273,9 +234,9 @@ int             key_hook(int keycode, t_vars *vars)
 		oldPlaneX = vars->pos->planeX;	
 		vars->pos->planeX = vars->pos->planeX * cos(-1 *(vars->pos->rot_speed)) - vars->pos->planeY * sin(-1 * (vars->pos->rot_speed));
 		vars->pos->planeY = oldPlaneX * sin(-1 * vars->pos->rot_speed) + vars->pos->planeY * cos(-1 * vars->pos->rot_speed);
-    }
-    if (keycode == 65361) //linux 65361
-    {
+	}
+	if (vars->keys->l)
+	{
 		oldDirX = vars->pos->dirX;
 
 		vars->pos->dirX = vars->pos->dirX * cos(vars->pos->rot_speed) - vars->pos->dirY *sin(vars->pos->rot_speed);
@@ -283,11 +244,9 @@ int             key_hook(int keycode, t_vars *vars)
 		oldPlaneX = vars->pos->planeX;	
 		vars->pos->planeX = vars->pos->planeX * cos(vars->pos->rot_speed) - vars->pos->planeY * sin(vars->pos->rot_speed);
 		vars->pos->planeY = oldPlaneX * sin(vars->pos->rot_speed) + vars->pos->planeY * cos(vars->pos->rot_speed);
-    }
-    if (keycode == 53)
-        mlx_destroy_window(vars->mlx, vars->win);
-    draw_frame(vars);
-    return (1);
+	}
+	draw_frame(vars);
+	return (1);
 }
 
 void	load_image(t_vars *vars, t_img *img, char *path)
@@ -312,15 +271,19 @@ int main()
 {
 	t_vars	vars;
 	int i = 0;
-	
+
 	vars.pos = malloc(sizeof(t_pos));
+	vars.keys = malloc(sizeof(t_keys));
 	init_position(&vars);
-        while (i < 8)
-                vars.text[i++] = (t_img *)malloc(sizeof(t_img));
+	while (i < 8)
+		vars.text[i++] = (t_img *)malloc(sizeof(t_img));
 	vars.mlx = mlx_init();
 	vars.win = mlx_new_window(vars.mlx, screenWidth, screenHeight, "Hello world!");
 	load_texture(&vars);
-	mlx_hook(vars.win, 2, 1L << 0, &key_hook, &vars);
+//	mlx_hook(vars.win, 2, 1L << 0, &key_hook, &vars);
+	mlx_hook(vars.win, 2, 1L << 0, &key_press, &vars);
+	mlx_hook(vars.win, 3, 1L << 1, &key_release, &vars);
+	mlx_loop_hook(vars.mlx, key_hook, &vars);
 	mlx_loop(vars.mlx);
 	return 0;
 }
