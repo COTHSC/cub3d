@@ -61,13 +61,13 @@ void	draw(t_vars *vars)
 	for (int y = 0; y < 480; y++)
 	{
 		for (int x = 0; x < 640; x++)
-		{
 			vars->img->data[y * 640 + x] = vars->buf[y][x];
-		}
 	}
 
 	reset_buffer(vars);
 	mlx_put_image_to_window(vars->mlx, vars->win, vars->img->ptr, 0, 0);
+	mlx_destroy_image(vars->mlx, vars->img->ptr);
+	free(vars->img);
 }
 
 int		draw_frame(t_vars *vars)
@@ -280,7 +280,6 @@ int main()
 	vars.mlx = mlx_init();
 	vars.win = mlx_new_window(vars.mlx, screenWidth, screenHeight, "Hello world!");
 	load_texture(&vars);
-//	mlx_hook(vars.win, 2, 1L << 0, &key_hook, &vars);
 	mlx_hook(vars.win, 2, 1L << 0, &key_press, &vars);
 	mlx_hook(vars.win, 3, 1L << 1, &key_release, &vars);
 	mlx_loop_hook(vars.mlx, key_hook, &vars);
