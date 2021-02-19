@@ -11,7 +11,7 @@
 
 typedef struct  s_img {
 	void        *ptr;
-	char        *data;
+	int	*data;
 	int         width;
 	int         height;
 
@@ -23,12 +23,6 @@ typedef struct  s_img {
 typedef struct s_tex {
 	t_img	*a;
 	t_img	*b;
-	t_img	*c;
-	t_img	*d;
-	t_img	*e;
-	t_img	*f;
-	t_img	*g;
-	t_img	*h;
 }		t_tex;
 
 typedef struct  s_pos {
@@ -43,11 +37,14 @@ typedef struct  s_pos {
 }                       t_pos;
 
 typedef struct  s_vars {
-	void        *mlx;
-	void        *win;
-	t_pos       *pos;
-	t_img       *img;
-	t_img       *background;
+	void	*mlx;
+	void	*win;
+	t_pos	*pos;
+	t_img	*img;
+	int	**texture;
+	int	buf[480][640];
+	t_img	*background;
+	t_tex	*tex;
 }               t_vars;
 
 void		pixel_put(t_img *image, int x, int y, int color);
@@ -56,4 +53,3 @@ int		render_next_frame(t_vars *vars);
 
 
 #endif
-
