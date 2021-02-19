@@ -18,9 +18,7 @@
 #define mapHeight 24
 #define texHeight 64
 #define texWidth 64
-#define FCOLOR 0x0000FF00
-#define CCOLOR 0x00FFFFFF
-
+/*
 int	worldMap[mapWidth][mapHeight] =
 						{
 							{4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,7,7,7,7,7,7,7,7},
@@ -50,6 +48,34 @@ int	worldMap[mapWidth][mapHeight] =
 						};
 
 
+*/
+
+    int  worldMap[24][24] = {
+        {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+        {1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+        {1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,1,0,0,0,0,0,1},
+        {1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+        {1,0,0,0,0,0,1,0,0,0,0,0,0,1,0,1,0,1,0,0,0,0,0,1},
+        {1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+        {1,1,1,1,1,1,1,0,0,0,0,0,0,1,0,1,0,1,0,0,0,0,0,1},
+        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+        {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
+    };
 
 int		init_position(t_vars *vars)
 {
@@ -90,24 +116,6 @@ void	draw(t_vars *vars)
 	mlx_put_image_to_window(vars->mlx, vars->win, vars->img->ptr, 0, 0);
 }
 
-int	draw_cieling(t_vars *vars, int x, int draw_start)
-{
-	int i = 0;
-
-	while (i < draw_start)
-		vars->buf[i++][x] = CCOLOR;
-	return (1);
-}
-
-int	draw_floor(t_vars *vars, int x, int draw_end)
-{
-	int i = draw_end;
-
-	while (i < screenHeight)
-		vars->buf[i++][x] = FCOLOR;
-	return (1);
-}
-
 int		draw_frame(t_vars *vars)
 {
 
@@ -139,6 +147,7 @@ int		draw_frame(t_vars *vars)
 	int y;
 	int drawStart;
 	int drawEnd;
+	unsigned int colors;
 	int texNum;
 
 	vars->img = malloc(sizeof(t_img));
@@ -206,8 +215,8 @@ int		draw_frame(t_vars *vars)
 		if (drawStart < 0)
 			drawStart = 0;
 		drawEnd = lineHeight / 2 + h / 2;
-		if (drawEnd >= h || drawEnd < 0)
-			drawEnd = h - 1;
+		if (drawEnd >= h)
+			drawEnd = h -1;
 	
 		if (side == 0)
 			wallX = vars->pos->posY + perpWallDist * rayDirY;
@@ -232,12 +241,10 @@ int		draw_frame(t_vars *vars)
 		{
 			texY = (int)texPos & (texHeight -1);
 			texPos += step;
-			color = vars->text[texNum]->data[texWidth * texY + texX]; 
+			color = vars->texture[texNum][texWidth * texY + texX]; 
 		     	vars->buf[y][i] = color;	
 			y++;
 		}
-		draw_cieling(vars, i, drawStart);
-		draw_floor(vars, i, drawEnd);
 
 		i++;
 	}
@@ -252,14 +259,18 @@ int             key_hook(int keycode, t_vars *vars)
 
     if (keycode == 65362) //linux 65362 
     {
-		if(worldMap[(int)(vars->pos->posX + vars->pos->dirX * vars->pos->move_speed)][(int)(vars->pos->posY)] == 0)
+		if(worldMap[(int)(vars->pos->posX - vars->pos->posY * vars->pos->move_speed)][(int)(vars->pos->posY)] == 0)
+		{
 			vars->pos->posX += vars->pos->dirX * vars->pos->move_speed;		
-		if(worldMap[(int)(vars->pos->posX)][(int)(vars->pos->posY + vars->pos->dirY * vars->pos->move_speed)] == 0)
+		}
+		if(worldMap[(int)(vars->pos->posX)][(int)(vars->pos->posY - vars->pos->dirY * vars->pos->move_speed)] == 0)
+		{
 			vars->pos->posY += vars->pos->dirY * vars->pos->move_speed;
+		}
     }
     if (keycode == 65364) // linux 65364
     {
-		if(worldMap[(int)(vars->pos->posX - vars->pos->dirX * vars->pos->move_speed)][(int)(vars->pos->posY)] == 0)
+		if(worldMap[(int)(vars->pos->posX - vars->pos->posY * vars->pos->move_speed)][(int)(vars->pos->posY)] == 0)
 			vars->pos->posX -= vars->pos->dirX * vars->pos->move_speed;
 		if(worldMap[(int)(vars->pos->posX)][(int)(vars->pos->posY - vars->pos->dirY * vars->pos->move_speed)] == 0)
 			vars->pos->posY -= vars->pos->dirY * vars->pos->move_speed;
@@ -286,26 +297,45 @@ int             key_hook(int keycode, t_vars *vars)
     }
     if (keycode == 53)
         mlx_destroy_window(vars->mlx, vars->win);
+	
     draw_frame(vars);
     return (1);
 }
-
-void	load_image(t_vars *vars, t_img *img, char *path)
+/*
+int	load_textures(t_vars *vars)
+{
+	vars->tex = malloc(sizeof(t_tex));
+	vars->tex->a = malloc(sizeof(t_img));
+	vars->tex->a->ptr = mlx_xpm_file_to_image(vars->mlx, "./pics/pacman.xpm", &vars->tex->a->width, &vars->tex->a->height);  
+	vars->tex->a->data = (int *)mlx_get_data_addr(vars->tex->a->ptr, &vars->tex->a->bpp, &vars->tex->a->size_l, &vars->tex->a->endian);
+	return (1);
+} */
+void	load_image(t_vars *vars, int *tex_num, char *path, t_img *img)
 {
 	img->ptr = mlx_xpm_file_to_image(vars->mlx, path, &img->width, &img->height);
 	img->data = (int *)mlx_get_data_addr(img->ptr, &img->bpp, &img->size_l, &img->endian);
+	for (int y = 0; y < img->height; y++)
+	{
+		for (int x = 0; x < img->width; x++)
+		{
+			tex_num[img->width * y + x] = img->data[img->width * y + x];
+		}
+	}
+	mlx_destroy_image(vars->mlx, img->ptr);
 }
 
 void	load_texture(t_vars *vars)
 {
-	load_image(vars, vars->text[0], "textures/eagle.xpm");
-	load_image(vars, vars->text[1], "textures/redbrick.xpm");
-	load_image(vars, vars->text[2], "textures/purplestone.xpm");
-	load_image(vars, vars->text[3], "textures/greystone.xpm");
-	load_image(vars, vars->text[4], "textures/bluestone.xpm");
-	load_image(vars, vars->text[5], "textures/mossy.xpm");
-	load_image(vars, vars->text[6], "textures/wood.xpm");
-	load_image(vars, vars->text[7], "textures/colorstone.xpm");
+	t_img	img;
+
+	load_image(vars, vars->texture[0], "textures/eagle.xpm", &img);
+	load_image(vars, vars->texture[1], "textures/redbrick.xpm", &img);
+	load_image(vars, vars->texture[2], "textures/purplestone.xpm", &img);
+	load_image(vars, vars->texture[3], "textures/greystone.xpm", &img);
+	load_image(vars, vars->texture[4], "textures/bluestone.xpm", &img);
+	load_image(vars, vars->texture[5], "textures/mossy.xpm", &img);
+	load_image(vars, vars->texture[6], "textures/wood.xpm", &img);
+	load_image(vars, vars->texture[7], "textures/colorstone.xpm", &img);
 }
 
 int main()
@@ -315,12 +345,21 @@ int main()
 	
 	vars.pos = malloc(sizeof(t_pos));
 	init_position(&vars);
+
+        vars.texture = (int**)malloc(sizeof(int *) * 8);
+
         while (i < 8)
-                vars.text[i++] = (t_img *)malloc(sizeof(t_img));
+        {
+                vars.texture[i++] = (int *)malloc(sizeof(int) * 640 * 480);
+        }
+
+	
 	vars.mlx = mlx_init();
 	vars.win = mlx_new_window(vars.mlx, screenWidth, screenHeight, "Hello world!");
 	load_texture(&vars);
 	mlx_hook(vars.win, 2, 1L << 0, &key_hook, &vars);
+
+
 	mlx_loop(vars.mlx);
 	return 0;
 }
