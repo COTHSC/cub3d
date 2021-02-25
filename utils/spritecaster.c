@@ -1,33 +1,83 @@
 #include "../cub3d.h"
 
-#define numSprites 8
-
-t_sprites sprite[numSprites] =
+int     innit_sprites(t_sprites **sprite, double x, double y, int num)
 {
+    sprite[num]->x = x;
+    sprite[num]->y = y;
+    sprite[num]->dist = 0;
+    return (1);
+}
 
-    //some barrels around the map
-    {21.5, 1.5, 8},
-    {15.5, 1.5, 8},
-    {16.0, 1.8, 8},
-    {16.2, 1.2, 8},
-    {3.5,  2.5, 8},
-    {9.5, 15.5, 8},
-    {10.0, 15.1, 8},
-    {10.5, 15.8, 8},
-};
+
+int     sprite_sort(t_sprites **sprite, int num_sprite)
+{
+    int i = 0;
+    int done = 0;
+    t_sprites *dummy;
+
+    dummy = malloc(sizeof(t_sprites));
+    while(i < num_sprite - 1)
+    {
+        if (sprite[i]->dist < sprite[i + 1]->dist)
+        {
+            dummy->dist = sprite[i + 1]->dist;
+            sprite[i + 1]->dist = sprite[i]->dist;
+            sprite[i]->dist = dummy->dist;
+            done++;
+        }
+        i++;
+    }
+    if (done != 0)
+        sprite_sort(sprite, num_sprite);
+    else
+        return (1);
+    return (1);
+}
+
 
 int     spritecaster(t_pos *pos)
 {
-    int spriteOrder[numSprites];
-    double spriteDistance[numSprites];
     int i = 0;
+    t_sprites **sprite;
+    int num_sprite = 3;
+    double spriteX;
+    double spriteY;
+    double invDet;
+    double transformX;
+    double transformY;
 
-    while (i < numSprites)
+    sprite = malloc(sizeof(t_sprites *));
+
+    while( i < num_sprite )
     {
-        spriteOrder[i] = i;
-        spriteDistance[i] = ((pos->posX - sprite[i].x) * (pos->posX - sprite[i].x) + (pos->posY - sprite[i].y) * (pos->posY - sprite[i].y));
+        sprite[i] = malloc(sizeof(t_sprites));
         i++;
     }
+
+
+    innit_sprites(sprite, 10.5, 11.5, 0);
+    innit_sprites(sprite, 10.5, 20.5, 1);
+    innit_sprites(sprite, 20.5, 11.5, 2);
+
+
+    i = 0;
+    while (i < num_sprite)
+    {
+        sprite[i]->dist = ((pos->posX - sprite[i]->x) * (pos->posX - sprite[i]->x) + (pos->posY - sprite[i]->y) * (pos->posY - sprite[i]->y));
+        i++;
+    }
+    sprite_sort(sprite, num_sprite);
+
+    while(i < num_sprite)
+    {
+        spriteX = sprite[i]->x - pos->posX;
+        spriteY = sprite[i]->y - pos->posY;
+        invDet = 1.0 / (pos->planeX * pos->dirY - pos->dixX * pos->planeY);
+        transformX = invDet * (pos->dirY * spriteX - pos->dirX * spriteY);
+        transformY = invDet * (pos->planeY * spriteX - pos->planeX * spriteY);
+
+    }
+
     return (1);
 
 }

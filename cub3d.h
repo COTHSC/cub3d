@@ -9,8 +9,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#define screenWidth 1920
-#define screenHeight 1080
+#define screenWidth 620
+#define screenHeight 480
 #define mapWidth 24
 #define mapHeight 24
 #define FCOLOR 0x0000FF00
@@ -30,6 +30,7 @@ typedef struct	s_sprites {
     double  x;
     double  y;
     int     texture;
+    double  dist;
 }		t_sprites;
 
 typedef struct  s_img {
