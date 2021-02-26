@@ -54,6 +54,5 @@
          vars->pos->planeY = oldPlaneX * sin(vars->pos->rot_speed) + vars->pos->planeY * cos(vars->pos->rot_speed);
      }
      draw_frame(vars);
-     spritecaster(vars->pos);
      return (1);
  }
