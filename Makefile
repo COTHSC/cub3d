@@ -7,7 +7,9 @@ SRCS = raytexting2.c \
 	utils/draw.c \
 	utils/map_to_struct.c \
 	utils/draw_frame.c \
+	utils/spritecaster.c \
 	utils/key_hook.c \
+	utils/spritefinder.c \
 	utils/draw_floor_cieling.c \
 	utils/render_next_frame.c \
 
@@ -40,8 +42,8 @@ debug :
 	$(CC) -o $(NAME) $(OBJS) $(MLX_REQ_OSX)
 
 %.o : %.c
-	$(CC) ${CFLAGS} -g -I ${HEADERS} -Imlx_osx -O3 -o $@ -c $<
-	#$(CC) ${CFLAGS} -I ${HEADERS} -Imlx_linux -O3  -o $@ -c $<
+	$(CC) ${CFLAGS} -g -I ${HEADERS} -Imlx_osx  -o $@ -c $<
+	#$(CC) ${CFLAGS} -I ${HEADERS} -Imlx_linux   -o $@ -c $<
 
 clean :
 #        $(MAKE) clean -C ./libft

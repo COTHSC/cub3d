@@ -61,6 +61,7 @@ typedef struct  s_vars {
     t_pos	*pos;
     t_img	*img;
     t_img	*text[8];
+    t_img   *sprite;
     t_keys	*keys;
     int	buf[screenHeight][screenWidth];
     int **WorldMap;
@@ -81,5 +82,6 @@ int             key_hook(t_vars *vars);
 int		draw_frame(t_vars *vars);
 int map_to_struct(int map[24][24], t_vars *vars);
 int     spritecaster(t_vars *vars, int texX, int texY, int texNum, int [640]);
+int     spritefinder(t_sprites **sprite, int **map);
 
 #endif
