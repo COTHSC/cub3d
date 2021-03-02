@@ -35,11 +35,14 @@ void	load_sprites(t_vars *vars)
 	load_image(vars, vars->sprite, "textures/barrel.xpm");
 }
 
-int main()
+int main(int argc, char **argv)
 {
 	t_vars	vars;
+	t_res	*res;
 	int i = 0;
-
+   
+    res = malloc(sizeof(t_res));
+    parse_resolution(argv[1], res);
 	vars.pos = malloc(sizeof(t_pos));
 	vars.keys = malloc(sizeof(t_keys));
 	init_position(&vars);

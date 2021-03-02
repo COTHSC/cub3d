@@ -2,6 +2,7 @@ NAME = cub3D
 
 SRCS = raytexting2.c \
 	utils/reset_buffer.c \
+	parse_resolution.c \
 	utils/keys.c \
 	utils/innit_position.c \
 	utils/draw.c \
@@ -10,6 +11,8 @@ SRCS = raytexting2.c \
 	utils/spritecaster.c \
 	utils/key_hook.c \
 	utils/spritefinder.c \
+	get_next_line/get_next_line.c \
+	get_next_line/get_next_line_utils.c \
 	utils/draw_floor_cieling.c \
 	utils/render_next_frame.c \
 
@@ -17,7 +20,7 @@ OBJS = $(SRCS:.c=.o)
 
 HEADERS = includes
 
-MLX_REQ_LN = -Lmlx_linux -lmlx_Linux -Imlx_linux -lXext -lX11 -lm 
+MLX_REQ_LN = -Lmlx_linux -lmlx_Linux -Imlx_linux -lXext -lX11 -lm -Llibft -lft 
 
 MLX_REQ_OSX = -Lmlx_osx -lmlx -framework OpenGL -framework AppKit
 
