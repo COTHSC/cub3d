@@ -1,16 +1,15 @@
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# include <unistd.h>
-# include <stdint.h>
-# include <stdarg.h>
+#include <unistd.h>
+#include <stdint.h>
+#include <stdarg.h>
 #include <math.h>
 #include "mlx_linux/mlx.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <fcntl.h>
 
-#define screenWidth 620
-#define screenHeight 480
 #define mapWidth 24
 #define mapHeight 24
 #define FCOLOR 0x0000FF00
@@ -30,6 +29,13 @@ typedef struct	s_res {
     int	w;
     int	h;
 }		t_res;
+
+typedef struct	s_texpath {
+    char *NO;
+    char *SO;
+    char *WE;
+    char *EA;
+}		t_texpath;
 
 typedef struct	s_sprites {
     double  x;
@@ -68,7 +74,8 @@ typedef struct  s_vars {
     t_img	*text[8];
     t_img   *sprite;
     t_keys	*keys;
-    int	buf[screenHeight][screenWidth];
+    t_res	*res;
+    int	**buf;
     int **WorldMap;
 }               t_vars;
 
@@ -89,6 +96,6 @@ int map_to_struct(int map[24][24], t_vars *vars);
 int     spritecaster(t_vars *vars, int texX, int texY, int texNum, int [640]);
 int     spritefinder(t_sprites **sprite, int **map);
 int			get_next_line(int const fd, char **line);
-int     parse_resolution(char *map_file, t_res *res);
+int     parse_resolution(t_res *res, int fd);
 
 #endif

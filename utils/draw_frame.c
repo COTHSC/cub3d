@@ -5,10 +5,10 @@
 
 int		draw_frame(t_vars *vars)
 {
-    int w = screenWidth;
+    int w = 640;
     int i = 0;
     int color;
-    int zbuffer[screenWidth];
+    int zbuffer[640];
     double cameraX;
     double rayDirX;
     double rayDirY;
@@ -29,7 +29,7 @@ int		draw_frame(t_vars *vars)
     int hit = 0;
     int side = 0;
     int lineHeight;
-    int h = screenHeight;
+    int h = 480;
     int y;
     int drawStart;
     int drawEnd;
@@ -37,7 +37,7 @@ int		draw_frame(t_vars *vars)
 
     vars->img = malloc(sizeof(t_img));
 
-    vars->img->ptr = mlx_new_image(vars->mlx, screenWidth, screenHeight );
+    vars->img->ptr = mlx_new_image(vars->mlx, vars->res->w, vars->res->h );
     vars->img->data = (int *)mlx_get_data_addr(vars->img->ptr, &vars->img->bpp, &vars->img->size_l, &vars->img->endian);
     i = 0;
     while (i < w - 1)

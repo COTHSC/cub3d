@@ -13,7 +13,7 @@ int     draw_floor(t_vars *vars, int x, int draw_end)
 {
         int i = draw_end;
 
-        while (i < screenHeight)
+        while (i < vars->res->h)
                 vars->buf[i++][x] = FCOLOR;
         return (1);
 }

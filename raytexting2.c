@@ -18,16 +18,12 @@ void	load_image(t_vars *vars, t_img *img, char *path)
 	img->data = (int *)mlx_get_data_addr(img->ptr, &img->bpp, &img->size_l, &img->endian);
 }
 
-void	load_texture(t_vars *vars)
+void	load_texture (t_vars *vars)
 {
 	load_image(vars, vars->text[0], "textures/eagle.xpm");
 	load_image(vars, vars->text[1], "textures/purplestone.xpm");
 	load_image(vars, vars->text[2], "textures/colorstone.xpm");
 	load_image(vars, vars->text[3], "textures/mossy.xpm");
-	load_image(vars, vars->text[4], "textures/colorstone.xpm");
-	load_image(vars, vars->text[5], "textures/colorstone.xpm");
-	load_image(vars, vars->text[6], "textures/colorstone.xpm");
-	load_image(vars, vars->text[7], "textures/colorstone.xpm");
 }
 
 void	load_sprites(t_vars *vars)
@@ -38,19 +34,29 @@ void	load_sprites(t_vars *vars)
 int main(int argc, char **argv)
 {
 	t_vars	vars;
-	t_res	*res;
 	int i = 0;
-   
-    res = malloc(sizeof(t_res));
-    parse_resolution(argv[1], res);
+    int fd;  
+
+    fd = open(argv[1], O_RDONLY);
+    vars.res = malloc(sizeof(t_res));
+    parse_resolution(vars.res, fd);
 	vars.pos = malloc(sizeof(t_pos));
 	vars.keys = malloc(sizeof(t_keys));
 	init_position(&vars);
 	while (i < 8)
 		vars.text[i++] = (t_img *)malloc(sizeof(t_img));
 	vars.mlx = mlx_init();
-	vars.win = mlx_new_window(vars.mlx, screenWidth, screenHeight, "Hello world!");
+	vars.win = mlx_new_window(vars.mlx, vars.res->w, vars.res->h, "Hello world!");
 	load_texture(&vars);
+
+    i = 0;
+    vars.buf = malloc(sizeof(int *) * vars.res->h);
+    while (i < vars.res->h)
+    {
+        vars.buf[i] = malloc(sizeof(int) * vars.res->w);
+        i++;
+    }
+
     vars.sprite = (t_img *)malloc(sizeof(t_img));
 	load_sprites(&vars);
     vars.WorldMap = (int **)malloc(sizeof(int *) * 24);

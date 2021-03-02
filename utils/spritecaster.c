@@ -44,8 +44,8 @@ int     spritecaster(t_vars *vars, int texX, int texY, int texNum, int zbuffer[6
 	int     drawStartY;
 	int     drawEndY;
 	int     drawEndX;
-	int     h = screenHeight;
-	int     w = screenWidth;
+	int     h = vars->res->h;
+	int     w = vars->res->w;
 	int     spriteHeight;
 	int     spriteWidth;
 	int color;
@@ -82,7 +82,7 @@ int     spritecaster(t_vars *vars, int texX, int texY, int texNum, int zbuffer[6
 		invDet = 1.0 / (vars->pos->planeX * vars->pos->dirY - vars->pos->dirX * vars->pos->planeY);
 		transformX = invDet * (vars->pos->dirY * spriteX - vars->pos->dirX * spriteY);
 		transformY = invDet * (-vars->pos->planeY * spriteX + vars->pos->planeX * spriteY);
-		spriteScreenX = (int)((screenWidth / 2) * (1 + transformX / transformY)); 
+		spriteScreenX = (int)((vars->res->w / 2) * (1 + transformX / transformY)); 
 
 		spriteHeight = abs((int)(h / transformY));
 		drawStartY = -spriteHeight / 2 + h / 2;
@@ -90,7 +90,7 @@ int     spritecaster(t_vars *vars, int texX, int texY, int texNum, int zbuffer[6
 			drawStartY = 0;
 		drawEndY = spriteHeight / 2 + h / 2;
 		if (drawEndY >= h)
-			drawEndY = screenHeight - 1;
+			drawEndY = vars->res->h - 1;
 
 		spriteWidth = abs((int)(h / transformY));
 		drawStartX = -spriteWidth / 2 + spriteScreenX;
@@ -98,7 +98,7 @@ int     spritecaster(t_vars *vars, int texX, int texY, int texNum, int zbuffer[6
 			drawStartX = 0;
 		drawEndX = spriteWidth / 2 + spriteScreenX;
 		if (drawEndX >= w)
-			drawEndX = screenWidth - 1;
+			drawEndX = vars->res->w - 1;
 		for(int stripe = drawStartX; stripe < drawEndX; stripe++)
 		{
 			texX = (int)(256 * (stripe - (-spriteWidth / 2 + spriteScreenX)) * 64 / spriteWidth) / 256;

@@ -3,10 +3,10 @@
 void    draw(t_vars *vars)
 {
 
-    for (int y = 0; y < screenHeight; y++)
+    for (int y = 0; y < vars->res->h; y++)
     {
-        for (int x = 0; x < screenWidth; x++)
-            vars->img->data[y * screenWidth + x] = vars->buf[y][x];
+        for (int x = 0; x < vars->res->w; x++)
+            vars->img->data[y * vars->res->w + x] = vars->buf[y][x];
     }
 
     reset_buffer(vars);
