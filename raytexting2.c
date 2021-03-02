@@ -39,7 +39,7 @@ int main(int argc, char **argv)
 
     fd = open(argv[1], O_RDONLY);
     vars.res = malloc(sizeof(t_res));
-    parse_resolution(vars.res, fd);
+    parse_lines(&vars, fd);
 	vars.pos = malloc(sizeof(t_pos));
 	vars.keys = malloc(sizeof(t_keys));
 	init_position(&vars);

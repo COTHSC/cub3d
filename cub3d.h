@@ -15,6 +15,8 @@
 #define FCOLOR 0x0000FF00
 #define CCOLOR 0x00FFFFFF
 
+
+
 typedef struct	s_keys {
     int	w;
     int	a;
@@ -28,7 +30,13 @@ typedef struct	s_keys {
 typedef struct	s_res {
     int	w;
     int	h;
+    char *NO;
+    char *SO;
+    char *WE;
+    char *EA;
 }		t_res;
+
+typedef int (*fptr)(t_res *, char *);
 
 typedef struct	s_texpath {
     char *NO;
@@ -96,6 +104,8 @@ int map_to_struct(int map[24][24], t_vars *vars);
 int     spritecaster(t_vars *vars, int texX, int texY, int texNum, int [640]);
 int     spritefinder(t_sprites **sprite, int **map);
 int			get_next_line(int const fd, char **line);
-int     parse_resolution(t_res *res, int fd);
+int     parse_resolution(t_res *res, char *buf);
+int     parse_lines(t_vars *vars, int fd);
+
 
 #endif
