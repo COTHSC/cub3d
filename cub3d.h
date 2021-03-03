@@ -34,6 +34,7 @@ typedef struct	s_res {
     char *SO;
     char *WE;
     char *EA;
+    char *S;
 }		t_res;
 
 typedef int (*fptr)(t_res *, char *);
@@ -106,6 +107,7 @@ int     spritefinder(t_sprites **sprite, int **map);
 int			get_next_line(int const fd, char **line);
 int     parse_resolution(t_res *res, char *buf);
 int     parse_lines(t_vars *vars, int fd);
-
+int     parse_paths(t_res *res, char *buf);
+int     parse_sprite(t_res *res, char *buf);
 
 #endif

@@ -40,7 +40,14 @@ int main(int argc, char **argv)
     fd = open(argv[1], O_RDONLY);
     vars.res = malloc(sizeof(t_res));
     parse_lines(&vars, fd);
-	vars.pos = malloc(sizeof(t_pos));
+    
+    printf("this is the path: %s \n", vars.res->NO);
+    printf("this is the path: %s \n", vars.res->SO);
+    printf("this is the path: %s \n", vars.res->WE);
+    printf("this is the path: %s \n", vars.res->EA);
+    printf("this is the path: %s \n", vars.res->S);
+	
+    vars.pos = malloc(sizeof(t_pos));
 	vars.keys = malloc(sizeof(t_keys));
 	init_position(&vars);
 	while (i < 8)
