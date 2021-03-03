@@ -1,6 +1,5 @@
 #include "../cub3d.h"
 
-#define numSprites 8
 
 int     sprite_sort(t_sprites **sprite, int num_sprites)
 {
@@ -9,13 +8,22 @@ int     sprite_sort(t_sprites **sprite, int num_sprites)
 	t_sprites *dummy;
 
 	dummy = malloc(sizeof(t_sprites));
+	dummy->dist = 0;
+	dummy->x = 0.0;
+	dummy->y = 0.0;
 	while(i < num_sprites - 1)
 	{
 		if (sprite[i]->dist < sprite[i + 1]->dist)
 		{
 			dummy->dist = sprite[i + 1]->dist;
+			dummy->x = sprite[i + 1]->x;
+			dummy->y = sprite[i + 1]->y;
 			sprite[i + 1]->dist = sprite[i]->dist;
+			sprite[i + 1]->x = sprite[i]->x;
+			sprite[i + 1]->y = sprite[i]->y;
 			sprite[i]->dist = dummy->dist;
+			sprite[i]->x = dummy->x;
+			sprite[i]->y = dummy->y;
 			done++;
 		}
 		i++;
@@ -27,12 +35,32 @@ int     sprite_sort(t_sprites **sprite, int num_sprites)
 	return (1);
 }
 
+int     count_sprites(int **map)
+{
+    int h = 0;
+    int w = 0;
+    int num_sprite;
+
+    num_sprite = 0;
+    while(h < 24)
+    {
+        w = 0;
+        while(w < 24)
+        {
+            if (map[h][w] == 2)
+                num_sprite++;
+            w++;
+        }
+        h++;
+    }
+    return (num_sprite);
+}
 
 int     spritecaster(t_vars *vars, int texX, int texY, int texNum, int zbuffer[640])
 {
 	int i = 0;
     t_sprites **sprite;
-	int num_sprite = 3;
+	int num_sprite;
 
 	double spriteX;
 	double spriteY;
@@ -50,13 +78,14 @@ int     spritecaster(t_vars *vars, int texX, int texY, int texNum, int zbuffer[6
 	int     spriteWidth;
 	int color;
 
-    sprite = malloc(sizeof(t_sprites *));
-//	i = 0;
-//	while( i < num_sprite )
-//	{
-//		sprite[i] = malloc(sizeof(t_sprites));
-//		i++;
-//	}
+    num_sprite = count_sprites(vars->WorldMap);
+    sprite = malloc(sizeof(t_sprites *) * num_sprite);
+	i = 0;
+	while( i < num_sprite )
+	{
+		sprite[i] = malloc(sizeof(t_sprites));
+		i++;
+	}
 
 
 //	innit_sprites(sprite, 10.5, 11.5, 0);

@@ -53,9 +53,3 @@ int	key_release(int keycode, t_vars *vars)
 		vars->keys->d = 0;
 	return (1);
 }
-
-int	button_press(int buttoncode, t_vars *vars)
-{
-	printf("this is the buttoncode hopefully? %i \n", buttoncode);
-	return (1);
-}

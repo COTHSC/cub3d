@@ -35,6 +35,8 @@ typedef struct	s_res {
     char *WE;
     char *EA;
     char *S;
+    int  C;
+    int  F;
 }		t_res;
 
 typedef int (*fptr)(t_res *, char *);
@@ -109,5 +111,7 @@ int     parse_resolution(t_res *res, char *buf);
 int     parse_lines(t_vars *vars, int fd);
 int     parse_paths(t_res *res, char *buf);
 int     parse_sprite(t_res *res, char *buf);
+int     parse_colors(t_res *res, char *buf);
+int     ft_get_color(int r, int g, int b);
 
 #endif
