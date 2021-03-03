@@ -50,39 +50,46 @@ int     parse_lines(t_vars *vars, int fd)
         {
             if(ft_strnstr(buf, farray[c], 3))
                 (*functions[c])(vars->res, buf);
+            else if (ft_isdigit(buf[0]))
+            {
+                printf("I am here \n");
+                parse_map(vars, buf, fd);
+              //  return (0);
+            }
+
             c++;
         }
-        
+
     }
     return 1;
 }
 
 int     parse_colors(t_res *res, char *buf)
 {
-      int r;
-      int g;
-      int b;
-      int i = 0;
-       int color;
-       color = 0; 
-       
-       if(!buf)
-           return 0;
-       while (!ft_isdigit(buf[i]))
-            i++;
-       r = ft_atoi(&buf[i]);
-       while (buf[i] != ',')
-            i++;
-       g = ft_atoi(&buf[i]);
-       while (buf[i] != ',')
-            i++;
-       b = ft_atoi(&buf[i]);
-       color = ft_get_color(r, g, b);
-       if (ft_strnstr(buf, "F ", 3))
-           res->F = color;
-       else if (ft_strnstr(buf, "C ", 3))
-           res->C = color;
-       return 1;
+    int r;
+    int g;
+    int b;
+    int i = 0;
+    int color;
+    color = 0; 
+
+    if(!buf)
+        return 0;
+    while (!ft_isdigit(buf[i]))
+        i++;
+    r = ft_atoi(&buf[i]);
+    while (buf[i] != ',')
+        i++;
+    g = ft_atoi(&buf[i]);
+    while (buf[i] != ',')
+        i++;
+    b = ft_atoi(&buf[i]);
+    color = ft_get_color(r, g, b);
+    if (ft_strnstr(buf, "F ", 3))
+        res->F = color;
+    else if (ft_strnstr(buf, "C ", 3))
+        res->C = color;
+    return 1;
 }
 
 int     ft_get_color(int r, int g, int b)
@@ -101,90 +108,136 @@ int     ft_get_color(int r, int g, int b)
 
 int     parse_resolution(t_res *res, char *buf)
 {
-       int i;
-        
-       if(!buf)
-           return 0;
-       i = 0;
-       while(!ft_isdigit(buf[i]))
-           i++;
-       res->w = ft_atoi(&buf[i]);
-        
-       while(ft_isdigit(buf[i]))
-           i++;
-       while(!ft_isdigit(buf[i]))
-           i++;
-       res->h = ft_atoi(&buf[i]);
-       return 1;
+    int i;
+
+    if(!buf)
+        return 0;
+    i = 0;
+    while(!ft_isdigit(buf[i]))
+        i++;
+    res->w = ft_atoi(&buf[i]);
+
+    while(ft_isdigit(buf[i]))
+        i++;
+    while(!ft_isdigit(buf[i]))
+        i++;
+    res->h = ft_atoi(&buf[i]);
+    return 1;
 }
 
 int     parse_paths(t_res *res, char *buf)
 {
-       int i;
-       int length;
-       int start;
+    int i;
+    int length;
+    int start;
 
-       if(!buf)
-           return 0;
+    if(!buf)
+        return 0;
 
-       i = 0;
-       length = 0;
-       while(buf[i] != ' ')
-           i++;
-       while(buf[i] == ' ')
-           i++;
-       start = i;
-       while (buf[i] && buf[i] != '\n')
-       {
-            length++;
-            i++;
-       }
-       if(ft_strnstr(buf, "NO", 3))
-       {
-           res->NO = malloc(length + 1);
-           ft_strlcpy(res->NO, &buf[start], length); 
-       }
-       else if(ft_strnstr(buf, "SO", 3))
-       {
-           res->SO = malloc(length + 1);
-           ft_strlcpy(res->SO, &buf[start], length); 
-       }
-       else if(ft_strnstr(buf, "WE", 3))
-       {
-           res->WE = malloc(length + 1);
-           ft_strlcpy(res->WE, &buf[start], length); 
-       }
-       else if(ft_strnstr(buf, "EA", 3))
-       {
-           res->EA = malloc(length + 1);
-           ft_strlcpy(res->EA, &buf[start], length); 
-       }
-       return 1;
+    i = 0;
+    length = 0;
+    while(buf[i] != ' ')
+        i++;
+    while(buf[i] == ' ')
+        i++;
+    start = i;
+    while (buf[i] && buf[i] != '\n')
+    {
+        length++;
+        i++;
+    }
+    if(ft_strnstr(buf, "NO", 3))
+    {
+        res->NO = malloc(length + 1);
+        ft_strlcpy(res->NO, &buf[start], length); 
+    }
+    else if(ft_strnstr(buf, "SO", 3))
+    {
+        res->SO = malloc(length + 1);
+        ft_strlcpy(res->SO, &buf[start], length); 
+    }
+    else if(ft_strnstr(buf, "WE", 3))
+    {
+        res->WE = malloc(length + 1);
+        ft_strlcpy(res->WE, &buf[start], length); 
+    }
+    else if(ft_strnstr(buf, "EA", 3))
+    {
+        res->EA = malloc(length + 1);
+        ft_strlcpy(res->EA, &buf[start], length); 
+    }
+    return 1;
 }
 
 
 int     parse_sprite(t_res *res, char *buf)
 {
-       int i;
-       int length;
-       int start;
+    int i;
+    int length;
+    int start;
 
-       if(!buf)
-           return 0;
-       i = 0;
-       length = 0;
-       while(buf[i] != ' ')
-           i++;
-       while(buf[i] == ' ')
-           i++;
-       start = i;
-       while (buf[i] && buf[i] != '\n')
-       {
-            length++;
-            i++;
-       }
-       res->S = malloc(length + 1);
-       ft_strlcpy(res->S, &buf[start], length); 
-       return 1;
+    if(!buf)
+        return 0;
+    i = 0;
+    length = 0;
+    while(buf[i] != ' ')
+        i++;
+    while(buf[i] == ' ')
+        i++;
+    start = i;
+    while (buf[i] && buf[i] != '\n')
+    {
+        length++;
+        i++;
+    }
+    res->S = malloc(length + 1);
+    ft_strlcpy(res->S, &buf[start], length); 
+    return 1;
 }
 
+int     parse_map(t_vars *vars, char *buf, int fd)
+{
+    int i = 0;
+  //  int f = 1;
+    int h = 0;
+   // int size = 2;
+ //   char *line;
+    int length;
+    int **map;
+
+    length = ft_strlen(buf);
+    map = (int **)malloc(sizeof(int *));
+    map[h] = malloc(sizeof(int) * length);
+    while (buf[i])
+    {
+        if (buf[i] == '1')
+           map[h][i] = 1;
+        else if (buf[i] == '0')
+            map[h][i] = 0;
+        i++;
+    }
+    i = 0;
+    while (i < 29)
+    {
+        printf("%i \n", map[h][i++]);
+    }
+    printf("\n");
+/*
+    while (f != 0)
+    {
+        map = realloc(map, (sizeof(int *) * size));
+        f = get_next_line(fd, &line);
+        map[i] = (int *)malloc(sizeof(int) * length);
+        while (buf[i])
+        {
+            if (buf[i] == '1')
+                map[h][i] = 1;
+            else
+                map[h][i] = 0;
+            i++;
+        }
+        size++;
+    }*/
+    return (1);
+
+}
