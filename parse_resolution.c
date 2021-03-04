@@ -40,7 +40,7 @@ int     parse_lines(t_vars *vars, int fd)
     int h;
     fptr functions[8];
     
-    h = 1;
+    h = 0;
     farray = malloc(sizeof(char *) * 8);
     innit_arrayf(farray, functions);
     i = 1;
@@ -54,7 +54,6 @@ int     parse_lines(t_vars *vars, int fd)
                 (*functions[c])(vars->res, buf);
             else if (ft_isdigit(buf[0]))
             {
-        //        printf("I am here \n");
                 parse_map(vars, buf, fd, h++);
                 break;
             }
@@ -82,10 +81,10 @@ int     parse_colors(t_res *res, char *buf)
     r = ft_atoi(&buf[i]);
     while (buf[i] != ',')
         i++;
-    g = ft_atoi(&buf[i]);
+    g = ft_atoi(&buf[i + 1]);
     while (buf[i] != ',')
         i++;
-    b = ft_atoi(&buf[i]);
+    b = ft_atoi(&buf[i + 1]);
     color = ft_get_color(r, g, b);
     if (ft_strnstr(buf, "F ", 3))
         res->F = color;
@@ -213,48 +212,144 @@ void	*ft_realloc(void *ptr, size_t newsize)
 	return (newptr);
 }
 
+int     save_position(t_vars *vars, char c, int h, int i)
+{
+    vars->pos->posX = (float)i;
+    vars->pos->posY = (float)h;
+    vars->pos->dirX = -1;
+    vars->pos->dirY = 0;
+    vars->pos->planeX =  0;
+    vars->pos->planeY = 0.66;
+    vars->pos->move_speed = 0.03;
+    vars->pos->rot_speed = 0.03;
+    return (1);
+}
+
+
 int     parse_map(t_vars *vars, char *buf, int fd, int h)
 {
     int i = 0;
     int c = 0;
-  //  int f = 1;
-   // int size = 2;
- //   char *line;
     int length;
-    int **map;
 
     length = ft_strlen(buf);
-    map = NULL;
-    map = (int **)ft_realloc(map, sizeof(int *) * h);
-    map[h] = malloc(sizeof(int) * length);
+    if (h == 0)
+    {
+        vars->map = malloc(sizeof(char *));
+    }
+    vars->map = (int *)ft_realloc(vars->map, sizeof(int) * (h + 1) * length);
     while (buf[i])
     {
         if (buf[i] == '1')
-           map[h][c++] = 1;
+            *(vars->map + length * i + h) = 1;
         else if (buf[i] == '0')
-            map[h][c++] = 0;
+            *(vars->map + length * i + h) = 1;
+        else if (buf[i] == '2')
+            *(vars->map + length * i + h) = 1;
+        else if (ft_strchr("NSEW", buf[i]))
+        {
+            *(vars->map + length * i + h) = 1;
+            save_position(vars, buf[i], h, c);
+        }
+        i++;
+    } 
+    return (1);
+}
+/*
+
+int     parse_map(t_vars *vars, char *buf, int fd, int h)
+{
+    int i = 0;
+    int c = 0;
+    int length;
+
+    length = ft_strlen(buf);
+    if(h == 0)
+    vars->map = NULL;
+    vars->map = (int **)ft_realloc(vars->map, sizeof(int **) * (h + 1));
+    vars->map[h] = malloc(sizeof(int) * length);
+    while (buf[i])
+    {
+        if (buf[i] == '1')
+           vars->map[h][c++] = 1;
+        else if (buf[i] == '0')
+            vars->map[h][c++] = 0;
+        else if (buf[i] == '2')
+            vars->map[h][c++] = 2;
+        else if (ft_strchr("NSEW", buf[i]))
+        {
+            vars->map[h][c++] = 0;
+            save_position(vars, buf[i], h, c);
+        }
+
         i++;
     }
+    printf("this is the size of my array %lu \n", sizeof(vars->map));
     i = 0;
-    while (i < 29)
-        printf("%i", map[h][i++]);
-    printf("\n");
-/*
-    while (f != 0)
-    {
-        map = realloc(map, (sizeof(int *) * size));
-        f = get_next_line(fd, &line);
-        map[i] = (int *)malloc(sizeof(int) * length);
-        while (buf[i])
-        {
-            if (buf[i] == '1')
-                map[h][i] = 1;
-            else
-                map[h][i] = 0;
-            i++;
-        }
-        size++;
-    }*/
+    
     return (1);
-
 }
+int     parse_map(t_vars *vars, char *buf, int fd, int h)
+{
+    int i = 0;
+    int c = 0;
+    int length;
+
+    length = ft_strlen(buf);
+    if(h == 0)
+    vars->map = NULL;
+    vars->map = (int **)ft_realloc(vars->map, sizeof(int **) * (h + 1));
+    vars->map[h] = malloc(sizeof(int) * length);
+    while (buf[i])
+    {
+        if (buf[i] == '1')
+           vars->map[h][c++] = 1;
+        else if (buf[i] == '0')
+            vars->map[h][c++] = 0;
+        else if (buf[i] == '2')
+            vars->map[h][c++] = 2;
+        else if (ft_strchr("NSEW", buf[i]))
+        {
+            vars->map[h][c++] = 0;
+            save_position(vars, buf[i], h, c);
+        }
+
+        i++;
+    }
+    printf("this is the size of my array %lu \n", sizeof(vars->map));
+    i = 0;
+    
+    return (1);
+}
+int     parse_map(t_vars *vars, char *buf, int fd, int h)
+{
+    int i = 0;
+    int c = 0;
+    int length;
+
+    length = ft_strlen(buf);
+    if(h == 0)
+    vars->map = NULL;
+    vars->map = (int **)ft_realloc(vars->map, sizeof(int **) * (h + 1));
+    vars->map[h] = malloc(sizeof(int) * length);
+    while (buf[i])
+    {
+        if (buf[i] == '1')
+           vars->map[h][c++] = 1;
+        else if (buf[i] == '0')
+            vars->map[h][c++] = 0;
+        else if (buf[i] == '2')
+            vars->map[h][c++] = 2;
+        else if (ft_strchr("NSEW", buf[i]))
+        {
+            vars->map[h][c++] = 0;
+            save_position(vars, buf[i], h, c);
+        }
+
+        i++;
+    }
+    printf("this is the size of my array %lu \n", sizeof(vars->map));
+    i = 0;
+    
+    return (1);
+}i*/

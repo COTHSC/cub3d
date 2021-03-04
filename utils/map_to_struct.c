@@ -1,6 +1,6 @@
 #include "../cub3d.h"
 
-int map_to_struct(int map[24][24], t_vars *vars)
+int map_to_struct(int **map, t_vars *vars)
 {
     int i;
     int c;

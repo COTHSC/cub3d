@@ -88,6 +88,7 @@ typedef struct  s_vars {
     t_res	*res;
     int	**buf;
     int **WorldMap;
+    int *map;
 }               t_vars;
 
 void		pixel_put(t_img *image, int x, int y, int color);
@@ -103,7 +104,7 @@ int     init_position(t_vars *vars);
 void    draw(t_vars *vars);
 int             key_hook(t_vars *vars);
 int		draw_frame(t_vars *vars);
-int map_to_struct(int map[24][24], t_vars *vars);
+int map_to_struct(int **map, t_vars *vars);
 int     spritecaster(t_vars *vars, int texX, int texY, int texNum, int [640]);
 int     spritefinder(t_sprites **sprite, int **map);
 int			get_next_line(int const fd, char **line);

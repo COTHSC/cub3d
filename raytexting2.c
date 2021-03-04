@@ -39,6 +39,7 @@ int main(int argc, char **argv)
 
     fd = open(argv[1], O_RDONLY);
     vars.res = malloc(sizeof(t_res));
+    vars.pos = malloc(sizeof(t_pos));
     parse_lines(&vars, fd);
     
     printf("this is the path: %s \n", vars.res->NO);
@@ -49,9 +50,9 @@ int main(int argc, char **argv)
     printf("this is the color: %X \n", vars.res->C);
     printf("this is the color: %X \n", vars.res->F);
 	
-    vars.pos = malloc(sizeof(t_pos));
+
 	vars.keys = malloc(sizeof(t_keys));
-	init_position(&vars);
+	//init_position(&vars);
 	while (i < 8)
 		vars.text[i++] = (t_img *)malloc(sizeof(t_img));
 	vars.mlx = mlx_init();
@@ -65,9 +66,9 @@ int main(int argc, char **argv)
         vars.buf[i] = malloc(sizeof(int) * vars.res->w);
         i++;
     }
-
     vars.sprite = (t_img *)malloc(sizeof(t_img));
 	load_sprites(&vars);
+
     vars.WorldMap = (int **)malloc(sizeof(int *) * 24);
     i = 0;
     while (i <= 24)
@@ -101,8 +102,21 @@ int main(int argc, char **argv)
           {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
           {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
           {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1} };
-
-    map_to_struct(Map, &vars);
+/*
+    i = 0;
+int j;
+    while(i < 24)
+    {
+        j = 0;
+        while(j < 24)
+        {
+            printf("%i ", *(vars.map + i * 24 + j));
+            j++;
+        }
+        i++;
+    }
+*/
+    map_to_struct(vars.map, &vars);
 	mlx_hook(vars.win, 2, 1L << 0, &key_press, &vars);
 	mlx_hook(vars.win, 3, 1L << 1, &key_release, &vars);
 	mlx_loop_hook(vars.mlx, key_hook, &vars);
