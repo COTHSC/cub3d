@@ -47,12 +47,14 @@ int main()
     int j;
     int count = 0;
     int *arr;
+    int length;
 
 
 
-
+    length = 0;
     arr = NULL;
     arr = (int*)malloc(sizeof(int) * r * c);
+
 
     while (i < r)
     {
@@ -65,7 +67,10 @@ int main()
         i++;
     }
 
+    while (arr[length])
+        length++;
 
+    printf("this is length: %i \n", length);
     arr = (int *)ft_realloc(arr, sizeof(int) * r * c, sizeof(int) * nr * c);
 
     
@@ -80,6 +85,10 @@ int main()
         i++;
     }
     
+    while (arr[length])
+        length++;
+
+    printf("this is length: %i \n", length);
     *(arr + c * c + 0) = 10000;
 
     i = 0; 

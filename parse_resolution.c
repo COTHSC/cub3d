@@ -219,6 +219,16 @@ void	*ft_realloc(void *ptr, int size, int newsize)
 	return (new);
 }
 
+int     array_length(int *array)
+{
+    int length;
+
+    length = 0;
+    while (array[length])
+        length++;
+    return (length);
+}
+
 int     save_position(t_vars *vars, char c, int h, int i)
 {
     vars->pos->posX = (float)i;
@@ -238,28 +248,44 @@ int     parse_map(t_vars *vars, char *buf, int fd, int h)
     int length;
     int j;
     int i;
+    static int arlength;
+
     length = ft_strlen(buf);
+ 
     if (h == 0)
-        vars->map = (int *)malloc(sizeof(int) * length * h + 1);
+    {
+        arlength = length * sizeof(int);
+        vars->map = (int *)malloc(sizeof(int) * length * (h + 1));
+    }
+
     else
-        vars->map = (int *)ft_realloc(vars->map, sizeof(int) * length * h , sizeof(int) * length * (h + 1));
+    {
+
+        vars->map = (int *)ft_realloc(vars->map, arlength, sizeof(int) * length * (h + 1));
+        arlength += 24 * sizeof(int); 
+    }
+
+
     i = 0;
     j = 0;
     while (buf[i])
     {
         if (buf[i] == '1')
-            *(vars->map + h * h + j++) = 1;
+            *(vars->map + h * (h + 1) + j++) = 1;
         else if (buf[i] == '0')
-            *(vars->map + h * h + j++) = 0;
+            *(vars->map + h * (h + 1) + j++) = 0;
         else if (buf[i] == '2')
-            *(vars->map + h * h + j++) = 2;
+            *(vars->map + h * (h + 1) + j++) = 2;
         else if (ft_strchr("NSEW", buf[i]))
         {
-            *(vars->map + h * h + j++) = 0;
+            *(vars->map + h * (h + 1) + j++) = 0;
             save_position(vars, buf[i], h, j++);
         }
         i++;
     }
+
+
+        printf("ar length %i \n", arlength);
     return (1);
 }
 /*
