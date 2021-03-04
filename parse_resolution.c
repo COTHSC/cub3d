@@ -196,20 +196,27 @@ int     parse_sprite(t_res *res, char *buf)
     return 1;
 }
 
-void	*ft_realloc(void *ptr, size_t newsize)
+void	*ft_realloc(void *ptr, int size, int newsize)
 {
-	char	*newptr;
-	size_t	cursize;
+	char	*str;
+	char	*new;
+	int		i;
 
-	if (ptr == 0)
-		return (malloc(newsize));
-	cursize = sizeof(ptr);
-	if (newsize <= cursize)
-		return (ptr);
-	newptr = malloc(newsize);
-	ft_memcpy(ptr, newptr, cursize);
-	free(ptr);
-	return (newptr);
+	str = (char*)ptr;
+	if (!(new = (char*)malloc(sizeof(char) * newsize + 1)))
+	{
+		if (ptr && size != 0)
+			free(ptr);
+		return (NULL);
+	}
+	i = -1;
+	while (++i < size)
+		*(new + i) = *(str + i);
+	while (i < newsize)
+		*(new + i++) = '\0';
+	if (ptr && size != 0)
+		free(ptr);
+	return (new);
 }
 
 int     save_position(t_vars *vars, char c, int h, int i)
@@ -228,31 +235,31 @@ int     save_position(t_vars *vars, char c, int h, int i)
 
 int     parse_map(t_vars *vars, char *buf, int fd, int h)
 {
-    int i = 0;
-    int c = 0;
     int length;
-
+    int j;
+    int i;
     length = ft_strlen(buf);
     if (h == 0)
-    {
-        vars->map = malloc(sizeof(char *));
-    }
-    vars->map = (int *)ft_realloc(vars->map, sizeof(int) * (h + 1) * length);
+        vars->map = (int *)malloc(sizeof(int) * length * h + 1);
+    else
+        vars->map = (int *)ft_realloc(vars->map, sizeof(int) * length * h , sizeof(int) * length * (h + 1));
+    i = 0;
+    j = 0;
     while (buf[i])
     {
         if (buf[i] == '1')
-            *(vars->map + length * i + h) = 1;
+            *(vars->map + h * h + j++) = 1;
         else if (buf[i] == '0')
-            *(vars->map + length * i + h) = 1;
+            *(vars->map + h * h + j++) = 0;
         else if (buf[i] == '2')
-            *(vars->map + length * i + h) = 1;
+            *(vars->map + h * h + j++) = 2;
         else if (ft_strchr("NSEW", buf[i]))
         {
-            *(vars->map + length * i + h) = 1;
-            save_position(vars, buf[i], h, c);
+            *(vars->map + h * h + j++) = 0;
+            save_position(vars, buf[i], h, j++);
         }
         i++;
-    } 
+    }
     return (1);
 }
 /*

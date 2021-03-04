@@ -102,9 +102,9 @@ int main(int argc, char **argv)
           {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
           {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
           {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1} };
-/*
+
     i = 0;
-int j;
+    int j;
     while(i < 24)
     {
         j = 0;
@@ -115,7 +115,7 @@ int j;
         }
         i++;
     }
-*/
+
     map_to_struct(vars.map, &vars);
 	mlx_hook(vars.win, 2, 1L << 0, &key_press, &vars);
 	mlx_hook(vars.win, 3, 1L << 1, &key_release, &vars);

@@ -1,6 +1,6 @@
 #include "../cub3d.h"
 
-int map_to_struct(int **map, t_vars *vars)
+int map_to_struct(int *map, t_vars *vars)
 {
     int i;
     int c;
@@ -13,7 +13,7 @@ int map_to_struct(int **map, t_vars *vars)
         c = 0;
         while (c < map_width)
         {
-        vars->WorldMap[i][c] = map[i][c];
+        vars->WorldMap[i][c] = *(vars->map + i * 24 + c);
         c++;
         }
         i++;
