@@ -37,8 +37,10 @@ int     parse_lines(t_vars *vars, int fd)
     char *buf;
     int i;
     int c;
+    int h;
     fptr functions[8];
-
+    
+    h = 1;
     farray = malloc(sizeof(char *) * 8);
     innit_arrayf(farray, functions);
     i = 1;
@@ -52,9 +54,9 @@ int     parse_lines(t_vars *vars, int fd)
                 (*functions[c])(vars->res, buf);
             else if (ft_isdigit(buf[0]))
             {
-                printf("I am here \n");
-                parse_map(vars, buf, fd);
-              //  return (0);
+        //        printf("I am here \n");
+                parse_map(vars, buf, fd, h++);
+                break;
             }
 
             c++;
@@ -195,32 +197,47 @@ int     parse_sprite(t_res *res, char *buf)
     return 1;
 }
 
-int     parse_map(t_vars *vars, char *buf, int fd)
+void	*ft_realloc(void *ptr, size_t newsize)
+{
+	char	*newptr;
+	size_t	cursize;
+
+	if (ptr == 0)
+		return (malloc(newsize));
+	cursize = sizeof(ptr);
+	if (newsize <= cursize)
+		return (ptr);
+	newptr = malloc(newsize);
+	ft_memcpy(ptr, newptr, cursize);
+	free(ptr);
+	return (newptr);
+}
+
+int     parse_map(t_vars *vars, char *buf, int fd, int h)
 {
     int i = 0;
+    int c = 0;
   //  int f = 1;
-    int h = 0;
    // int size = 2;
  //   char *line;
     int length;
     int **map;
 
     length = ft_strlen(buf);
-    map = (int **)malloc(sizeof(int *));
+    map = NULL;
+    map = (int **)ft_realloc(map, sizeof(int *) * h);
     map[h] = malloc(sizeof(int) * length);
     while (buf[i])
     {
         if (buf[i] == '1')
-           map[h][i] = 1;
+           map[h][c++] = 1;
         else if (buf[i] == '0')
-            map[h][i] = 0;
+            map[h][c++] = 0;
         i++;
     }
     i = 0;
     while (i < 29)
-    {
-        printf("%i \n", map[h][i++]);
-    }
+        printf("%i", map[h][i++]);
     printf("\n");
 /*
     while (f != 0)
