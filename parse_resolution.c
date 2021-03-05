@@ -280,7 +280,7 @@ int     parse_map(t_vars *vars, char *buf, int fd, int h)
     {
 	    vars->collumn = (int *)ft_realloc(vars->collumn, sizeof(int) * (nc + 1), sizeof(int) * (nc + 2));
 	    vars->collumn[++nc] = length;
-        vars->map = (int *)ft_realloc(vars->map, arlength, sizeof(int) * length * (h + 1));
+        vars->map = (int *)ft_realloc(vars->map, arlength, sizeof(int) * length + arlength);
         arlength += length * sizeof(int); 
     }
     printf("this is the result %i \n", sum_int_array(vars->collumn, h));
