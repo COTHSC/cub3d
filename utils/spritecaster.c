@@ -35,19 +35,19 @@ int     sprite_sort(t_sprites **sprite, int num_sprites)
 	return (1);
 }
 
-int     count_sprites(int **map)
+int     count_sprites(t_vars *vars)
 {
     int h = 0;
     int w = 0;
     int num_sprite;
 
     num_sprite = 0;
-    while(h < 24)
+    while(h < vars->map_h)
     {
         w = 0;
-        while(w < 24)
+        while(w < vars->collumn[h])
         {
-            if (map[h][w] == 2)
+            if (get_value(vars, h, w) == 2)
                 num_sprite++;
             w++;
         }
@@ -78,7 +78,7 @@ int     spritecaster(t_vars *vars, int texX, int texY, int texNum, int zbuffer[6
 	int     spriteWidth;
 	int color;
 
-    num_sprite = count_sprites(vars->WorldMap);
+    num_sprite = count_sprites(vars);
     sprite = malloc(sizeof(t_sprites *) * num_sprite);
 	i = 0;
 	while( i < num_sprite )
@@ -87,12 +87,7 @@ int     spritecaster(t_vars *vars, int texX, int texY, int texNum, int zbuffer[6
 		i++;
 	}
 
-
-//	innit_sprites(sprite, 10.5, 11.5, 0);
-//	innit_sprites(sprite, 10.5, 20.5, 1);
-//	innit_sprites(sprite, 20.5, 11.5, 2);
-
-    spritefinder(sprite, vars->WorldMap);
+    spritefinder(sprite, vars);
 	i = 0;
 	while (i < num_sprite)
 	{

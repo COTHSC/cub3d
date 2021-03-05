@@ -9,7 +9,7 @@ int     innit_sprites(t_sprites **sprite, double x, double y, int num)
         return (1);
 }
 
-int     spritefinder(t_sprites **sprite, int **map)
+int     spritefinder(t_sprites **sprite, t_vars *vars)
 {
 	int w;
 	int h;
@@ -18,12 +18,12 @@ int     spritefinder(t_sprites **sprite, int **map)
 	w = 0;
 	h = 0;
 	i = 0;
-	while (map[h][0])
+	while (h < vars->map_h)
 	{
 		w = 0;
-		while ( w < 24)
+		while (w < vars->collumn[h])
 		{
-			if(map[h][w] == 2)
+			if(get_value(vars, h, w) == 2)
 			{
                 
 				sprite[i] = malloc(sizeof(t_sprites));

@@ -61,7 +61,7 @@ int     parse_lines(t_vars *vars, int fd)
             c++;
         }
     }
-    return 1;
+    return h;
 }
 
 int     parse_colors(t_res *res, char *buf)

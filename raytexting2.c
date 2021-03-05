@@ -40,15 +40,8 @@ int main(int argc, char **argv)
     fd = open(argv[1], O_RDONLY);
     vars.res = malloc(sizeof(t_res));
     vars.p = malloc(sizeof(t_pos));
-    parse_lines(&vars, fd);
-    printf("this is the path: %s \n", vars.res->NO);
-    printf("this is the path: %s \n", vars.res->SO);
-    printf("this is the path: %s \n", vars.res->WE);
-    printf("this is the path: %s \n", vars.res->EA);
-    printf("this is the path: %s \n", vars.res->S);
-    printf("this is the color: %X \n", vars.res->C);
-    printf("this is the color: %X \n", vars.res->F);
-	
+    vars.map_h = parse_lines(&vars, fd);
+printf("this is map height %i \n", vars.map_h);	
 
 	vars.keys = malloc(sizeof(t_keys));
 	innit_keys(&vars);

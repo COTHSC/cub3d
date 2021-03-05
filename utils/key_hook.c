@@ -1,32 +1,36 @@
 #include "../cub3d.h"
 
+int     get_value(t_vars *vars, int h, int w)
+{
+    int i = 0;
+
+    i = *(vars->map + sia(vars->collumn, h) + w);
+
+    return (i);
+}
+
  int             key_hook(t_vars *vars)
  {
      double odx;
      double opx;
-/*
-     if (vars->keys->w)
-     {
-         if(vars->WorldMap[(int)(vars->p->px + vars->p->dx * vars->p->ms)][(int)(vars->p->py)] == 0)
-             vars->p->px += vars->p->dx * vars->p->ms;
-         if(vars->WorldMap[(int)(vars->p->px)][(int)(vars->p->py + vars->p->dy * vars->p->ms)] == 0)
-             vars->p->py += vars->p->dy * vars->p->ms;
-     } */
      
      if (vars->keys->w)
      {
-         if(!*(vars->map + sia(vars->collumn, (int)(vars->p->px + vars->p->dx * vars->p->ms)) + (int)(vars->p->py)))
+         if(!get_value(vars, (int)(vars->p->px + vars->p->dx * vars->p->ms), (int)(vars->p->py)))
              vars->p->px += vars->p->dx * vars->p->ms;
-         if(vars->WorldMap[(int)(vars->p->px)][(int)(vars->p->py + vars->p->dy * vars->p->ms)] == 0)
+         if(!get_value(vars, (int)(vars->p->px), (int)(vars->p->py + vars->p->dy * vars->p->ms)))
              vars->p->py += vars->p->dy * vars->p->ms;
      }
+     
+     
      if (vars->keys->s)
      {
-         if(vars->WorldMap[(int)(vars->p->px - vars->p->dx * vars->p->ms)][(int)(vars->p->py)] == 0)
+         if(!get_value(vars, (int)(vars->p->px - vars->p->dx * vars->p->ms), (int)(vars->p->py)))
              vars->p->px -= vars->p->dx * vars->p->ms;
-         if(vars->WorldMap[(int)(vars->p->px)][(int)(vars->p->py - vars->p->dy * vars->p->ms)] == 0)
+         if(!get_value(vars, (int)(vars->p->px), (int)(vars->p->py - vars->p->dy * vars->p->ms)))
              vars->p->py -= vars->p->dy * vars->p->ms;
      }
+
  /*  if (vars->keys->d)
      {
          if(worldMap[(int)(vars->p->px + (vars->p->dx + M_PI_2) * vars->p->ms)][(int)(vars->p->py)]   == 0)
