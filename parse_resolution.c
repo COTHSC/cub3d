@@ -230,18 +230,18 @@ int     array_length(int *array)
 
 int     save_position(t_vars *vars, char c, int h, int i)
 {
-    vars->pos->posX = (double)i;
-    vars->pos->posY = (double)h;
-    vars->pos->dirX = -1;
-    vars->pos->dirY = 0;
-    vars->pos->planeX =  0;
-    vars->pos->planeY = 0.66;
-    vars->pos->move_speed = 0.03;
-    vars->pos->rot_speed = 0.03;
+    vars->p->px = (double)i;
+    vars->p->py = (double)h;
+    vars->p->dx = -1;
+    vars->p->dy = 0;
+    vars->p->plx =  0;
+    vars->p->ply = 0.66;
+    vars->p->ms = 0.03;
+    vars->p->rs = 0.03;
     return (1);
 }
 
-int     sum_int_array(int *array, int h)
+int     sia(int *array, int h)
 {
     int result;
     int count;
@@ -283,22 +283,22 @@ int     parse_map(t_vars *vars, char *buf, int fd, int h)
         vars->map = (int *)ft_realloc(vars->map, arlength, sizeof(int) * length + arlength);
         arlength += length * sizeof(int); 
     }
-    printf("this is the result %i \n", sum_int_array(vars->collumn, h));
-    printf("this is the key %i for h %i \n", sum_int_array(vars->collumn, h), h);
+    printf("this is the result %i \n", sia(vars->collumn, h));
+    printf("this is the key %i for h %i \n", sia(vars->collumn, h), h);
 
     i = 0;
     j = 0;
     while (buf[i])
     {
         if (buf[i] == '1')
-            *(vars->map + sum_int_array(vars->collumn, h) + j++) = 1;
+            *(vars->map + sia(vars->collumn, h) + j++) = 1;
         else if (buf[i] == '0')
-            *(vars->map + sum_int_array(vars->collumn, h)  + j++) = 0;
+            *(vars->map + sia(vars->collumn, h)  + j++) = 0;
         else if (buf[i] == '2')
-            *(vars->map + sum_int_array(vars->collumn, h) + j++) = 2;
+            *(vars->map + sia(vars->collumn, h) + j++) = 2;
         else if (ft_strchr("NSEW", buf[i]))
         {
-            *(vars->map +  sum_int_array(vars->collumn, h)  + j++) = 0;
+            *(vars->map +  sia(vars->collumn, h)  + j++) = 0;
             save_position(vars, buf[i], h, j);
         }
         i++;

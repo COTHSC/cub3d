@@ -39,7 +39,7 @@ int main(int argc, char **argv)
 
     fd = open(argv[1], O_RDONLY);
     vars.res = malloc(sizeof(t_res));
-    vars.pos = malloc(sizeof(t_pos));
+    vars.p = malloc(sizeof(t_pos));
     parse_lines(&vars, fd);
     printf("this is the path: %s \n", vars.res->NO);
     printf("this is the path: %s \n", vars.res->SO);
@@ -110,7 +110,7 @@ int main(int argc, char **argv)
         j = 0;
         while(j < vars.collumn[i])
         {
-            printf("%i ", *(vars.map + sum_int_array(vars.collumn, i)  + j));
+            printf("%i ", *(vars.map + sia(vars.collumn, i)  + j));
             j++;
         }
         printf("\n");

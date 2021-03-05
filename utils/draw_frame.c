@@ -43,11 +43,11 @@ int		draw_frame(t_vars *vars)
     while (i < w - 1)
     {
         cameraX = (2 * i) / ((double)w) - 1;
-        rayDirX = vars->pos->dirX + vars->pos->planeX * cameraX;
-        rayDirY = vars->pos->dirY + vars->pos->planeY * cameraX;
+        rayDirX = vars->p->dx + vars->p->plx * cameraX;
+        rayDirY = vars->p->dy + vars->p->ply * cameraX;
 
-        mapX = (int)vars->pos->posX;
-        mapY = (int)vars->pos->posY;
+        mapX = (int)vars->p->px;
+        mapY = (int)vars->p->py;
 
         deltaDistX = fabs(1 / rayDirX);
         deltaDistY = fabs(1 / rayDirY);
@@ -56,22 +56,22 @@ int		draw_frame(t_vars *vars)
         if(rayDirX < 0)
         {
             stepX = -1;
-            sideDistX = (vars->pos->posX - mapX) * deltaDistX;
+            sideDistX = (vars->p->px - mapX) * deltaDistX;
         }
         else
         {
             stepX = 1;
-            sideDistX = (mapX + 1.0 - vars->pos->posX) * deltaDistX;
+            sideDistX = (mapX + 1.0 - vars->p->px) * deltaDistX;
         }
         if(rayDirY < 0)
         {
             stepY = -1;
-            sideDistY = (vars->pos->posY - mapY) * deltaDistY;
+            sideDistY = (vars->p->py - mapY) * deltaDistY;
         }
         else
         {
             stepY = 1;
-            sideDistY = (mapY + 1.0 - vars->pos->posY) * deltaDistY;
+            sideDistY = (mapY + 1.0 - vars->p->py) * deltaDistY;
         }
 
         while (hit == 0)
@@ -88,13 +88,13 @@ int		draw_frame(t_vars *vars)
                 mapY += stepY;
                 side = 1;
             }
-            if (*(vars->map + sum_int_array(vars->collumn, mapX) + mapY) == 1)
+            if (*(vars->map + sia(vars->collumn, mapX) + mapY) == 1)
                 hit = 1;
         }
         if (side == 0)
-            perpWallDist = (mapX - vars->pos->posX + (1 - stepX) / 2) / rayDirX;
+            perpWallDist = (mapX - vars->p->px + (1 - stepX) / 2) / rayDirX;
         else
-            perpWallDist = (mapY - vars->pos->posY + (1 - stepY) / 2) / rayDirY;
+            perpWallDist = (mapY - vars->p->py + (1 - stepY) / 2) / rayDirY;
         lineHeight = (int)(h / perpWallDist);
         drawStart = -lineHeight / 2 + h / 2;
         if (drawStart < 0)
@@ -104,9 +104,9 @@ int		draw_frame(t_vars *vars)
             drawEnd = h - 1;
 
         if (side == 0)
-            wallX = vars->pos->posY + perpWallDist * rayDirY;
+            wallX = vars->p->py + perpWallDist * rayDirY;
         else
-            wallX = vars->pos->posX + perpWallDist * rayDirX;
+            wallX = vars->p->px + perpWallDist * rayDirX;
         wallX -= floor(wallX);
 
         if (side == 0 && rayDirX >=0 )

@@ -4,7 +4,7 @@ int	exit_game(t_vars *vars)
 {
 	int i = 0;
 
-	free(vars->pos);
+	free(vars->p);
 	free(vars->keys);
 	i = 0;
 	while (i < 8)
@@ -44,6 +44,7 @@ int	key_press(int keycode, t_vars *vars)
 		vars->keys->a = 1;
 	if (keycode == 100)
 		vars->keys->d = 1;
+    return 0;
 }
 
 

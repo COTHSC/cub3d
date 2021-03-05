@@ -96,7 +96,7 @@ int     spritecaster(t_vars *vars, int texX, int texY, int texNum, int zbuffer[6
 	i = 0;
 	while (i < num_sprite)
 	{
-		sprite[i]->dist = ((vars->pos->posX - sprite[i]->x) * (vars->pos->posX - sprite[i]->x) + (vars->pos->posY - sprite[i]->y) * (vars->pos->posY - sprite[i]->y));
+		sprite[i]->dist = ((vars->p->px - sprite[i]->x) * (vars->p->px - sprite[i]->x) + (vars->p->py - sprite[i]->y) * (vars->p->py - sprite[i]->y));
 		i++;
 	}
 	sprite_sort(sprite, num_sprite);
@@ -106,11 +106,11 @@ int     spritecaster(t_vars *vars, int texX, int texY, int texNum, int zbuffer[6
 
 	while(i < num_sprite)
 	{
-		spriteX = sprite[i]->x - vars->pos->posX;
-		spriteY = sprite[i]->y - vars->pos->posY;
-		invDet = 1.0 / (vars->pos->planeX * vars->pos->dirY - vars->pos->dirX * vars->pos->planeY);
-		transformX = invDet * (vars->pos->dirY * spriteX - vars->pos->dirX * spriteY);
-		transformY = invDet * (-vars->pos->planeY * spriteX + vars->pos->planeX * spriteY);
+		spriteX = sprite[i]->x - vars->p->px;
+		spriteY = sprite[i]->y - vars->p->py;
+		invDet = 1.0 / (vars->p->plx * vars->p->dy - vars->p->dx * vars->p->ply);
+		transformX = invDet * (vars->p->dy * spriteX - vars->p->dx * spriteY);
+		transformY = invDet * (-vars->p->ply * spriteX + vars->p->plx * spriteY);
 		spriteScreenX = (int)((vars->res->w / 2) * (1 + transformX / transformY)); 
 
 		spriteHeight = abs((int)(h / transformY));

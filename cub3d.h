@@ -67,20 +67,20 @@ typedef struct  s_img {
 }			t_img;
 
 typedef struct  s_pos {
-    double          posX;
-    double          posY;
-    double          dirX;
-    double          dirY;
-    double          planeX;
-    double          planeY;
-    double          move_speed;
-    double          rot_speed;
+    double          px;
+    double          py;
+    double          dx;
+    double          dy;
+    double          plx;
+    double          ply;
+    double          ms;
+    double          rs;
 }                       t_pos;
 
 typedef struct  s_vars {
     void	*mlx;
     void	*win;
-    t_pos	*pos;
+    t_pos	*p;
     t_img	*img;
     t_img	*text[8];
     t_img	*sprite;
@@ -116,7 +116,7 @@ int     parse_sprite(t_res *res, char *buf);
 int     parse_colors(t_res *res, char *buf);
 int     ft_get_color(int r, int g, int b);
 int     parse_map(t_vars *vars, char *buf, int fd, int h);
-int     sum_int_array(int *array, int h);
+int     sia(int *array, int h);
 void    innit_keys(t_vars *vars);
 
 #endif

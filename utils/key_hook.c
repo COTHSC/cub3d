@@ -2,65 +2,64 @@
 
  int             key_hook(t_vars *vars)
  {
-     double oldDirX;
-     double oldPlaneX;
+     double odx;
+     double opx;
 /*
      if (vars->keys->w)
      {
-         if(vars->WorldMap[(int)(vars->pos->posX + vars->pos->dirX * vars->pos->move_speed)][(int)(vars->pos->posY)] == 0)
-             vars->pos->posX += vars->pos->dirX * vars->pos->move_speed;
-         if(vars->WorldMap[(int)(vars->pos->posX)][(int)(vars->pos->posY + vars->pos->dirY * vars->pos->move_speed)] == 0)
-             vars->pos->posY += vars->pos->dirY * vars->pos->move_speed;
+         if(vars->WorldMap[(int)(vars->p->px + vars->p->dx * vars->p->ms)][(int)(vars->p->py)] == 0)
+             vars->p->px += vars->p->dx * vars->p->ms;
+         if(vars->WorldMap[(int)(vars->p->px)][(int)(vars->p->py + vars->p->dy * vars->p->ms)] == 0)
+             vars->p->py += vars->p->dy * vars->p->ms;
      } */
      
      if (vars->keys->w)
      {
-         if(!*(vars->map + sum_int_array(vars->collumn, (int)(vars->pos->posX + vars->pos->dirX * vars->pos->move_speed)) + (int)(vars->pos->posY)))
-             vars->pos->posX += vars->pos->dirX * vars->pos->move_speed;
-         if(vars->WorldMap[(int)(vars->pos->posX)][(int)(vars->pos->posY + vars->pos->dirY * vars->pos->move_speed)] == 0)
-             vars->pos->posY += vars->pos->dirY * vars->pos->move_speed;
+         if(!*(vars->map + sia(vars->collumn, (int)(vars->p->px + vars->p->dx * vars->p->ms)) + (int)(vars->p->py)))
+             vars->p->px += vars->p->dx * vars->p->ms;
+         if(vars->WorldMap[(int)(vars->p->px)][(int)(vars->p->py + vars->p->dy * vars->p->ms)] == 0)
+             vars->p->py += vars->p->dy * vars->p->ms;
      }
-
      if (vars->keys->s)
      {
-         if(vars->WorldMap[(int)(vars->pos->posX - vars->pos->dirX * vars->pos->move_speed)][(int)(vars->pos->posY)] == 0)
-             vars->pos->posX -= vars->pos->dirX * vars->pos->move_speed;
-         if(vars->WorldMap[(int)(vars->pos->posX)][(int)(vars->pos->posY - vars->pos->dirY * vars->pos->move_speed)] == 0)
-             vars->pos->posY -= vars->pos->dirY * vars->pos->move_speed;
+         if(vars->WorldMap[(int)(vars->p->px - vars->p->dx * vars->p->ms)][(int)(vars->p->py)] == 0)
+             vars->p->px -= vars->p->dx * vars->p->ms;
+         if(vars->WorldMap[(int)(vars->p->px)][(int)(vars->p->py - vars->p->dy * vars->p->ms)] == 0)
+             vars->p->py -= vars->p->dy * vars->p->ms;
      }
  /*  if (vars->keys->d)
      {
-         if(worldMap[(int)(vars->pos->posX + (vars->pos->dirX + M_PI_2) * vars->pos->move_speed)][(int)(vars->pos->posY)]   == 0)
-             vars->pos->posX += (vars->pos->dirX + M_PI_2) * vars->pos->move_speed;
-         if(worldMap[(int)(vars->pos->posX)][(int)(vars->pos->posY + (vars->pos->dirY + 1) * vars->pos->move_speed)] == 0)
-             vars->pos->posY += (vars->pos->dirY + M_PI_2) * vars->pos->move_speed;
+         if(worldMap[(int)(vars->p->px + (vars->p->dx + M_PI_2) * vars->p->ms)][(int)(vars->p->py)]   == 0)
+             vars->p->px += (vars->p->dx + M_PI_2) * vars->p->ms;
+         if(worldMap[(int)(vars->p->px)][(int)(vars->p->py + (vars->p->dy + 1) * vars->p->ms)] == 0)
+             vars->p->py += (vars->p->dy + M_PI_2) * vars->p->ms;
      }
      if (vars->keys->a)
      {
-         if(worldMap[(int)(vars->pos->posX + (vars->pos->dirX - 1) * vars->pos->move_speed)][(int)(vars->pos->posY)] == 0)
-             vars->pos->posX += (vars->pos->dirX - 1) * vars->pos->move_speed;
-         if(worldMap[(int)(vars->pos->posX)][(int)(vars->pos->posY - (vars->pos->dirY - 1) * vars->pos->move_speed)] == 0)
-             vars->pos->posY += (vars->pos->dirY - 1) * vars->pos->move_speed;
+         if(worldMap[(int)(vars->p->px + (vars->p->dx - 1) * vars->p->ms)][(int)(vars->p->py)] == 0)
+             vars->p->px += (vars->p->dx - 1) * vars->p->ms;
+         if(worldMap[(int)(vars->p->px)][(int)(vars->p->py - (vars->p->dy - 1) * vars->p->ms)] == 0)
+             vars->p->py += (vars->p->dy - 1) * vars->p->ms;
      }*/
      if (vars->keys->r)
      {
-         oldDirX = vars->pos->dirX;
+         odx = vars->p->dx;
 
-         vars->pos->dirX = vars->pos->dirX * cos(-1 * vars->pos->rot_speed) - vars->pos->dirY *sin(-1 * vars->pos->rot_speed);
-         vars->pos->dirY = oldDirX * sin(-vars->pos->rot_speed) + vars->pos->dirY * cos(-vars->pos->rot_speed);
-         oldPlaneX = vars->pos->planeX;
-         vars->pos->planeX = vars->pos->planeX * cos(-1 *(vars->pos->rot_speed)) - vars->pos->planeY * sin(-1 * (vars->pos->rot_speed));
-         vars->pos->planeY = oldPlaneX * sin(-1 * vars->pos->rot_speed) + vars->pos->planeY * cos(-1 * vars->pos->rot_speed);
+         vars->p->dx = vars->p->dx * cos(-1 * vars->p->rs) - vars->p->dy *sin(-1 * vars->p->rs);
+         vars->p->dy = odx * sin(-vars->p->rs) + vars->p->dy * cos(-vars->p->rs);
+         opx = vars->p->plx;
+         vars->p->plx = vars->p->plx * cos(-1 *(vars->p->rs)) - vars->p->ply * sin(-1 * (vars->p->rs));
+         vars->p->ply = opx * sin(-1 * vars->p->rs) + vars->p->ply * cos(-1 * vars->p->rs);
      }
      if (vars->keys->l)
      {
-         oldDirX = vars->pos->dirX;
+         odx = vars->p->dx;
 
-         vars->pos->dirX = vars->pos->dirX * cos(vars->pos->rot_speed) - vars->pos->dirY *sin(vars->pos->rot_speed);
-         vars->pos->dirY = oldDirX * sin(vars->pos->rot_speed) + vars->pos->dirY * cos(-vars->pos->rot_speed);
-         oldPlaneX = vars->pos->planeX;
-         vars->pos->planeX = vars->pos->planeX * cos(vars->pos->rot_speed) - vars->pos->planeY * sin(vars->pos->rot_speed);
-         vars->pos->planeY = oldPlaneX * sin(vars->pos->rot_speed) + vars->pos->planeY * cos(vars->pos->rot_speed);
+         vars->p->dx = vars->p->dx * cos(vars->p->rs) - vars->p->dy *sin(vars->p->rs);
+         vars->p->dy = odx * sin(vars->p->rs) + vars->p->dy * cos(-vars->p->rs);
+         opx = vars->p->plx;
+         vars->p->plx = vars->p->plx * cos(vars->p->rs) - vars->p->ply * sin(vars->p->rs);
+         vars->p->ply = opx * sin(vars->p->rs) + vars->p->ply * cos(vars->p->rs);
      }
      draw_frame(vars);
      return (1);
