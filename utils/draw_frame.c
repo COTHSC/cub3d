@@ -88,7 +88,7 @@ int		draw_frame(t_vars *vars)
                 mapY += stepY;
                 side = 1;
             }
-            if (vars->WorldMap[mapX][mapY] == 1)
+            if (*(vars->map + sum_int_array(vars->collumn, mapX) + mapY) == 1)
                 hit = 1;
         }
         if (side == 0)
@@ -109,7 +109,6 @@ int		draw_frame(t_vars *vars)
             wallX = vars->pos->posX + perpWallDist * rayDirX;
         wallX -= floor(wallX);
 
-//        texNum = vars->WorldMap[mapX][mapY] - 1;
         if (side == 0 && rayDirX >=0 )
             texNum = 0;
         else if (side == 0 && rayDirX < 0)

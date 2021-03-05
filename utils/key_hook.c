@@ -4,14 +4,23 @@
  {
      double oldDirX;
      double oldPlaneX;
-
+/*
      if (vars->keys->w)
      {
          if(vars->WorldMap[(int)(vars->pos->posX + vars->pos->dirX * vars->pos->move_speed)][(int)(vars->pos->posY)] == 0)
              vars->pos->posX += vars->pos->dirX * vars->pos->move_speed;
          if(vars->WorldMap[(int)(vars->pos->posX)][(int)(vars->pos->posY + vars->pos->dirY * vars->pos->move_speed)] == 0)
              vars->pos->posY += vars->pos->dirY * vars->pos->move_speed;
+     } */
+     
+     if (vars->keys->w)
+     {
+         if(!*(vars->map + sum_int_array(vars->collumn, (int)(vars->pos->posX + vars->pos->dirX * vars->pos->move_speed)) + (int)(vars->pos->posY)))
+             vars->pos->posX += vars->pos->dirX * vars->pos->move_speed;
+         if(vars->WorldMap[(int)(vars->pos->posX)][(int)(vars->pos->posY + vars->pos->dirY * vars->pos->move_speed)] == 0)
+             vars->pos->posY += vars->pos->dirY * vars->pos->move_speed;
      }
+
      if (vars->keys->s)
      {
          if(vars->WorldMap[(int)(vars->pos->posX - vars->pos->dirX * vars->pos->move_speed)][(int)(vars->pos->posY)] == 0)
