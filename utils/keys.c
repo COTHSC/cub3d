@@ -18,6 +18,16 @@ int	exit_game(t_vars *vars)
 	return (1);
 }
 
+void    innit_keys(t_vars *vars)
+{
+		vars->keys->w = 0;
+		vars->keys->s = 0;
+		vars->keys->r = 0;
+		vars->keys->l = 0;
+		vars->keys->a = 0;
+		vars->keys->d = 0;
+}
+
 int	key_press(int keycode, t_vars *vars)
 {
 	if (keycode == 65307)

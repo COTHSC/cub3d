@@ -51,7 +51,8 @@ int main(int argc, char **argv)
 	
 
 	vars.keys = malloc(sizeof(t_keys));
-	//init_position(&vars);
+	innit_keys(&vars);
+    //init_position(&vars);
 	while (i < 8)
 		vars.text[i++] = (t_img *)malloc(sizeof(t_img));
 	vars.mlx = mlx_init();
@@ -116,7 +117,7 @@ int main(int argc, char **argv)
         i++;
     }
 
-	return 0;
+	//return 0;
     map_to_struct(vars.map, &vars);
 	mlx_hook(vars.win, 2, 1L << 0, &key_press, &vars);
 	mlx_hook(vars.win, 3, 1L << 1, &key_release, &vars);
