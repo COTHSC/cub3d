@@ -116,5 +116,7 @@ int     parse_sprite(t_res *res, char *buf);
 int     parse_colors(t_res *res, char *buf);
 int     ft_get_color(int r, int g, int b);
 int     parse_map(t_vars *vars, char *buf, int fd, int h);
+int     sum_int_array(int *array, int h);
+
 
 #endif

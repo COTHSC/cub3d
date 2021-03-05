@@ -230,8 +230,8 @@ int     array_length(int *array)
 
 int     save_position(t_vars *vars, char c, int h, int i)
 {
-    vars->pos->posX = (float)i;
-    vars->pos->posY = (float)h;
+    vars->pos->posX = (double)i;
+    vars->pos->posY = (double)h;
     vars->pos->dirX = -1;
     vars->pos->dirY = 0;
     vars->pos->planeX =  0;
@@ -241,6 +241,21 @@ int     save_position(t_vars *vars, char c, int h, int i)
     return (1);
 }
 
+int     sum_int_array(int *array, int h)
+{
+    int result;
+    int count;
+
+    result = 0;
+    count = 0;
+
+    while (count < h)
+    {
+        result = result + array[count];
+        count++;
+    }
+    return (result);
+}
 
 int     parse_map(t_vars *vars, char *buf, int fd, int h)
 {
@@ -254,36 +269,36 @@ int     parse_map(t_vars *vars, char *buf, int fd, int h)
     length = ft_strlen(buf);
  
     if (h == 0)
-    {
-    
+    { 
         nc = 0;
         arlength = length * sizeof(int);
 	    vars->collumn = (int *)malloc(sizeof(int));
-	    vars->collumn[nc] = 0;
+	    vars->collumn[nc] = 24;
         vars->map = (int *)malloc(sizeof(int) * length * (h + 1));
     }
     else
     {
-	    vars->collumn = (int *)ft_realloc(vars->collumn, nc, (nc + 1));
-	    vars->collumn[++nc] = arlength / 4;
+	    vars->collumn = (int *)ft_realloc(vars->collumn, sizeof(int) * (nc + 1), sizeof(int) * (nc + 2));
+	    vars->collumn[++nc] = length;
         vars->map = (int *)ft_realloc(vars->map, arlength, sizeof(int) * length * (h + 1));
         arlength += length * sizeof(int); 
     }
-    printf("this is the key %i for h %i \n", vars->collumn[h], h);
+    printf("this is the result %i \n", sum_int_array(vars->collumn, h));
+    printf("this is the key %i for h %i \n", sum_int_array(vars->collumn, h), h);
 
     i = 0;
     j = 0;
     while (buf[i])
     {
         if (buf[i] == '1')
-            *(vars->map + vars->collumn[h] + j++) = 1;
+            *(vars->map + sum_int_array(vars->collumn, h) + j++) = 1;
         else if (buf[i] == '0')
-            *(vars->map + h * (24) + j++) = 0;
+            *(vars->map + sum_int_array(vars->collumn, h)  + j++) = 0;
         else if (buf[i] == '2')
-            *(vars->map + h * (24) + j++) = 2;
+            *(vars->map + sum_int_array(vars->collumn, h) + j++) = 2;
         else if (ft_strchr("NSEW", buf[i]))
         {
-            *(vars->map + h * (24) + j++) = 0;
+            *(vars->map +  sum_int_array(vars->collumn, h)  + j++) = 0;
             save_position(vars, buf[i], h, j);
         }
         i++;
