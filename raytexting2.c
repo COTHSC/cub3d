@@ -105,20 +105,20 @@ int main(int argc, char **argv)
 
     i = 0;
     int j;
-    while(i < 5)
+    while(i < 24)
     {
         j = 0;
         while(j < 24)
         {
-            printf("%i ", *(vars.map + i * 5 + j));
+            printf("%i ", *(vars.map + i * 24 + j));
             j++;
         }
         printf("\n");
         i++;
     }
 
-	return 0;
-    map_to_struct(vars.map, &vars);
+	//return 0;
+    	map_to_struct(vars.map, &vars);
 	mlx_hook(vars.win, 2, 1L << 0, &key_press, &vars);
 	mlx_hook(vars.win, 3, 1L << 1, &key_release, &vars);
 	mlx_loop_hook(vars.mlx, key_hook, &vars);

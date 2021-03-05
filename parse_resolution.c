@@ -60,7 +60,6 @@ int     parse_lines(t_vars *vars, int fd)
 
             c++;
         }
-
     }
     return 1;
 }
@@ -248,44 +247,47 @@ int     parse_map(t_vars *vars, char *buf, int fd, int h)
     int length;
     int j;
     int i;
+    static int nc;
     static int arlength;
+
 
     length = ft_strlen(buf);
  
     if (h == 0)
     {
+    
+        nc = 0;
         arlength = length * sizeof(int);
+	    vars->collumn = (int *)malloc(sizeof(int));
+	    vars->collumn[nc] = 0;
         vars->map = (int *)malloc(sizeof(int) * length * (h + 1));
     }
-
     else
     {
-
+	    vars->collumn = (int *)ft_realloc(vars->collumn, nc, (nc + 1));
+	    vars->collumn[++nc] = arlength / 4;
         vars->map = (int *)ft_realloc(vars->map, arlength, sizeof(int) * length * (h + 1));
-        arlength += 24 * sizeof(int); 
+        arlength += length * sizeof(int); 
     }
-
+    printf("this is the key %i for h %i \n", vars->collumn[h], h);
 
     i = 0;
     j = 0;
     while (buf[i])
     {
         if (buf[i] == '1')
-            *(vars->map + h * (h + 1) + j++) = 1;
+            *(vars->map + vars->collumn[h] + j++) = 1;
         else if (buf[i] == '0')
-            *(vars->map + h * (h + 1) + j++) = 0;
+            *(vars->map + h * (24) + j++) = 0;
         else if (buf[i] == '2')
-            *(vars->map + h * (h + 1) + j++) = 2;
+            *(vars->map + h * (24) + j++) = 2;
         else if (ft_strchr("NSEW", buf[i]))
         {
-            *(vars->map + h * (h + 1) + j++) = 0;
-            save_position(vars, buf[i], h, j++);
+            *(vars->map + h * (24) + j++) = 0;
+            save_position(vars, buf[i], h, j);
         }
         i++;
     }
-
-
-        printf("ar length %i \n", arlength);
     return (1);
 }
 /*

@@ -83,12 +83,13 @@ typedef struct  s_vars {
     t_pos	*pos;
     t_img	*img;
     t_img	*text[8];
-    t_img   *sprite;
+    t_img	*sprite;
     t_keys	*keys;
     t_res	*res;
-    int	**buf;
-    int **WorldMap;
-    int *map;
+    int		**buf;
+    int		**WorldMap;
+    int		*map;
+    int		*collumn;
 }               t_vars;
 
 void		pixel_put(t_img *image, int x, int y, int color);
