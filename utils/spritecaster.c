@@ -27,7 +27,8 @@ int     sprite_sort(t_sprites **sprite, int num_sprites)
 			done++;
 		}
 		i++;
-	}
+	}   
+    free(dummy);
 	if (done != 0)
 		sprite_sort(sprite, num_sprites);
 	else
@@ -79,11 +80,12 @@ int     spritecaster(t_vars *vars, int texX, int texY, int texNum, int zbuffer[6
 	int color;
 
     num_sprite = count_sprites(vars);
-    sprite = malloc(sizeof(t_sprites *) * num_sprite);
+    sprite = malloc(sizeof(t_sprites) * num_sprite);
 	i = 0;
-	while( i < num_sprite )
-	{
-		sprite[i] = malloc(sizeof(t_sprites));
+	
+    while( i < num_sprite )
+    {
+        sprite[i] = malloc(sizeof(t_sprites));
 		i++;
 	}
 
@@ -136,7 +138,16 @@ int     spritecaster(t_vars *vars, int texX, int texY, int texNum, int zbuffer[6
 				}
 		}
 		i++;
+
 	}
+
+	i = 0;
+	while(i < num_sprite)
+	{
+		free(sprite[i]);
+		i++;
+	}
+    free(sprite);
 	return (1);
 
 }

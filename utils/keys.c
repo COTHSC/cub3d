@@ -7,11 +7,12 @@ int	exit_game(t_vars *vars)
 	free(vars->p);
 	free(vars->keys);
 	i = 0;
-	while (i < 8)
+	while (i < 4)
 		mlx_destroy_image(vars->mlx, vars->text[i++]->ptr);
 	i++;
-	while (i < 8)
+	while (i < 4)
 		free(vars->text[i++]);
+    free(vars->map);
 	mlx_clear_window(vars->mlx, vars->win);
 	mlx_destroy_window(vars->mlx, vars->win);
 	exit(0);

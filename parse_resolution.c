@@ -64,7 +64,11 @@ int     parse_lines(t_vars *vars, int fd)
 
             c++;
         }
+        free(buf);
     }
+    while (i < 8)
+        free(farray[i++]);
+    free(farray);
     return h;
 }
 
@@ -231,8 +235,8 @@ int     array_length(int *array)
 
 int     save_position(t_vars *vars, char c, int h, int i)
 {
-    vars->p->px = (double)i;
-    vars->p->py = (double)h;
+    vars->p->px = (double)h;
+    vars->p->py = (double)i;
     vars->p->dx = -1;
     vars->p->dy = 0;
     vars->p->plx =  0;
@@ -290,25 +294,27 @@ int     parse_map(t_vars *vars, char *buf, int fd, int h)
     static int nc;
     static int arlength;
 
-    length = ft_strlen(buf);
+    length = ft_strlen(buf) + 1;
     if (h == 0)
     { 
         nc = 0;
         arlength = length * sizeof(int);
 	    vars->collumn = (int *)malloc(sizeof(int));
-	    vars->collumn[nc] = 24;
-        vars->map = (int *)malloc(sizeof(int) * length * (h + 1));
+	    vars->collumn[nc] = length;
+        vars->map = (int *)malloc(sizeof(int) * length * (h + 2));
     }
     else
     {
 	    vars->collumn = (int *)ft_realloc(vars->collumn, sizeof(int) * (nc + 1), sizeof(int) * (nc + 2));
+	    //vars->collumn = (int *)realloc(vars->collumn, sizeof(int) * (nc + 2));
 	    vars->collumn[++nc] = length;
         vars->map = (int *)ft_realloc(vars->map, arlength, sizeof(int) * length + arlength);
-        arlength += length * sizeof(int); 
+       // vars->map = (int *)realloc(vars->map, sizeof(int) * length + arlength);
+        arlength += (length) * sizeof(int); 
     }
-    i = 0;
+    i = -1;
     j = 0;
-    while (buf[i])
+    while (buf[++i])
     {
         if (buf[i] == '1')
             *(vars->map + sia(vars->collumn, h) + j++) = 1;
@@ -323,7 +329,7 @@ int     parse_map(t_vars *vars, char *buf, int fd, int h)
         }
         else
             *(vars->map + sia(vars->collumn, h) + j++) = 5;
-        i++;
     }
+    *(vars->map + sia(vars->collumn, h) + j) = 10;
     return (1);
 }
