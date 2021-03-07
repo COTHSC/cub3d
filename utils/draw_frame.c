@@ -139,7 +139,7 @@ int		draw_frame(t_vars *vars)
         zbuffer[i] = perpWallDist;
         i++;
     }
-    spritecaster(vars, texX, texY, texNum, zbuffer);
+    spritecaster(vars, texX, texY, zbuffer);
     draw(vars);
     return (1);
 }

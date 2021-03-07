@@ -58,7 +58,7 @@ int     parse_lines(t_vars *vars, int fd)
                 (*functions[c])(vars->res, buf);
             else if (ft_isdigit(buf[j]))
             {
-                parse_map(vars, buf, fd, h++);
+                parse_map(vars, buf, h++);
                 break;
             }
 
@@ -235,13 +235,18 @@ int     array_length(int *array)
 
 int     save_position(t_vars *vars, char c, int h, int i)
 {
+    int dir;
+
+    dir = 0;
+    if (c == 'N')
+        dir = -1;
     vars->p->px = (double)h;
     vars->p->py = (double)i;
-    vars->p->dx = -1;
+    vars->p->dx = dir;
     vars->p->dy = 0;
     vars->p->plx =  0;
     vars->p->ply = 0.66;
-    vars->p->ms = 0.03;
+    vars->p->ms = 0.05;
     vars->p->rs = 0.03;
     return (1);
 }
@@ -286,7 +291,7 @@ int     check_map(t_vars *vars)
     return (ret);
 }
 
-int     parse_map(t_vars *vars, char *buf, int fd, int h)
+int     parse_map(t_vars *vars, char *buf, int h)
 {
     int length;
     int j;

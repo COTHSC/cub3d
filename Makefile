@@ -6,7 +6,6 @@ SRCS = raytexting2.c \
 	utils/keys.c \
 	utils/innit_position.c \
 	utils/draw.c \
-	utils/map_to_struct.c \
 	utils/draw_frame.c \
 	utils/spritecaster.c \
 	utils/key_hook.c \
