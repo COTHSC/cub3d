@@ -38,6 +38,7 @@ int     parse_lines(t_vars *vars, int fd)
     int i;
     int c;
     int h;
+    int j;
     fptr functions[8];
     
     h = 0;
@@ -48,11 +49,14 @@ int     parse_lines(t_vars *vars, int fd)
     {
         i = get_next_line(fd, &buf);
         c = 0;
+        j = 0;
+        while(buf[j] == ' ')
+            j++;
         while(c < 8)
         {
             if(ft_strnstr(buf, farray[c], 3))
                 (*functions[c])(vars->res, buf);
-            else if (ft_isdigit(buf[0]))
+            else if (ft_isdigit(buf[j]))
             {
                 parse_map(vars, buf, fd, h++);
                 break;
@@ -97,11 +101,9 @@ int     ft_get_color(int r, int g, int b)
     int color;
 
     color = 0;
-
     color += r << 16;
     color += g << 8;
     color += b;
-
     return color;
 }
 
@@ -133,7 +135,6 @@ int     parse_paths(t_res *res, char *buf)
 
     if(!buf)
         return 0;
-
     i = 0;
     length = 0;
     while(buf[i] != ' ')
@@ -265,9 +266,7 @@ int     parse_map(t_vars *vars, char *buf, int fd, int h)
     static int nc;
     static int arlength;
 
-
     length = ft_strlen(buf);
- 
     if (h == 0)
     { 
         nc = 0;
@@ -283,9 +282,6 @@ int     parse_map(t_vars *vars, char *buf, int fd, int h)
         vars->map = (int *)ft_realloc(vars->map, arlength, sizeof(int) * length + arlength);
         arlength += length * sizeof(int); 
     }
-    printf("this is the result %i \n", sia(vars->collumn, h));
-    printf("this is the key %i for h %i \n", sia(vars->collumn, h), h);
-
     i = 0;
     j = 0;
     while (buf[i])
@@ -301,105 +297,9 @@ int     parse_map(t_vars *vars, char *buf, int fd, int h)
             *(vars->map +  sia(vars->collumn, h)  + j++) = 0;
             save_position(vars, buf[i], h, j);
         }
+        else
+            *(vars->map + sia(vars->collumn, h) + j++) = 3;
         i++;
     }
     return (1);
 }
-/*
-
-int     parse_map(t_vars *vars, char *buf, int fd, int h)
-{
-    int i = 0;
-    int c = 0;
-    int length;
-
-    length = ft_strlen(buf);
-    if(h == 0)
-    vars->map = NULL;
-    vars->map = (int **)ft_realloc(vars->map, sizeof(int **) * (h + 1));
-    vars->map[h] = malloc(sizeof(int) * length);
-    while (buf[i])
-    {
-        if (buf[i] == '1')
-           vars->map[h][c++] = 1;
-        else if (buf[i] == '0')
-            vars->map[h][c++] = 0;
-        else if (buf[i] == '2')
-            vars->map[h][c++] = 2;
-        else if (ft_strchr("NSEW", buf[i]))
-        {
-            vars->map[h][c++] = 0;
-            save_position(vars, buf[i], h, c);
-        }
-
-        i++;
-    }
-    printf("this is the size of my array %lu \n", sizeof(vars->map));
-    i = 0;
-    
-    return (1);
-}
-int     parse_map(t_vars *vars, char *buf, int fd, int h)
-{
-    int i = 0;
-    int c = 0;
-    int length;
-
-    length = ft_strlen(buf);
-    if(h == 0)
-    vars->map = NULL;
-    vars->map = (int **)ft_realloc(vars->map, sizeof(int **) * (h + 1));
-    vars->map[h] = malloc(sizeof(int) * length);
-    while (buf[i])
-    {
-        if (buf[i] == '1')
-           vars->map[h][c++] = 1;
-        else if (buf[i] == '0')
-            vars->map[h][c++] = 0;
-        else if (buf[i] == '2')
-            vars->map[h][c++] = 2;
-        else if (ft_strchr("NSEW", buf[i]))
-        {
-            vars->map[h][c++] = 0;
-            save_position(vars, buf[i], h, c);
-        }
-
-        i++;
-    }
-    printf("this is the size of my array %lu \n", sizeof(vars->map));
-    i = 0;
-    
-    return (1);
-}
-int     parse_map(t_vars *vars, char *buf, int fd, int h)
-{
-    int i = 0;
-    int c = 0;
-    int length;
-
-    length = ft_strlen(buf);
-    if(h == 0)
-    vars->map = NULL;
-    vars->map = (int **)ft_realloc(vars->map, sizeof(int **) * (h + 1));
-    vars->map[h] = malloc(sizeof(int) * length);
-    while (buf[i])
-    {
-        if (buf[i] == '1')
-           vars->map[h][c++] = 1;
-        else if (buf[i] == '0')
-            vars->map[h][c++] = 0;
-        else if (buf[i] == '2')
-            vars->map[h][c++] = 2;
-        else if (ft_strchr("NSEW", buf[i]))
-        {
-            vars->map[h][c++] = 0;
-            save_position(vars, buf[i], h, c);
-        }
-
-        i++;
-    }
-    printf("this is the size of my array %lu \n", sizeof(vars->map));
-    i = 0;
-    
-    return (1);
-}i*/
