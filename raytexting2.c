@@ -41,8 +41,11 @@ int main(int argc, char **argv)
     vars.res = malloc(sizeof(t_res));
     vars.p = malloc(sizeof(t_pos));
     vars.map_h = parse_lines(&vars, fd);
-printf("this is map height %i \n", vars.map_h);	
-
+    if(check_map(&vars) == -1)
+    {
+        printf("Map in invalid \n");
+        return 0;
+    }
 	vars.keys = malloc(sizeof(t_keys));
 	innit_keys(&vars);
     //init_position(&vars);

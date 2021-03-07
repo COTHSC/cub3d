@@ -258,6 +258,30 @@ int     sia(int *array, int h)
     return (result);
 }
 
+int     check_map(t_vars *vars)
+{
+    int h;
+    int w;
+    int ret;
+
+    h = 1;
+    ret = 0;
+    while (h < vars->map_h)
+    {
+        w = 1;
+        while (w < vars->collumn[h] && w < vars->collumn[h - 1])
+        {
+            if (get_value(vars, h, w) + get_value(vars, h - 1, w) == 5)
+                ret = -1;
+            if (get_value(vars, h, w) + get_value(vars, h, w - 1) == 5)
+                ret = -1;
+            w++;
+        }
+        h++;
+    }
+    return (ret);
+}
+
 int     parse_map(t_vars *vars, char *buf, int fd, int h)
 {
     int length;
@@ -298,7 +322,7 @@ int     parse_map(t_vars *vars, char *buf, int fd, int h)
             save_position(vars, buf[i], h, j);
         }
         else
-            *(vars->map + sia(vars->collumn, h) + j++) = 3;
+            *(vars->map + sia(vars->collumn, h) + j++) = 5;
         i++;
     }
     return (1);

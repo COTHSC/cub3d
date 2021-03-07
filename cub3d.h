@@ -120,4 +120,6 @@ int     parse_map(t_vars *vars, char *buf, int fd, int h);
 int     sia(int *array, int h);
 void    innit_keys(t_vars *vars);
 int     get_value(t_vars *vars, int h, int w);
+ int     check_map(t_vars *vars);
+
 #endif
