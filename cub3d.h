@@ -78,19 +78,20 @@ typedef struct  s_pos {
 }                       t_pos;
 
 typedef struct  s_vars {
-    void	*mlx;
-    void	*win;
-    t_pos	*p;
-    t_img	*img;
-    t_img	*text[8];
-    t_img	*sprite;
-    t_keys	*keys;
-    t_res	*res;
-    int		**buf;
-    int		**WorldMap;
-    int		*map;
-    int		*collumn;
-    int		map_h;
+    void	    *mlx;
+    void	    *win;
+    t_pos	    *p;
+    t_img	    *img;
+    t_img	    *text[8];
+    t_img	    *sprite;
+    t_sprites   **sprites;
+    t_keys	    *keys;
+    t_res	    *res;
+    int		    **buf;
+    int		    **WorldMap;
+    int		    *map;
+    int		    *collumn;
+    int	    	map_h;
 }               t_vars;
 
 void		pixel_put(t_img *image, int x, int y, int color);
@@ -120,6 +121,8 @@ int     parse_map(t_vars *vars, char *buf, int h);
 int     sia(int *array, int h);
 void    innit_keys(t_vars *vars);
 int     get_value(t_vars *vars, int h, int w);
- int     check_map(t_vars *vars);
+int     check_map(t_vars *vars);
+int     init_sprites(t_vars *vars);
+
 
 #endif

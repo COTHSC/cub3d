@@ -120,10 +120,10 @@ int		draw_frame(t_vars *vars)
             texNum = 3;
 
         texX = (int)(wallX * (double)vars->text[texNum]->width);
-        if (side == 0 && rayDirX > 0)
+    //    if (side == 0 && rayDirX > 0)
             texX = vars->text[texNum]->width - texX -1;
-        if (side == 0 && rayDirY < 0)
-            texX = vars->text[texNum]->width - texX -1;
+//        if (side == 0 && rayDirY < 0)
+  //          texX = vars->text[texNum]->width - texX -1;
         step = 1.0 * vars->text[texNum]->height / lineHeight;
         texPos = (drawStart - (h / 2) + (lineHeight / 2)) * step;
         y = drawStart;

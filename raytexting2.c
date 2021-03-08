@@ -46,14 +46,8 @@ int main(int argc, char **argv)
         printf("Map in invalid \n");
         return 0;
     }
-    printf("this is S: %s \n", vars.res->S);
-    printf("this is NO: %s \n", vars.res->NO);
-    printf("this is WE: %s \n", vars.res->WE);
-    printf("this is SO: %s \n", vars.res->SO);
-    printf("this is EA: %s \n", vars.res->EA);
 	vars.keys = malloc(sizeof(t_keys));
 	innit_keys(&vars);
-    //init_position(&vars);
 	while (i < 4)
 		vars.text[i++] = (t_img *)malloc(sizeof(t_img));
 	vars.mlx = mlx_init();
@@ -69,6 +63,7 @@ int main(int argc, char **argv)
     }
     vars.sprite = (t_img *)malloc(sizeof(t_img));
 	load_sprites(&vars);
+    init_sprites(&vars);
     i = 0;
 	mlx_hook(vars.win, 2, 1L << 0, &key_press, &vars);
 	mlx_hook(vars.win, 3, 1L << 1, &key_release, &vars);

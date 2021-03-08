@@ -57,6 +57,33 @@ int     count_sprites(t_vars *vars)
     return (num_sprite);
 }
 
+int     init_sprites(t_vars *vars)
+{
+
+	int i = 0;
+	int num_sprite;
+
+    num_sprite = count_sprites(vars);
+    vars->sprites = malloc(sizeof(t_sprites) * num_sprite);
+	i = 0;
+    while( i < num_sprite)
+        vars->sprites[i++] = malloc(sizeof(t_sprites));
+    spritefinder(vars->sprites, vars);
+	return (1);
+}
+
+int     free_sprites(t_vars *vars, int num_sprites)
+{
+
+	int i;
+
+	i = 0;
+	while(i < num_sprites)
+		free(vars->sprites[i++]);
+    free(vars->sprites);
+	return (1);
+}
+
 int     spritecaster(t_vars *vars, int texX, int texY, int *zbuffer)
 {
 	int i = 0;
