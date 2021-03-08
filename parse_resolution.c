@@ -39,7 +39,7 @@ int     parse_lines(t_vars *vars, int fd)
     int h;
     int j;
     fptr functions[8];
-    
+
     h = 0;
     farray = malloc(sizeof(char *) * 8);
     innit_arrayf(farray, functions);
@@ -201,25 +201,25 @@ int     parse_sprite(t_res *res, char *buf)
 
 void	*ft_realloc(void *ptr, int size, int newsize)
 {
-	char	*str;
-	char	*new;
-	int		i;
+    char	*str;
+    char	*new;
+    int		i;
 
-	str = (char*)ptr;
-	if (!(new = (char*)malloc(sizeof(char) * newsize + 1)))
-	{
-		if (ptr && size != 0)
-			free(ptr);
-		return (NULL);
-	}
-	i = -1;
-	while (++i < size)
-		*(new + i) = *(str + i);
-	while (i < newsize)
-		*(new + i++) = '\0';
-	if (ptr && size != 0)
-		free(ptr);
-	return (new);
+    str = (char*)ptr;
+    if (!(new = (char*)malloc(sizeof(char) * newsize + 1)))
+    {
+        if (ptr && size != 0)
+            free(ptr);
+        return (NULL);
+    }
+    i = -1;
+    while (++i < size)
+        *(new + i) = *(str + i);
+    while (i < newsize)
+        *(new + i++) = '\0';
+    if (ptr && size != 0)
+        free(ptr);
+    return (new);
 }
 
 int     array_length(int *array)
@@ -230,6 +230,21 @@ int     array_length(int *array)
     while (array[length])
         length++;
     return (length);
+}
+
+int     init_orientation(t_vars *vars, int h)
+{
+    int opx;
+    int odx;
+    
+    odx = vars->p->dx;
+    vars->p->dx = vars->p->dx * cos(-1 * M_PI_2) - vars->p->dy *sin(-1 * M_PI_2);
+    vars->p->dy = odx * sin(-vars->p->rs) + vars->p->dy * cos(-vars->p->rs);
+    opx = vars->p->plx;
+    vars->p->plx = vars->p->plx * cos(-1 *(M_PI_2)) - vars->p->ply * sin(-1 * (M_PI_2));
+    vars->p->ply = opx * sin(-1 * M_PI_2) + vars->p->ply * cos(-1 * M_PI_2);
+
+    return (0);
 }
 
 int     save_position(t_vars *vars, char c, int h, int i)
@@ -251,6 +266,7 @@ int     save_position(t_vars *vars, char c, int h, int i)
     vars->p->ply = 0.66;
     vars->p->ms = 0.05;
     vars->p->rs = 0.03;
+    //init_orientation(vars, 1);
     return (1);
 }
 
@@ -287,6 +303,10 @@ int     check_map(t_vars *vars)
                 ret = -1;
             if (get_value(vars, h, w) + get_value(vars, h, w - 1) == 5)
                 ret = -1;
+            if (get_value(vars, h, w) + get_value(vars, h - 1, w) == 7)
+                ret = -1;
+            if (get_value(vars, h, w) + get_value(vars, h, w - 1) == 7)
+                ret = -1;
             w++;
         }
         h++;
@@ -307,19 +327,21 @@ int     parse_map(t_vars *vars, char *buf, int h)
     { 
         nc = 0;
         arlength = (length + 1) * sizeof(int);
-	    vars->collumn = (int *)malloc(sizeof(int));
-	    vars->collumn[nc] = length;
+        vars->collumn = (int *)malloc(sizeof(int));
+        vars->collumn[nc] = length;
         vars->map = (int *)malloc(sizeof(int) * length * (h + 2));
     }
     else
     {
-	    vars->collumn = (int *)ft_realloc(vars->collumn, sizeof(int) * (nc + 1), sizeof(int) * (nc + 2));
-	    vars->collumn[++nc] = length;
+        vars->collumn = (int *)ft_realloc(vars->collumn, sizeof(int) * (nc + 1), sizeof(int) * (nc + 2));
+        vars->collumn[++nc] = length;
         vars->map = (int *)ft_realloc(vars->map, arlength, sizeof(int) * length + arlength);
         arlength += (length) * sizeof(int); 
     }
     i = -1;
     j = 0;
+
+    *(vars->map + sia(vars->collumn, h) + j++) = 5;
     while (buf[++i])
     {
         if (buf[i] == '1')

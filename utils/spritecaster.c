@@ -1,6 +1,5 @@
 #include "../cub3d.h"
 
-
 int     sprite_sort(t_sprites **sprite, int num_sprites)
 {
 	int i = 0;
@@ -72,11 +71,12 @@ int     init_sprites(t_vars *vars)
 	return (1);
 }
 
-int     free_sprites(t_vars *vars, int num_sprites)
+int     free_sprites(t_vars *vars)
 {
-
+	int num_sprites;
 	int i;
 
+    num_sprites = count_sprites(vars);
 	i = 0;
 	while(i < num_sprites)
 		free(vars->sprites[i++]);
@@ -87,7 +87,6 @@ int     free_sprites(t_vars *vars, int num_sprites)
 int     spritecaster(t_vars *vars, int texX, int texY, int *zbuffer)
 {
 	int i = 0;
-    t_sprites **sprite;
 	int num_sprite;
 
 	double spriteX;
@@ -107,31 +106,15 @@ int     spritecaster(t_vars *vars, int texX, int texY, int *zbuffer)
 	int color;
 
     num_sprite = count_sprites(vars);
-    sprite = malloc(sizeof(t_sprites) * num_sprite);
-	i = 0;
-	
-    while( i < num_sprite )
-    {
-        sprite[i] = malloc(sizeof(t_sprites));
-		i++;
-	}
+	i = -1;
+	while (++i < num_sprite)
+		vars->sprites[i]->dist = ((vars->p->px - vars->sprites[i]->x) * (vars->p->px - vars->sprites[i]->x) + (vars->p->py - vars->sprites[i]->y) * (vars->p->py - vars->sprites[i]->y));
 
-    spritefinder(sprite, vars);
-	i = 0;
-	while (i < num_sprite)
+	i = -1;
+	while(++i < num_sprite)
 	{
-		sprite[i]->dist = ((vars->p->px - sprite[i]->x) * (vars->p->px - sprite[i]->x) + (vars->p->py - sprite[i]->y) * (vars->p->py - sprite[i]->y));
-		i++;
-	}
-	sprite_sort(sprite, num_sprite);
-
-
-	i = 0;
-
-	while(i < num_sprite)
-	{
-		spriteX = sprite[i]->x - vars->p->px;
-		spriteY = sprite[i]->y - vars->p->py;
+		spriteX = vars->sprites[i]->x - vars->p->px;
+		spriteY = vars->sprites[i]->y - vars->p->py;
 		invDet = 1.0 / (vars->p->plx * vars->p->dy - vars->p->dx * vars->p->ply);
 		transformX = invDet * (vars->p->dy * spriteX - vars->p->dx * spriteY);
 		transformY = invDet * (-vars->p->ply * spriteX + vars->p->plx * spriteY);
@@ -164,18 +147,7 @@ int     spritecaster(t_vars *vars, int texX, int texY, int *zbuffer)
 					if((color & 0x00FFFFFF) != 0) vars->buf[y][stripe] = color; 
 				}
 		}
-		i++;
-
 	}
-
-	i = 0;
-	while(i < num_sprite)
-	{
-		free(sprite[i]);
-		i++;
-	}
-    free(sprite);
 	return (1);
-
 }
 

@@ -4,6 +4,7 @@ int	exit_game(t_vars *vars)
 {
 	int i = 0;
 
+    free_sprites(vars);
 	free(vars->p);
 	free(vars->keys);
 	i = 0;

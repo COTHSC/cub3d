@@ -123,6 +123,6 @@ void    innit_keys(t_vars *vars);
 int     get_value(t_vars *vars, int h, int w);
 int     check_map(t_vars *vars);
 int     init_sprites(t_vars *vars);
-
+ int     free_sprites(t_vars *vars);
 
 #endif
