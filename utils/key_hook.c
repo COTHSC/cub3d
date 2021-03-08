@@ -30,21 +30,23 @@ int     get_value(t_vars *vars, int h, int w)
          if(!get_value(vars, (int)(vars->p->px), (int)(vars->p->py - vars->p->dy * vars->p->ms)))
              vars->p->py -= vars->p->dy * vars->p->ms;
      }
-
- /*  if (vars->keys->d)
+    
+     if (vars->keys->d)
      {
-         if(worldMap[(int)(vars->p->px + (vars->p->dx + M_PI_2) * vars->p->ms)][(int)(vars->p->py)]   == 0)
-             vars->p->px += (vars->p->dx + M_PI_2) * vars->p->ms;
-         if(worldMap[(int)(vars->p->px)][(int)(vars->p->py + (vars->p->dy + 1) * vars->p->ms)] == 0)
-             vars->p->py += (vars->p->dy + M_PI_2) * vars->p->ms;
+         if(!get_value(vars, (int)(vars->p->px + vars->p->plx * vars->p->ms), (int)(vars->p->py)))
+             vars->p->px += vars->p->plx * vars->p->ms;
+         if(!get_value(vars, (int)(vars->p->px), (int)(vars->p->py + vars->p->ply * vars->p->ms)))
+             vars->p->py += vars->p->ply * vars->p->ms;
      }
+
      if (vars->keys->a)
      {
-         if(worldMap[(int)(vars->p->px + (vars->p->dx - 1) * vars->p->ms)][(int)(vars->p->py)] == 0)
-             vars->p->px += (vars->p->dx - 1) * vars->p->ms;
-         if(worldMap[(int)(vars->p->px)][(int)(vars->p->py - (vars->p->dy - 1) * vars->p->ms)] == 0)
-             vars->p->py += (vars->p->dy - 1) * vars->p->ms;
-     }*/
+         if(!get_value(vars, (int)(vars->p->px - vars->p->plx * vars->p->ms), (int)(vars->p->py)))
+             vars->p->px -= vars->p->plx * vars->p->ms;
+         if(!get_value(vars, (int)(vars->p->px), (int)(vars->p->py - vars->p->ply * vars->p->ms)))
+             vars->p->py -= vars->p->ply * vars->p->ms;
+     }
+
      if (vars->keys->r)
      {
          odx = vars->p->dx;

@@ -1,6 +1,5 @@
 #include "../cub3d.h"
 
-#define numSprites 8
 
 
 int		draw_frame(t_vars *vars)
@@ -103,13 +102,11 @@ int		draw_frame(t_vars *vars)
         drawEnd = lineHeight / 2 + h / 2;
         if (drawEnd >= h || drawEnd < 0)
             drawEnd = h - 1;
-
         if (side == 0)
             wallX = vars->p->py + perpWallDist * rayDirY;
         else
             wallX = vars->p->px + perpWallDist * rayDirX;
         wallX -= floor(wallX);
-
         if (side == 0 && rayDirX >=0 )
             texNum = 0;
         else if (side == 0 && rayDirX < 0)
@@ -118,12 +115,8 @@ int		draw_frame(t_vars *vars)
             texNum = 2;
         else 
             texNum = 3;
-
         texX = (int)(wallX * (double)vars->text[texNum]->width);
-    //    if (side == 0 && rayDirX > 0)
             texX = vars->text[texNum]->width - texX -1;
-//        if (side == 0 && rayDirY < 0)
-  //          texX = vars->text[texNum]->width - texX -1;
         step = 1.0 * vars->text[texNum]->height / lineHeight;
         texPos = (drawStart - (h / 2) + (lineHeight / 2)) * step;
         y = drawStart;

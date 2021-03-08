@@ -267,8 +267,8 @@ int     save_position(t_vars *vars, char c, int h, int i)
     vars->p->dy = 0;
     vars->p->plx =  0;
     vars->p->ply = 0.66;
-    vars->p->ms = 0.05;
-    vars->p->rs = 0.05;
+    vars->p->ms = 0.03;
+    vars->p->rs = 0.03;
     init_orientation(vars, rot);
     return (1);
 }
@@ -313,13 +313,14 @@ int     check_map(t_vars *vars)
             w++;
         }
         w = 1;
-        while (w < vars->collumn[h - 1])
+        while (w < vars->collumn[h])
         {
-            if (get_value(vars, h, w) == 0 && w > vars->collumn[h + 1])
-            {
+            if (get_value(vars, 0, w) == 0)
                 ret = -1;
-                printf("this is h:%i and w:%i \n", h, w);
-            }
+            if (get_value(vars, h, w) == 0 && w > vars->collumn[h + 1])
+                ret = -1;
+            if (get_value(vars, h, w) == 2 && w > vars->collumn[h + 1])
+                ret = -1;
             w++;
         }
         h++;

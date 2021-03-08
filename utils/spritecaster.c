@@ -110,6 +110,7 @@ int     spritecaster(t_vars *vars, int texX, int texY, int *zbuffer)
 	while (++i < num_sprite)
 		vars->sprites[i]->dist = ((vars->p->px - vars->sprites[i]->x) * (vars->p->px - vars->sprites[i]->x) + (vars->p->py - vars->sprites[i]->y) * (vars->p->py - vars->sprites[i]->y));
 
+    sprite_sort(vars->sprites, num_sprite);
 	i = -1;
 	while(++i < num_sprite)
 	{

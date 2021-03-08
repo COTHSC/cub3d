@@ -34,9 +34,9 @@ int	key_press(int keycode, t_vars *vars)
 {
 	if (keycode == 65307)
 		exit_game(vars);
-	if (keycode == 65362)
+	if (keycode == 119)
 		vars->keys->w = 1;
-	if (keycode == 65364)
+	if (keycode == 115)
 		vars->keys->s = 1;
 	if (keycode == 65363)
 		vars->keys->r = 1;
@@ -52,9 +52,9 @@ int	key_press(int keycode, t_vars *vars)
 
 int	key_release(int keycode, t_vars *vars)
 {
-	if (keycode == 65362)
+	if (keycode == 119)
 		vars->keys->w = 0;
-	if (keycode == 65364)
+	if (keycode == 115)
 		vars->keys->s = 0;
 	if (keycode == 65363)
 		vars->keys->r = 0;
