@@ -232,41 +232,44 @@ int     array_length(int *array)
     return (length);
 }
 
-int     init_orientation(t_vars *vars, int h)
+int     init_orientation(t_vars *vars, double h)
 {
-    int opx;
-    int odx;
-    
-    odx = vars->p->dx;
-    vars->p->dx = vars->p->dx * cos(-1 * M_PI_2) - vars->p->dy *sin(-1 * M_PI_2);
-    vars->p->dy = odx * sin(-vars->p->rs) + vars->p->dy * cos(-vars->p->rs);
+    double opx;
+    double odx;
+    if (h == 0)
+        return (0);
+    printf("this is rot %f \n", h);
+    vars->p->dx = vars->p->dx * cos(h) - vars->p->dy *sin(h);
+    vars->p->dy = odx * sin(h) + vars->p->dy * cos(-h);
     opx = vars->p->plx;
-    vars->p->plx = vars->p->plx * cos(-1 *(M_PI_2)) - vars->p->ply * sin(-1 * (M_PI_2));
-    vars->p->ply = opx * sin(-1 * M_PI_2) + vars->p->ply * cos(-1 * M_PI_2);
-
+    vars->p->plx = vars->p->plx * cos(h) - vars->p->ply * sin(h);
+    vars->p->ply = opx * sin(h) + vars->p->ply * cos(h);
     return (0);
 }
 
 int     save_position(t_vars *vars, char c, int h, int i)
 {
-    int dirx;
-    int diry;
+    double rot;
 
-    dirx = 0;
-    diry = 0;
     if (c == 'N')
-        dirx = -1;
-    if (c == 'E')
-        diry = 1;
-    vars->p->px = (double)h + 0.5 * dirx;
-    vars->p->py = (double)i + 0.5 * diry;
-    vars->p->dx = dirx;
-    vars->p->dy = diry;
+        rot = 0;
+    else if (c == 'S')
+        rot = M_PI;
+    else if (c == 'E')
+        rot = 3 * M_PI / 2;
+    else if (c == 'W')
+        rot = M_PI / 2;
+
+    printf("this is rot %f \n", rot);
+    vars->p->px = (double)h;
+    vars->p->py = (double)i;
+    vars->p->dx = -1;
+    vars->p->dy = 0;
     vars->p->plx =  0;
     vars->p->ply = 0.66;
     vars->p->ms = 0.05;
-    vars->p->rs = 0.03;
-    //init_orientation(vars, 1);
+    vars->p->rs = 0.05;
+    init_orientation(vars, rot);
     return (1);
 }
 
@@ -307,6 +310,16 @@ int     check_map(t_vars *vars)
                 ret = -1;
             if (get_value(vars, h, w) + get_value(vars, h, w - 1) == 7)
                 ret = -1;
+            w++;
+        }
+        w = 1;
+        while (w < vars->collumn[h - 1])
+        {
+            if (get_value(vars, h, w) == 0 && w > vars->collumn[h + 1])
+            {
+                ret = -1;
+                printf("this is h:%i and w:%i \n", h, w);
+            }
             w++;
         }
         h++;
