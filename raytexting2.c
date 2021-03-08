@@ -20,15 +20,15 @@ void	load_image(t_vars *vars, t_img *img, char *path)
 
 void	load_texture (t_vars *vars)
 {
-	load_image(vars, vars->text[0], "textures/eagle.xpm");
-	load_image(vars, vars->text[1], "textures/purplestone.xpm");
-	load_image(vars, vars->text[2], "textures/colorstone.xpm");
-	load_image(vars, vars->text[3], "textures/mossy.xpm");
+	load_image(vars, vars->text[0], vars->res->EA);
+	load_image(vars, vars->text[1], vars->res->WE);
+	load_image(vars, vars->text[2], vars->res->SO);
+	load_image(vars, vars->text[3], vars->res->NO);
 }
 
 void	load_sprites(t_vars *vars)
 {
-	load_image(vars, vars->sprite, "textures/barrel.xpm");
+	load_image(vars, vars->sprite, vars->res->S);
 }
 
 int main(int argc, char **argv)
@@ -46,6 +46,11 @@ int main(int argc, char **argv)
         printf("Map in invalid \n");
         return 0;
     }
+    printf("this is S: %s \n", vars.res->S);
+    printf("this is NO: %s \n", vars.res->NO);
+    printf("this is WE: %s \n", vars.res->WE);
+    printf("this is SO: %s \n", vars.res->SO);
+    printf("this is EA: %s \n", vars.res->EA);
 	vars.keys = malloc(sizeof(t_keys));
 	innit_keys(&vars);
     //init_position(&vars);

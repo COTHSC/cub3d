@@ -6,7 +6,6 @@
 int     innit_arrayf(char **farray, fptr functions[8])
 {
     int i;
-
     i = 0;
     while(i < 8)
         farray[i++] = malloc(sizeof(char) * 3);
@@ -154,22 +153,22 @@ int     parse_paths(t_res *res, char *buf)
     if(ft_strnstr(buf, "NO", 3))
     {
         res->NO = malloc(length + 1);
-        ft_strlcpy(res->NO, &buf[start], length); 
+        ft_strlcpy(res->NO, &buf[start], length + 1); 
     }
     else if(ft_strnstr(buf, "SO", 3))
     {
         res->SO = malloc(length + 1);
-        ft_strlcpy(res->SO, &buf[start], length); 
+        ft_strlcpy(res->SO, &buf[start], length + 1); 
     }
     else if(ft_strnstr(buf, "WE", 3))
     {
         res->WE = malloc(length + 1);
-        ft_strlcpy(res->WE, &buf[start], length); 
+        ft_strlcpy(res->WE, &buf[start], length + 1); 
     }
     else if(ft_strnstr(buf, "EA", 3))
     {
         res->EA = malloc(length + 1);
-        ft_strlcpy(res->EA, &buf[start], length); 
+        ft_strlcpy(res->EA, &buf[start], length + 1); 
     }
     return 1;
 }
@@ -196,7 +195,7 @@ int     parse_sprite(t_res *res, char *buf)
         i++;
     }
     res->S = malloc(length + 1);
-    ft_strlcpy(res->S, &buf[start], length); 
+    ft_strlcpy(res->S, &buf[start], length + 1); 
     return 1;
 }
 
@@ -311,10 +310,8 @@ int     parse_map(t_vars *vars, char *buf, int h)
     else
     {
 	    vars->collumn = (int *)ft_realloc(vars->collumn, sizeof(int) * (nc + 1), sizeof(int) * (nc + 2));
-	    //vars->collumn = (int *)realloc(vars->collumn, sizeof(int) * (nc + 2));
 	    vars->collumn[++nc] = length;
         vars->map = (int *)ft_realloc(vars->map, arlength, sizeof(int) * length + arlength);
-       // vars->map = (int *)realloc(vars->map, sizeof(int) * length + arlength);
         arlength += (length) * sizeof(int); 
     }
     i = -1;
