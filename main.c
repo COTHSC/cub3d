@@ -41,11 +41,7 @@ int main(int argc, char **argv)
     vars.res = malloc(sizeof(t_res));
     vars.p = malloc(sizeof(t_pos));
     vars.map_h = parse_lines(&vars, fd);
-    if(check_map(&vars) == -1)
-    {
-        printf("Error, Map in invalid \n");
-        return 0;
-    }
+
 	vars.keys = malloc(sizeof(t_keys));
 	innit_keys(&vars);
 	while (i < 4)
@@ -61,6 +57,12 @@ int main(int argc, char **argv)
     vars.sprite = (t_img *)malloc(sizeof(t_img));
 	load_sprites(&vars);
     init_sprites(&vars);
+    if(check_map(&vars) == -1)
+    {
+        printf("Error, Map in invalid \n");
+        exit_game(&vars);
+        return 0;
+    }
 	mlx_hook(vars.win, 2, 1L << 0, &key_press, &vars);
 	mlx_hook(vars.win, 3, 1L << 1, &key_release, &vars);
 	mlx_loop_hook(vars.mlx, key_hook, &vars);

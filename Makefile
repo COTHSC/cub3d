@@ -1,8 +1,8 @@
 NAME = cub3D
 
-SRCS = raytexting2.c \
+SRCS = main.c \
 	utils/reset_buffer.c \
-	parse_resolution.c \
+	parsing/parse_resolution.c \
 	utils/keys.c \
 	utils/innit_position.c \
 	utils/draw.c \
