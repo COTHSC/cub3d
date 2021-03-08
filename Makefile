@@ -35,7 +35,7 @@ all : $(NAME)
 
 $(NAME) : $(OBJS)
 #	$(CC) -o $(NAME) $(OBJS) $(MLX_REQ_OSX)
-	$(CC) -g -o $(NAME) $(OBJS) $(MLX_REQ_LN)
+	$(CC)  -g -o $(NAME) $(OBJS) $(MLX_REQ_LN)
 #        $(MAKE) -C ./libft
 #        cp libft/libft.a ./$(NAME)
 #        ar rcs $@ $^

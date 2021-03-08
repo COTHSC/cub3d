@@ -234,15 +234,19 @@ int     array_length(int *array)
 
 int     save_position(t_vars *vars, char c, int h, int i)
 {
-    int dir;
+    int dirx;
+    int diry;
 
-    dir = 0;
+    dirx = 0;
+    diry = 0;
     if (c == 'N')
-        dir = -1;
-    vars->p->px = (double)h;
-    vars->p->py = (double)i;
-    vars->p->dx = dir;
-    vars->p->dy = 0;
+        dirx = -1;
+    if (c == 'E')
+        diry = 1;
+    vars->p->px = (double)h + 0.5 * dirx;
+    vars->p->py = (double)i + 0.5 * diry;
+    vars->p->dx = dirx;
+    vars->p->dy = diry;
     vars->p->plx =  0;
     vars->p->ply = 0.66;
     vars->p->ms = 0.05;
@@ -302,7 +306,7 @@ int     parse_map(t_vars *vars, char *buf, int h)
     if (h == 0)
     { 
         nc = 0;
-        arlength = length * sizeof(int);
+        arlength = (length + 1) * sizeof(int);
 	    vars->collumn = (int *)malloc(sizeof(int));
 	    vars->collumn[nc] = length;
         vars->map = (int *)malloc(sizeof(int) * length * (h + 2));
@@ -332,6 +336,6 @@ int     parse_map(t_vars *vars, char *buf, int h)
         else
             *(vars->map + sia(vars->collumn, h) + j++) = 5;
     }
-    *(vars->map + sia(vars->collumn, h) + j) = 10;
+    *(vars->map + sia(vars->collumn, h) + j) = 5;
     return (1);
 }

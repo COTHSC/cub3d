@@ -107,7 +107,7 @@ void    draw(t_vars *vars);
 int             key_hook(t_vars *vars);
 int		draw_frame(t_vars *vars);
 int map_to_struct(int *map, t_vars *vars);
-int     spritecaster(t_vars *vars, int texX, int texY, int [640]);
+int     spritecaster(t_vars *vars, int texX, int texY, int *zbuffer);
 int     spritefinder(t_sprites **sprite, t_vars *vars);
 int			get_next_line(int const fd, char **line);
 int     parse_resolution(t_res *res, char *buf);

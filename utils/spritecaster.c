@@ -57,7 +57,7 @@ int     count_sprites(t_vars *vars)
     return (num_sprite);
 }
 
-int     spritecaster(t_vars *vars, int texX, int texY, int zbuffer[640])
+int     spritecaster(t_vars *vars, int texX, int texY, int *zbuffer)
 {
 	int i = 0;
     t_sprites **sprite;

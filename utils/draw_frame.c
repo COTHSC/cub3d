@@ -5,10 +5,10 @@
 
 int		draw_frame(t_vars *vars)
 {
-    int w = 640;
+    int w = vars->res->w;
     int i = 0;
     int color;
-    int zbuffer[640];
+    int *zbuffer;
     double cameraX;
     double rayDirX;
     double rayDirY;
@@ -29,12 +29,13 @@ int		draw_frame(t_vars *vars)
     int hit = 0;
     int side = 0;
     int lineHeight;
-    int h = 480;
+    int h = vars->res->h;
     int y;
     int drawStart;
     int drawEnd;
     int texNum = 0;
 
+    zbuffer = malloc(sizeof(int) * w);
     vars->img = malloc(sizeof(t_img));
 
     vars->img->ptr = mlx_new_image(vars->mlx, vars->res->w, vars->res->h );
@@ -140,6 +141,7 @@ int		draw_frame(t_vars *vars)
         i++;
     }
     spritecaster(vars, texX, texY, zbuffer);
+    free(zbuffer);
     draw(vars);
     return (1);
 }
