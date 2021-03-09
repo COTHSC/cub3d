@@ -125,5 +125,5 @@ int     check_map(t_vars *vars);
 int     init_sprites(t_vars *vars);
  int     free_sprites(t_vars *vars);
  int exit_game(t_vars *vars);
-
+int save_img(t_vars *vars,const char* fichier);
 #endif

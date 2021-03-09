@@ -14,6 +14,7 @@ SRCS = main.c \
 	get_next_line/get_next_line_utils.c \
 	utils/draw_floor_cieling.c \
 	utils/render_next_frame.c \
+	save/bmp.c \
 
 OBJS = $(SRCS:.c=.o)
 
