@@ -66,6 +66,7 @@ int main(int argc, char **argv)
 
 	mlx_hook(vars.win, 2, 1L << 0, &key_press, &vars);
 	mlx_hook(vars.win, 3, 1L << 1, &key_release, &vars);
+	mlx_hook(vars.win, 33, 1L << 17, &exit_game, &vars);
 	mlx_loop_hook(vars.mlx, key_hook, &vars);
 	mlx_loop(vars.mlx);
 	return 0;

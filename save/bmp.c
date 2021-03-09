@@ -86,15 +86,15 @@ int save_img(t_vars *vars,const char* fichier)
 	int i,j,tailledata,pitch;
 	unsigned char bgrpix[3];
 	int fd;
+
     fd = open("./save/screenshot.bmp", O_CREAT|O_RDWR, S_IRWXU|S_IRWXG);	
 	ft_header(vars, fd);
 	for(j=vars->res->h;j > 0;j--)
 	{
 		for(i=0;i<vars->res->w;i++)
 		{
-			write(fd, &vars->img->data[j * vars->res->w + i], 4);
+			write(fd, &vars->img->data[j * (vars->img->size_l/4) + i], 4);
 		}
-		bgrpix[0] = bgrpix[1] = bgrpix[2] = 0;
 //		write(fd, &bgrpix, pitch);
 	}
 	close(fd);
