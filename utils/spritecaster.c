@@ -84,71 +84,85 @@ int     free_sprites(t_vars *vars)
 	return (1);
 }
 
+typedef	struct	s_raysprite
+{
+	double sx;
+	double sy;
+	double invd;
+	double tx;
+	double ty;
+	int     ssx;
+	int     dsx;
+	int     dsy;
+	int     dey;
+	int     dex;
+	int     sheight;
+	int     swidth;
+	int     i;
+	int num_sprite;
+}	t_raysprite;
+
+static void	dist_sprite(t_vars * vars, t_raysprite *r)
+{
+	while (++r->i < r->num_sprite)
+		vars->sprites[r->i]->dist = ((vars->p->px - vars->sprites[r->i]->x) * \
+				(vars->p->px - vars->sprites[r->i]->x) + (vars->p->py - vars->sprites[r->i]->y) * (vars->p->py - vars->sprites[r->i]->y));
+}
+
+static	void	init_sprite_dir(t_vars *vars, t_raysprite *r)
+{
+		r->sx = vars->sprites[r->i]->x - vars->p->px;
+		r->sy = vars->sprites[r->i]->y - vars->p->py;
+		r->invd = 1.0 / (vars->p->plx * vars->p->dy - vars->p->dx * vars->p->ply);
+		r->tx = r->invd * (vars->p->dy * r->sx - vars->p->dx * r->sy);
+		r->ty = r->invd * (-vars->p->ply * r->sx + vars->p->plx * r->sy);
+		r->ssx = (int)((vars->res->w / 2) * (1 + r->tx / r->ty)); 
+		r->sheight = abs((int)(vars->res->h / r->ty));
+		r->dsy = -r->sheight / 2 + vars->res->h / 2;
+}
+
 int     spritecaster(t_vars *vars, int texX, int texY, int *zbuffer)
 {
-	int i = 0;
-	int num_sprite;
-
-	double spriteX;
-	double spriteY;
-	double invDet;
-	double transformX;
-	double transformY;
-	int     spriteScreenX;
-	int     drawStartX;
-	int     drawStartY;
-	int     drawEndY;
-	int     drawEndX;
+	int color;
+	t_raysprite	*r;
 	int     h = vars->res->h;
 	int     w = vars->res->w;
-	int     spriteHeight;
-	int     spriteWidth;
-	int color;
-
-    num_sprite = count_sprites(vars);
-	i = -1;
-	while (++i < num_sprite)
-		vars->sprites[i]->dist = ((vars->p->px - vars->sprites[i]->x) * (vars->p->px - vars->sprites[i]->x) + (vars->p->py - vars->sprites[i]->y) * (vars->p->py - vars->sprites[i]->y));
-
-    sprite_sort(vars->sprites, num_sprite);
-	i = -1;
-	while(++i < num_sprite)
+	
+	r = malloc(sizeof(t_raysprite));
+    r->num_sprite = count_sprites(vars);
+	r->i = -1;
+	dist_sprite(vars,r);
+    sprite_sort(vars->sprites, r->num_sprite);
+	r->i = -1;
+	while(++r->i < r->num_sprite)
 	{
-		spriteX = vars->sprites[i]->x - vars->p->px;
-		spriteY = vars->sprites[i]->y - vars->p->py;
-		invDet = 1.0 / (vars->p->plx * vars->p->dy - vars->p->dx * vars->p->ply);
-		transformX = invDet * (vars->p->dy * spriteX - vars->p->dx * spriteY);
-		transformY = invDet * (-vars->p->ply * spriteX + vars->p->plx * spriteY);
-		spriteScreenX = (int)((vars->res->w / 2) * (1 + transformX / transformY)); 
+		init_sprite_dir(vars, r);
+		if (r->dsy< 0)
+			r->dsy = 0;
+		r->dey = r->sheight / 2 + h / 2;
+		if (r->dey >= h)
+			r->dey = vars->res->h - 1;
 
-		spriteHeight = abs((int)(h / transformY));
-		drawStartY = -spriteHeight / 2 + h / 2;
-		if (drawStartY< 0)
-			drawStartY = 0;
-		drawEndY = spriteHeight / 2 + h / 2;
-		if (drawEndY >= h)
-			drawEndY = vars->res->h - 1;
-
-		spriteWidth = abs((int)(h / transformY));
-		drawStartX = -spriteWidth / 2 + spriteScreenX;
-		if (drawStartX< 0)
-			drawStartX = 0;
-		drawEndX = spriteWidth / 2 + spriteScreenX;
-		if (drawEndX >= w)
-			drawEndX = vars->res->w - 1;
-		for(int stripe = drawStartX; stripe < drawEndX; stripe++)
+		r->swidth = abs((int)(h / r->ty));
+		r->dsx = -r->swidth / 2 + r->ssx;
+		if (r->dsx< 0)
+			r->dsx = 0;
+		r->dex = r->swidth / 2 + r->ssx;
+		if (r->dex >= w)
+			r->dex = vars->res->w - 1;
+		for(int stripe = r->dsx; stripe < r->dex; stripe++)
 		{
-			texX = (int)(256 * (stripe - (-spriteWidth / 2 + spriteScreenX)) * 64 / spriteWidth) / 256;
-			if(transformY > 0 && stripe > 0 && stripe < w && transformY < zbuffer[stripe])
-				for(int y = drawStartY; y < drawEndY; y++)
+			texX = (int)(256 * (stripe - (-r->swidth / 2 + r->ssx)) * 64 / r->swidth) / 256;
+			if(r->ty > 0 && stripe > 0 && stripe < w && r->ty < zbuffer[stripe])
+				for(int y = r->dsy; y < r->dey; y++)
 				{
-					int d = (y) * 256 - h * 128 + spriteHeight * 128;
-					texY = ((d * 64) / spriteHeight) / 256;
+					int d = (y) * 256 - h * 128 + r->sheight * 128;
+					texY = ((d * 64) / r->sheight) / 256;
 					color = vars->sprite->data[64 * texY + texX]; 
 					if((color & 0x00FFFFFF) != 0) vars->buf[y][stripe] = color; 
 				}
 		}
 	}
+	free(r);
 	return (1);
 }
-
