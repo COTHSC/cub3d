@@ -1,10 +1,19 @@
 #include "../cub3d.h"
 
-void    reset_buffer(t_vars *vars)
+void	reset_buffer(t_vars *vars)
 {
-        for (int y = 0; y < vars->res->h; y++)
-        {
-                for (int x = 0; x < vars->res->w; x++)
-                        vars->buf[y][x] = 0;
-        }
+	int y;
+	int x;
+
+	y = 0;
+	while (y < vars->res->h)
+	{
+		x = 0;
+		while (x < vars->res->w)
+		{
+			vars->buf[y][x] = 0;
+			x++;
+		}
+		y++;
+	}
 }

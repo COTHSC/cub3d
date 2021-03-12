@@ -4,7 +4,6 @@ SRCS = main.c \
 	utils/reset_buffer.c \
 	parsing/parse_resolution.c \
 	utils/keys.c \
-	utils/innit_position.c \
 	utils/draw.c \
 	utils/draw_frame.c \
 	utils/spritecaster.c \
@@ -36,7 +35,7 @@ all : $(NAME)
 
 $(NAME) : $(OBJS)
 #	$(CC) -o $(NAME) $(OBJS) $(MLX_REQ_OSX)
-	$(CC)  -g -o $(NAME) $(OBJS) $(MLX_REQ_LN)
+	$(CC) -O3 -g -o $(NAME) $(OBJS) $(MLX_REQ_LN)
 #        $(MAKE) -C ./libft
 #        cp libft/libft.a ./$(NAME)
 #        ar rcs $@ $^

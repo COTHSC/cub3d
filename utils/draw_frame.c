@@ -1,141 +1,189 @@
 #include "../cub3d.h"
 
 
+typedef struct s_raycast
+{
+	int i;
+	double camx;
+	double rdirx;
+	double rdiry;
+	double wx;
+	double stp;
+	double texp;
+	int texx;
+	int texy;
+	int mapx;
+	int mapy;
+	double sdx;
+	double sdy;
+	double ddx;
+	double ddy;
+	double pwd;
+	int stpx;
+	int stpy;
+	int lineh;
+	int draws;
+	int drawe;
+}   t_raycast;
+
+
+static int  calc_line_height(t_vars *vars, t_raycast *r, int side)
+{
+	int lineh;
+	if (side == 0)
+		r->pwd = (r->mapx - vars->p->px + (1 - r->stpx) / 2) / r->rdirx;
+	else
+		r->pwd = (r->mapy - vars->p->py + (1 - r->stpy) / 2) / r->rdiry;
+	lineh = (int)(vars->res->h / r->pwd);
+	return (lineh);
+}
+
+int	 dda(t_vars *vars, t_raycast *r)
+{
+	int side;
+	int hit;
+
+	hit = 0;
+	while (hit == 0)
+	{
+		if (r->sdx < r->sdy)
+		{
+			r->sdx += r->ddx;
+			r->mapx += r->stpx;
+			side = 0;
+		}
+		else
+		{
+			r->sdy += r->ddy;
+			r->mapy += r->stpy;
+			side = 1;
+		}
+		if (*(vars->map + sia(vars->collumn, r->mapx) + r->mapy) == 1)
+			hit = 1;
+	}
+
+	r->lineh = calc_line_height(vars, r, side);
+	r->draws = -r->lineh / 2 + vars->res->h / 2;
+	return (side);
+}
+
+static void init_dirs(t_vars *vars, t_raycast *r)
+{
+	r->camx = (2 * r->i) / ((double)vars->res->w) - 1;
+	r->rdirx = vars->p->dx + vars->p->plx * r->camx;
+	r->rdiry = vars->p->dy + vars->p->ply * r->camx;
+	r->mapx = (int)vars->p->px;
+	r->mapy = (int)vars->p->py;
+	r->ddx = fabs(1 / r->rdirx);
+	r->ddy = fabs(1 / r->rdiry);
+}
+
+static void calc_steps(t_vars *vars, t_raycast *r)
+{
+	if(r->rdirx < 0)
+	{
+		r->stpx = -1;
+		r->sdx = (vars->p->px - r->mapx) * r->ddx;
+	}
+	else
+	{
+		r->stpx = 1;
+		r->sdx = (r->mapx + 1.0 - vars->p->px) * r->ddx;
+	}
+	if(r->rdiry < 0)
+	{
+		r->stpy = -1;
+		r->sdy = (vars->p->py - r->mapy) * r->ddy;
+	}
+	else
+	{
+		r->stpy = 1;
+		r->sdy = (r->mapy + 1.0 - vars->p->py) * r->ddy;
+	}
+}
+
+static int  get_texnum(t_raycast *r, int side)
+{
+
+	if (side == 0 && r->rdirx >=0 )
+		return (0);
+	else if (side == 0 && r->rdirx < 0)
+		return (1);
+	else if (side == 1 && r->rdiry >= 0)
+		return (2);
+	else 
+		return (3);
+}
+
+void	fill_buffer(t_vars *vars, t_raycast *r, int y, int tn)
+{
+	int color;
+
+	while (y < r->drawe)
+	{
+		r->texy = (int)r->texp & (vars->text[tn]->height -1);
+		r->texp += r->stp;
+		color = vars->text[tn]->data[vars->text[tn]->width * r->texy + r->texx];
+		vars->buf[y][r->i] = color;
+		y++;
+	}
+}
+
+static void	 draw_wall(t_vars *vars, t_raycast *r, int side, int tn)
+{
+	int y;
+	y = 0;
+	if (r->draws < 0)
+		r->draws = 0;
+	r->drawe = r->lineh / 2 + vars->res->h / 2;
+	if (r->drawe >= vars->res->h || r->drawe < 0)
+		r->drawe = vars->res->h - 1;
+	if (side == 0)
+		r->wx = vars->p->py + r->pwd * r->rdiry;
+	else
+		r->wx = vars->p->px + r->pwd * r->rdirx;
+	r->wx -= floor(r->wx);
+	tn = get_texnum(r, side);
+	r->texx = (int)(r->wx * (double)vars->text[tn]->width);
+	r->texx = vars->text[tn]->width - r->texx -1;
+	r->stp = 1.0 * vars->text[tn]->height / r->lineh;
+	r->texp = (r->draws - (vars->res->h / 2) + (r->lineh / 2)) * r->stp;
+	y = r->draws;
+	fill_buffer(vars, r, y, tn);
+}
+
+static  void prep_image(t_vars *vars)
+{
+	vars->img = malloc(sizeof(t_img));
+	vars->img->ptr = mlx_new_image(vars->mlx, vars->res->w, vars->res->h );
+	vars->img->data = (int *)mlx_get_data_addr(vars->img->ptr, &vars->img->bpp, &vars->img->size_l, &vars->img->endian);
+}
 
 int		draw_frame(t_vars *vars)
 {
-    int w = vars->res->w;
-    int i = 0;
-    int color;
-    int *zbuffer;
-    double cameraX;
-    double rayDirX;
-    double rayDirY;
-    double wallX;
-    double step;
-    double texPos;
-    int texX;
-    int texY;
-    int mapX;
-    int mapY;
-    double sideDistX;
-    double sideDistY;
-    double deltaDistX;
-    double deltaDistY;
-    double perpWallDist;
-    int stepX;
-    int stepY;
-    int hit = 0;
-    int side = 0;
-    int lineHeight;
-    int h = vars->res->h;
-    int y;
-    int drawStart;
-    int drawEnd;
-    int texNum = 0;
+	int w = vars->res->w;
+	int *zbuffer;
+	t_raycast *r;
+	int side = 0;
+	int tn = 0;
 
-    zbuffer = malloc(sizeof(int) * w);
-    vars->img = malloc(sizeof(t_img));
-
-    vars->img->ptr = mlx_new_image(vars->mlx, vars->res->w, vars->res->h );
-    vars->img->data = (int *)mlx_get_data_addr(vars->img->ptr, &vars->img->bpp, &vars->img->size_l, &vars->img->endian);
-    i = 0;
-    while (i < w - 1)
-    {
-        cameraX = (2 * i) / ((double)w) - 1;
-        rayDirX = vars->p->dx + vars->p->plx * cameraX;
-        rayDirY = vars->p->dy + vars->p->ply * cameraX;
-
-        mapX = (int)vars->p->px;
-        mapY = (int)vars->p->py;
-
-        deltaDistX = fabs(1 / rayDirX);
-        deltaDistY = fabs(1 / rayDirY);
-        hit = 0;
-
-        if(rayDirX < 0)
-        {
-            stepX = -1;
-            sideDistX = (vars->p->px - mapX) * deltaDistX;
-        }
-        else
-        {
-            stepX = 1;
-            sideDistX = (mapX + 1.0 - vars->p->px) * deltaDistX;
-        }
-        if(rayDirY < 0)
-        {
-            stepY = -1;
-            sideDistY = (vars->p->py - mapY) * deltaDistY;
-        }
-        else
-        {
-            stepY = 1;
-            sideDistY = (mapY + 1.0 - vars->p->py) * deltaDistY;
-        }
-
-        while (hit == 0)
-        {
-            if (sideDistX < sideDistY)
-            {
-                sideDistX += deltaDistX;
-                mapX += stepX;
-                side = 0;
-            }
-            else
-            {
-                sideDistY += deltaDistY;
-                mapY += stepY;
-                side = 1;
-            }
-            if (*(vars->map + sia(vars->collumn, mapX) + mapY) == 1)
-                hit = 1;
-        }
-        if (side == 0)
-            perpWallDist = (mapX - vars->p->px + (1 - stepX) / 2) / rayDirX;
-        else
-            perpWallDist = (mapY - vars->p->py + (1 - stepY) / 2) / rayDirY;
-        lineHeight = (int)(h / perpWallDist);
-        drawStart = -lineHeight / 2 + h / 2;
-        if (drawStart < 0)
-            drawStart = 0;
-        drawEnd = lineHeight / 2 + h / 2;
-        if (drawEnd >= h || drawEnd < 0)
-            drawEnd = h - 1;
-        if (side == 0)
-            wallX = vars->p->py + perpWallDist * rayDirY;
-        else
-            wallX = vars->p->px + perpWallDist * rayDirX;
-        wallX -= floor(wallX);
-        if (side == 0 && rayDirX >=0 )
-            texNum = 0;
-        else if (side == 0 && rayDirX < 0)
-            texNum = 1;
-        else if (side == 1 && rayDirY >= 0)
-            texNum = 2;
-        else 
-            texNum = 3;
-        texX = (int)(wallX * (double)vars->text[texNum]->width);
-            texX = vars->text[texNum]->width - texX -1;
-        step = 1.0 * vars->text[texNum]->height / lineHeight;
-        texPos = (drawStart - (h / 2) + (lineHeight / 2)) * step;
-        y = drawStart;
-        while (y < drawEnd)
-        {
-            texY = (int)texPos & (vars->text[texNum]->height -1);
-            texPos += step;
-            color = vars->text[texNum]->data[vars->text[texNum]->width * texY + texX];
-            vars->buf[y][i] = color;
-            y++;
-        }
-        draw_cieling(vars, i, drawStart);
-        draw_floor(vars, i, drawEnd);
-        zbuffer[i] = perpWallDist;
-        i++;
-    }
-    spritecaster(vars, texX, texY, zbuffer);
-    free(zbuffer);
-    draw(vars);
-    return (1);
+	r = malloc(sizeof(t_raycast));
+	zbuffer = malloc(sizeof(int) * w);
+	prep_image(vars);
+	r->i = -1;
+	while (++r->i < w - 1)
+	{
+		init_dirs(vars, r);
+		calc_steps(vars, r);
+		side = dda(vars, r);
+		draw_wall(vars, r, side, tn);
+		draw_cieling(vars, r->i, r->draws);
+		draw_floor(vars, r->i, r->drawe);
+		zbuffer[r->i] = r->pwd;
+	}
+	spritecaster(vars, r->texx, r->texy, zbuffer);
+	free(zbuffer);
+	free(r);
+	draw(vars);
+	return (1);
 }
-
