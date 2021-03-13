@@ -1,35 +1,9 @@
 #include "../cub3d.h"
 
-
-typedef struct s_raycast
+static int		calc_line_height(t_vars *vars, t_raycast *r, int side)
 {
-	int i;
-	double camx;
-	double rdirx;
-	double rdiry;
-	double wx;
-	double stp;
-	double texp;
-	int texx;
-	int texy;
-	int mapx;
-	int mapy;
-	double sdx;
-	double sdy;
-	double ddx;
-	double ddy;
-	double pwd;
-	int stpx;
-	int stpy;
-	int lineh;
-	int draws;
-	int drawe;
-}   t_raycast;
+	int			lineh;
 
-
-static int  calc_line_height(t_vars *vars, t_raycast *r, int side)
-{
-	int lineh;
 	if (side == 0)
 		r->pwd = (r->mapx - vars->p->px + (1 - r->stpx) / 2) / r->rdirx;
 	else
@@ -38,10 +12,10 @@ static int  calc_line_height(t_vars *vars, t_raycast *r, int side)
 	return (lineh);
 }
 
-int	 dda(t_vars *vars, t_raycast *r)
+int				dda(t_vars *vars, t_raycast *r)
 {
-	int side;
-	int hit;
+	int			side;
+	int			hit;
 
 	hit = 0;
 	while (hit == 0)
@@ -61,13 +35,12 @@ int	 dda(t_vars *vars, t_raycast *r)
 		if (*(vars->map + sia(vars->collumn, r->mapx) + r->mapy) == 1)
 			hit = 1;
 	}
-
 	r->lineh = calc_line_height(vars, r, side);
 	r->draws = -r->lineh / 2 + vars->res->h / 2;
 	return (side);
 }
 
-static void init_dirs(t_vars *vars, t_raycast *r)
+static void		init_dirs(t_vars *vars, t_raycast *r)
 {
 	r->camx = (2 * r->i) / ((double)vars->res->w) - 1;
 	r->rdirx = vars->p->dx + vars->p->plx * r->camx;
@@ -78,9 +51,9 @@ static void init_dirs(t_vars *vars, t_raycast *r)
 	r->ddy = fabs(1 / r->rdiry);
 }
 
-static void calc_steps(t_vars *vars, t_raycast *r)
+static void		calc_steps(t_vars *vars, t_raycast *r)
 {
-	if(r->rdirx < 0)
+	if (r->rdirx < 0)
 	{
 		r->stpx = -1;
 		r->sdx = (vars->p->px - r->mapx) * r->ddx;
@@ -90,7 +63,7 @@ static void calc_steps(t_vars *vars, t_raycast *r)
 		r->stpx = 1;
 		r->sdx = (r->mapx + 1.0 - vars->p->px) * r->ddx;
 	}
-	if(r->rdiry < 0)
+	if (r->rdiry < 0)
 	{
 		r->stpy = -1;
 		r->sdy = (vars->p->py - r->mapy) * r->ddy;
@@ -102,26 +75,25 @@ static void calc_steps(t_vars *vars, t_raycast *r)
 	}
 }
 
-static int  get_texnum(t_raycast *r, int side)
+static int		get_texnum(t_raycast *r, int side)
 {
-
-	if (side == 0 && r->rdirx >=0 )
+	if (side == 0 && r->rdirx >= 0)
 		return (0);
 	else if (side == 0 && r->rdirx < 0)
 		return (1);
 	else if (side == 1 && r->rdiry >= 0)
 		return (2);
-	else 
+	else
 		return (3);
 }
 
-void	fill_buffer(t_vars *vars, t_raycast *r, int y, int tn)
+void			fill_buffer(t_vars *vars, t_raycast *r, int y, int tn)
 {
 	int color;
 
 	while (y < r->drawe)
 	{
-		r->texy = (int)r->texp & (vars->text[tn]->height -1);
+		r->texy = (int)r->texp & (vars->text[tn]->height - 1);
 		r->texp += r->stp;
 		color = vars->text[tn]->data[vars->text[tn]->width * r->texy + r->texx];
 		vars->buf[y][r->i] = color;
@@ -129,9 +101,10 @@ void	fill_buffer(t_vars *vars, t_raycast *r, int y, int tn)
 	}
 }
 
-static void	 draw_wall(t_vars *vars, t_raycast *r, int side, int tn)
+static void		draw_wall(t_vars *vars, t_raycast *r, int side, int tn)
 {
 	int y;
+
 	y = 0;
 	if (r->draws < 0)
 		r->draws = 0;
@@ -145,33 +118,36 @@ static void	 draw_wall(t_vars *vars, t_raycast *r, int side, int tn)
 	r->wx -= floor(r->wx);
 	tn = get_texnum(r, side);
 	r->texx = (int)(r->wx * (double)vars->text[tn]->width);
-	r->texx = vars->text[tn]->width - r->texx -1;
+	r->texx = vars->text[tn]->width - r->texx - 1;
 	r->stp = 1.0 * vars->text[tn]->height / r->lineh;
 	r->texp = (r->draws - (vars->res->h / 2) + (r->lineh / 2)) * r->stp;
 	y = r->draws;
 	fill_buffer(vars, r, y, tn);
 }
 
-static  void prep_image(t_vars *vars)
+void			prep_image(t_vars *vars)
 {
 	vars->img = malloc(sizeof(t_img));
-	vars->img->ptr = mlx_new_image(vars->mlx, vars->res->w, vars->res->h );
-	vars->img->data = (int *)mlx_get_data_addr(vars->img->ptr, &vars->img->bpp, &vars->img->size_l, &vars->img->endian);
+	vars->img->ptr = mlx_new_image(vars->mlx, vars->res->w, vars->res->h);
+	vars->img->data = \
+			(int *)mlx_get_data_addr(vars->img->ptr, &vars->img->bpp, \
+			&vars->img->size_l, &vars->img->endian);
 }
 
-int		draw_frame(t_vars *vars)
+void			draw_frame(t_vars *vars)
 {
-	int w = vars->res->w;
-	int *zbuffer;
-	t_raycast *r;
-	int side = 0;
-	int tn = 0;
+	int			*zbuffer;
+	t_raycast	*r;
+	int			side;
+	int			tn;
 
+	side = 0;
+	tn = 0;
 	r = malloc(sizeof(t_raycast));
-	zbuffer = malloc(sizeof(int) * w);
+	zbuffer = malloc(sizeof(int) * vars->res->w);
 	prep_image(vars);
 	r->i = -1;
-	while (++r->i < w - 1)
+	while (++r->i < vars->res->w - 1)
 	{
 		init_dirs(vars, r);
 		calc_steps(vars, r);
@@ -185,5 +161,4 @@ int		draw_frame(t_vars *vars)
 	free(zbuffer);
 	free(r);
 	draw(vars);
-	return (1);
 }

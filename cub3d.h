@@ -15,83 +15,125 @@
 #define FCOLOR 0x0000FF00
 #define CCOLOR 0x00FFFFFF
 
+typedef struct  s_raysprite
+{
+	double sx;
+	double sy;
+	double invd;
+	double tx;
+	double ty;
+	int     ssx;
+	int     dsx;
+	int     dsy;
+	int     dey;
+	int     dex;
+	int     sheight;
+	int     swidth;
+	int     i;
+	int num_sprite;
+	int *zbuffer;
+}   t_raysprite;
 
+typedef struct s_raycast
+{
+	int i;
+	double camx;
+	double rdirx;
+	double rdiry;
+	double wx;
+	double stp;
+	double texp;
+	int texx;
+	int texy;
+	int mapx;
+	int mapy;
+	double sdx;
+	double sdy;
+	double ddx;
+	double ddy;
+	double pwd;
+	int stpx;
+	int stpy;
+	int lineh;
+	int draws;
+	int drawe;
+}   t_raycast;
 
 typedef struct	s_keys {
-    int	w;
-    int	a;
-    int	s;
-    int	d;
-    int	l;
-    int	r;
+	int	w;
+	int	a;
+	int	s;
+	int	d;
+	int	l;
+	int	r;
 }		t_keys;
 
 
 typedef struct	s_res {
-    int	w;
-    int	h;
-    char *NO;
-    char *SO;
-    char *WE;
-    char *EA;
-    char *S;
-    int  C;
-    int  F;
+	int	w;
+	int	h;
+	char *NO;
+	char *SO;
+	char *WE;
+	char *EA;
+	char *S;
+	int  C;
+	int  F;
 }		t_res;
 
 typedef int (*fptr)(t_res *, char *);
 
 typedef struct	s_texpath {
-    char *NO;
-    char *SO;
-    char *WE;
-    char *EA;
+	char *NO;
+	char *SO;
+	char *WE;
+	char *EA;
 }		t_texpath;
 
 typedef struct	s_sprites {
-    double  x;
-    double  y;
-    int     texture;
-    double  dist;
+	double  x;
+	double  y;
+	int     texture;
+	double  dist;
 }		t_sprites;
 
 typedef struct  s_img {
-    void        *ptr;
-    int	*data;
-    int         width;
-    int         height;
+	void        *ptr;
+	int	*data;
+	int         width;
+	int         height;
 
-    int         bpp;
-    int         size_l;
-    int         endian;
+	int         bpp;
+	int         size_l;
+	int         endian;
 }			t_img;
 
 typedef struct  s_pos {
-    double          px;
-    double          py;
-    double          dx;
-    double          dy;
-    double          plx;
-    double          ply;
-    double          ms;
-    double          rs;
+	double          px;
+	double          py;
+	double          dx;
+	double          dy;
+	double          plx;
+	double          ply;
+	double          ms;
+	double          rs;
 }                       t_pos;
 
 typedef struct  s_vars {
-    void	    *mlx;
-    void	    *win;
-    t_pos	    *p;
-    t_img	    *img;
-    t_img	    *text[8];
-    t_img	    *sprite;
-    t_sprites   **sprites;
-    t_keys	    *keys;
-    t_res	    *res;
-    int		    **buf;
-    int		    **WorldMap;
-    int		    *map;
-    int		    *collumn;
-    int	    	map_h;
+	void	    *mlx;
+	void	    *win;
+	t_pos	    *p;
+	t_img	    *img;
+	t_img	    *text[8];
+	t_img	    *sprite;
+	t_sprites   **sprites;
+	t_keys	    *keys;
+	t_res	    *res;
+	int		    **buf;
+	int		    **WorldMap;
+	int		    *map;
+	int		    *collumn;
+	int	    	map_h;
 }               t_vars;
 
 void		pixel_put(t_img *image, int x, int y, int color);
@@ -106,7 +148,7 @@ int     button_press(int buttoncode, t_vars *vars);
 int     init_position(t_vars *vars);
 void    draw(t_vars *vars);
 int             key_hook(t_vars *vars);
-int		draw_frame(t_vars *vars);
+void		draw_frame(t_vars *vars);
 int map_to_struct(int *map, t_vars *vars);
 int     spritecaster(t_vars *vars, int texX, int texY, int *zbuffer);
 int     spritefinder(t_sprites **sprite, t_vars *vars);
@@ -123,7 +165,13 @@ void    innit_keys(t_vars *vars);
 int     get_value(t_vars *vars, int h, int w);
 int     check_map(t_vars *vars);
 int     init_sprites(t_vars *vars);
- int     free_sprites(t_vars *vars);
- int exit_game(t_vars *vars);
+int     free_sprites(t_vars *vars);
+int exit_game(t_vars *vars);
 int save_img(t_vars *vars,const char* fichier);
+int             init_sprites(t_vars *vars);
+int             free_sprites(t_vars *vars);
+int             count_sprites(t_vars *vars);
+int             sprite_sort(t_sprites **sprite, int num_sprites);
+void     swap_sprites(t_sprites *sprite1, t_sprites *sprite2);
+
 #endif
