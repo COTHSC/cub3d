@@ -10,6 +10,7 @@ SRCS = main.c \
 	utils/key_hook.c \
 	utils/spritefinder.c \
 	utils/sprite_utils.c \
+	utils/raycast_utils.c \
 	get_next_line/get_next_line.c \
 	get_next_line/get_next_line_utils.c \
 	utils/draw_floor_cieling.c \

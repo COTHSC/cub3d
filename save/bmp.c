@@ -7,49 +7,6 @@
 #include "../cub3d.h"
 #include <fcntl.h>
 
-Image* NouvelleImage(int w,int h)
-{
-	Image* I = malloc(sizeof(Image));
-	I->w = w;
-	I->h = h;
-	I->dat = calloc(1,w*h*sizeof(Pixel*));
-	return I;
-}
-
-Image* CopieImage(Image* I)
-{
-	Image* res;
-	if (!I)
-		return NULL;
-	res = NouvelleImage(I->w,I->h);
-	memcpy(res->dat,I->dat,I->w*I->h*sizeof(Pixel));
-	return res;
-}
-
-void DelImage(Image* I)
-{
-	if (I)
-	{
-		free(I->dat);
-		free(I);
-	}
-}
-
-void SetPixel(Image* I,int i,int j,Pixel p)
-{
-	assert(I && i>=0 && i<I->w && j>=0 && j<I->h);
-	I->dat[I->w*j+i] = p;
-}
-
-Pixel GetPixel(Image* I,int i,int j)
-{
-	assert(I && i>=0 && i<I->w && j>=0 && j<I->h);
-	return I->dat[I->w*j+i];
-}
-
-typedef int int32;
-typedef short int16;
-
 void    ft_header(t_vars *vars, int fd)
 {
     int tmp;
