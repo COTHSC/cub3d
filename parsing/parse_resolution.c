@@ -6,7 +6,7 @@
 /*   By: jescully <jescully@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 16:23:04 by jescully          #+#    #+#             */
-/*   Updated: 2021/03/14 15:42:23 by jescully         ###   ########.fr       */
+/*   Updated: 2021/03/14 17:01:34 by jescully         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	free_farray(char **farray)
 	while (c < 8)
 		free(farray[c++]);
 }
-
+/*
 void		select_ft(t_vars *vars, char *buf, int j)
 {
 	char	**farray;
@@ -72,7 +72,7 @@ void		select_ft(t_vars *vars, char *buf, int j)
 		c++;
 	}
 }
-
+*/
 int			parse_lines(t_vars *vars, int fd)
 {
 	char	**farray;
@@ -97,8 +97,18 @@ int			parse_lines(t_vars *vars, int fd)
 				(*functions[c])(vars->res, buf);
 			else if (ft_isdigit(buf[j]))
 			{
-				parse_map(vars, buf, h++);
-				break ;
+				//check the rest;
+				if (!check_struct(vars->res))
+				{
+					printf("error \n");
+					exit_game(vars, 0);
+					return (0);
+				}	
+
+				h = parse_map(vars, fd);
+				free(buf);
+				free_farray(farray);
+				return (h);
 			}
 			c++;
 		}
@@ -386,31 +396,39 @@ int				realloc_map(t_vars *vars, int length, int h)
 	return (0);
 }
 
-void			parse_map(t_vars *vars, char *buf, int h)
+int			parse_map(t_vars *vars, int fd)
 {
 	int			length;
 	int			j;
 	int			i;
+	char 		*buf;
+	int 		h;
 
-	length = ft_strlen(buf) + 1;
-	j = realloc_map(vars, length, h);
-	i = -1;
-	*(vars->map + sia(vars->collumn, h) + j++) = 5;
-	while (buf[++i])
+	h = 0;
+	while(get_next_line(fd, &buf) != 0)
 	{
-		if (buf[i] == '1')
-			*(vars->map + sia(vars->collumn, h) + j++) = 1;
-		else if (buf[i] == '0')
-			*(vars->map + sia(vars->collumn, h) + j++) = 0;
-		else if (buf[i] == '2')
-			*(vars->map + sia(vars->collumn, h) + j++) = 2;
-		else if (ft_strchr("NSEW", buf[i]))
+		length = ft_strlen(buf) + 1;
+		j = realloc_map(vars, length, h);
+		i = -1;
+		*(vars->map + sia(vars->collumn, h) + j++) = 5;
+		while (buf[++i])
 		{
-			*(vars->map + sia(vars->collumn, h) + j++) = 0;
-			save_position(vars, buf[i], h, j);
+			if (buf[i] == '1')
+				*(vars->map + sia(vars->collumn, h) + j++) = 1;
+			else if (buf[i] == '0')
+				*(vars->map + sia(vars->collumn, h) + j++) = 0;
+			else if (buf[i] == '2')
+				*(vars->map + sia(vars->collumn, h) + j++) = 2;
+			else if (ft_strchr("NSEW", buf[i]))
+			{
+				*(vars->map + sia(vars->collumn, h) + j++) = 0;
+				save_position(vars, buf[i], h, j);
+			}
+			else
+				*(vars->map + sia(vars->collumn, h) + j++) = 5;
 		}
-		else
-			*(vars->map + sia(vars->collumn, h) + j++) = 5;
+		*(vars->map + sia(vars->collumn, h) + j) = 5;
+		h++;
 	}
-	*(vars->map + sia(vars->collumn, h) + j) = 5;
+	return (h);
 }

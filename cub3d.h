@@ -159,7 +159,7 @@ int     parse_paths(t_res *res, char *buf);
 int     parse_sprite(t_res *res, char *buf);
 int     parse_colors(t_res *res, char *buf);
 int     ft_get_color(int r, int g, int b);
-void     parse_map(t_vars *vars, char *buf, int h);
+int     parse_map(t_vars *vars, int fd);
 int     sia(int *array, int h);
 void    innit_keys(t_vars *vars);
 int     get_value(t_vars *vars, int h, int w);
@@ -177,5 +177,6 @@ void            prep_image(t_vars *vars);
 int     get_texnum(t_raycast *r, int side);
 void        init_dirs(t_vars *vars, t_raycast *r);
 int     calc_line_height(t_vars *vars, t_raycast *r, int side);
+int check_struct(t_res *res);
 
 #endif

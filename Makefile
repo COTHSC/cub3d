@@ -3,6 +3,7 @@ NAME = cub3D
 SRCS = main.c \
 	utils/reset_buffer.c \
 	parsing/parse_resolution.c \
+	parsing/check_config.c \
 	utils/keys.c \
 	utils/draw.c \
 	utils/draw_frame.c \
