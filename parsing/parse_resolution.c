@@ -6,7 +6,7 @@
 /*   By: jescully <jescully@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 16:23:04 by jescully          #+#    #+#             */
-/*   Updated: 2021/03/13 16:57:22 by jescully         ###   ########.fr       */
+/*   Updated: 2021/03/14 15:42:23 by jescully         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -274,7 +274,6 @@ int			init_orientation(t_vars *vars, double h)
 
 	if (h == 0)
 		return (0);
-	printf("this is rot %f \n", h);
 	odx = vars->p->dx;
 	vars->p->dx = vars->p->dx * cos(h) - vars->p->dy * sin(h);
 	vars->p->dy = odx * sin(h) + vars->p->dy * cos(-h);
@@ -296,8 +295,8 @@ int			save_position(t_vars *vars, char c, int h, int i)
 		rot = 3 * M_PI / 2;
 	else if (c == 'W')
 		rot = M_PI / 2;
-	vars->p->px = (double)h;
-	vars->p->py = (double)i;
+	vars->p->px = (double)h + 0.5;
+	vars->p->py = (double)i - 0.5;
 	vars->p->dx = -1;
 	vars->p->dy = 0;
 	vars->p->plx = 0;

@@ -6,7 +6,7 @@
 /*   By: jescully <jescully@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 14:54:31 by jescully          #+#    #+#             */
-/*   Updated: 2021/03/13 14:54:37 by jescully         ###   ########.fr       */
+/*   Updated: 2021/03/14 15:28:28 by jescully         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ static void		draw_wall(t_vars *vars, t_raycast *r, int side, int tn)
 
 void			draw_frame(t_vars *vars)
 {
-	int			*zbuffer;
+	double		*zbuffer;
 	t_raycast	*r;
 	int			side;
 	int			tn;
@@ -112,7 +112,7 @@ void			draw_frame(t_vars *vars)
 	side = 0;
 	tn = 0;
 	r = malloc(sizeof(t_raycast));
-	zbuffer = malloc(sizeof(int) * vars->res->w);
+	zbuffer = malloc(sizeof(double) * vars->res->w);
 	prep_image(vars);
 	r->i = -1;
 	while (++r->i < vars->res->w - 1)
@@ -121,9 +121,9 @@ void			draw_frame(t_vars *vars)
 		calc_steps(vars, r);
 		side = dda(vars, r);
 		draw_wall(vars, r, side, tn);
+		zbuffer[r->i] = r->pwd;
 		draw_cieling(vars, r->i, r->draws);
 		draw_floor(vars, r->i, r->drawe);
-		zbuffer[r->i] = r->pwd;
 	}
 	spritecaster(vars, r->texx, r->texy, zbuffer);
 	free(zbuffer);

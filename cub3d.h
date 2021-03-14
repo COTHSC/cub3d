@@ -31,7 +31,7 @@ typedef struct  s_raysprite
 	int     swidth;
 	int     i;
 	int num_sprite;
-	int *zbuffer;
+	double *zbuffer;
 }   t_raysprite;
 
 typedef struct s_raycast
@@ -150,7 +150,7 @@ void    draw(t_vars *vars);
 int             key_hook(t_vars *vars);
 void		draw_frame(t_vars *vars);
 int map_to_struct(int *map, t_vars *vars);
-int     spritecaster(t_vars *vars, int texX, int texY, int *zbuffer);
+int     spritecaster(t_vars *vars, int texX, int texY, double *zbuffer);
 int     spritefinder(t_sprites **sprite, t_vars *vars);
 int			get_next_line(int const fd, char **line);
 int     parse_resolution(t_res *res, char *buf);
@@ -166,7 +166,7 @@ int     get_value(t_vars *vars, int h, int w);
 int     check_map(t_vars *vars);
 int     init_sprites(t_vars *vars);
 int     free_sprites(t_vars *vars);
-int exit_game(t_vars *vars);
+int exit_game(t_vars *vars, int bol);
 int save_img(t_vars *vars,const char* fichier);
 int             init_sprites(t_vars *vars);
 int             free_sprites(t_vars *vars);

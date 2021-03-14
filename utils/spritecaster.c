@@ -6,7 +6,7 @@
 /*   By: jescully <jescully@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 14:56:49 by jescully          #+#    #+#             */
-/*   Updated: 2021/03/13 14:56:52 by jescully         ###   ########.fr       */
+/*   Updated: 2021/03/14 15:29:01 by jescully         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static	void		init_sprite_dir(t_vars *vars, t_raysprite *r)
 	r->sy = vars->sprites[r->i]->y - vars->p->py;
 	r->invd = 1.0 / (vars->p->plx * vars->p->dy - vars->p->dx * vars->p->ply);
 	r->tx = r->invd * (vars->p->dy * r->sx - vars->p->dx * r->sy);
-	r->ty = r->invd * (-vars->p->ply * r->sx + vars->p->plx * r->sy);
+	r->ty = r->invd * (((-1) * vars->p->ply) * r->sx + vars->p->plx * r->sy);
 	r->ssx = (int)((vars->res->w / 2) * (1 + r->tx / r->ty));
 	r->sheight = abs((int)(vars->res->h / r->ty));
 	r->dsy = -r->sheight / 2 + vars->res->h / 2;
@@ -79,7 +79,7 @@ static void			fill_raysprite(t_vars *vars, t_raysprite *r)
 		r->dex = vars->res->w - 1;
 }
 
-int					spritecaster(t_vars *vars, int texx, int texy, int *zbuffer)
+int					spritecaster(t_vars *vars, int texx, int texy, double *zbuffer)
 {
 	t_raysprite		*r;
 

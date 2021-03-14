@@ -6,13 +6,13 @@
 /*   By: jescully <jescully@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 14:56:09 by jescully          #+#    #+#             */
-/*   Updated: 2021/03/13 14:56:12 by jescully         ###   ########.fr       */
+/*   Updated: 2021/03/14 15:35:12 by jescully         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-int		exit_game(t_vars *vars)
+int		exit_game(t_vars *vars, int bol)
 {
 	int i;
 
@@ -27,8 +27,11 @@ int		exit_game(t_vars *vars)
 	while (i < 4)
 		free(vars->text[i++]);
 	free(vars->map);
-	mlx_clear_window(vars->mlx, vars->win);
-	mlx_destroy_window(vars->mlx, vars->win);
+	if (bol == 1)
+	{
+		mlx_clear_window(vars->mlx, vars->win);
+		mlx_destroy_window(vars->mlx, vars->win);
+	}
 	exit(0);
 	return (1);
 }
@@ -46,7 +49,7 @@ void	innit_keys(t_vars *vars)
 int		key_press(int keycode, t_vars *vars)
 {
 	if (keycode == 65307)
-		exit_game(vars);
+		exit_game(vars, 1);
 	if (keycode == 119)
 		vars->keys->w = 1;
 	if (keycode == 115)

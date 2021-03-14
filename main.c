@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raycasting.c                                       :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jescully <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 14:14:27 by jescully          #+#    #+#             */
-/*   Updated: 2021/02/16 11:17:10 by jescully         ###   ########.fr       */
+/*   Updated: 2021/03/14 15:35:23 by jescully         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,7 @@ int main(int argc, char **argv)
 	while (i < 4)
 		vars.text[i++] = (t_img *)malloc(sizeof(t_img));
 	vars.mlx = mlx_init();
-	vars.win = mlx_new_window(vars.mlx, vars.res->w, vars.res->h, "Hello world!");
 	load_texture(&vars);
-
     i = 0;
     vars.buf = malloc(sizeof(int *) * vars.res->h);
     while (i < vars.res->h)
@@ -60,10 +58,11 @@ int main(int argc, char **argv)
     if(check_map(&vars) == -1)
     {
         printf("Error, Map in invalid \n");
-        exit_game(&vars);
+        exit_game(&vars, 0);
         return 0;
     }
-
+	
+	vars.win = mlx_new_window(vars.mlx, vars.res->w, vars.res->h, "Hello world!");
 	mlx_hook(vars.win, 2, 1L << 0, &key_press, &vars);
 	mlx_hook(vars.win, 3, 1L << 1, &key_release, &vars);
 	mlx_hook(vars.win, 33, 1L << 17, &exit_game, &vars);
