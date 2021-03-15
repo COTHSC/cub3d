@@ -1,4 +1,4 @@
-R 680 480
+
 
 NO textures/wall_1.xpm
 SO textures/wall_2.xpm
@@ -6,7 +6,12 @@ WE textures/wall_3.xpm
 EA textures/wall_4.xpm
 S textures/sprite_1.xpm
 F 184,113,39
+
+
+
+
 C 51,198,227
+             R   680   480
                                          11111
 1       1                  111          11000111111111
 11111111111111111          101          11000000000001

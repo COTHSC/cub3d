@@ -6,7 +6,7 @@
 /*   By: jescully <jescully@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 16:23:04 by jescully          #+#    #+#             */
-/*   Updated: 2021/03/15 14:57:22 by jescully         ###   ########.fr       */
+/*   Updated: 2021/03/15 16:05:00 by jescully         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,11 @@ int			parse_lines(t_vars *vars, int fd)
 			j++;
 		while (c < 8)
 		{
-			if (ft_strnstr(buf, farray[c], 3))
+			if (ft_strnstr(&buf[j], farray[c], 3))
 			{
 				if (!(*functions[c])(vars->res, buf))
 				{
-					printf("Error funct\n");
+					printf("Error\n funct\n");
 					exit_game(vars, 0);
 				}
 			}
@@ -98,7 +98,7 @@ int			parse_lines(t_vars *vars, int fd)
 		free(buf);
 	}
 	free_farray(farray);
-	printf("Error no map?\n");
+	printf("Error\n no map?\n");
 	exit_game(vars, 0);
 	return (0);
 }
@@ -168,13 +168,15 @@ int			parse_resolution(t_res *res, char *buf)
 	res->w = ft_atoi(&buf[i]);
 	while (ft_isdigit(buf[i]))
 		i++;
-	while (!ft_isdigit(buf[i]))
+	while (!ft_isdigit(buf[i]) && buf[i])
 	{
 		if (buf[i] != ' ' && buf[i] != '\t' && buf[i] != 'R')
 			return (0);
 		i++;
 
 	}
+	//if (buf[i] == '\0')
+	//	return (0);
 	res->h = ft_atoi(&buf[i]);
 	return (1);
 }
@@ -409,7 +411,9 @@ int			parse_map(t_vars *vars, int fd)
 	int			i;
 	char 		*buf;
 	int 		h;
-
+	int bol;
+	
+	bol = 0;
 	h = 0;
 	while(get_next_line(fd, &buf) != 0)
 	{
@@ -430,6 +434,7 @@ int			parse_map(t_vars *vars, int fd)
 				{
 					*(vars->map + sia(vars->collumn, h) + j++) = 0;
 					save_position(vars, buf[i], h, j);
+					bol++;
 				}
 				else
 					*(vars->map + sia(vars->collumn, h) + j++) = 5;
@@ -440,5 +445,11 @@ int			parse_map(t_vars *vars, int fd)
 
 	}
 	free(buf);
+	if (bol != 1)
+	{
+		printf("Error\n");
+		exit_game(vars, 0);
+	}
+
 	return (h);
 }
