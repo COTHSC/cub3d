@@ -6,7 +6,7 @@
 /*   By: jescully <jescully@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 14:56:09 by jescully          #+#    #+#             */
-/*   Updated: 2021/03/14 15:35:12 by jescully         ###   ########.fr       */
+/*   Updated: 2021/03/15 07:14:11 by jescully         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,12 @@ int		exit_game(t_vars *vars, int bol)
 	int i;
 
 	i = 0;
-	free_sprites(vars);
-	free(vars->p);
-	free(vars->keys);
+	if (bol)
+	{
+		free_sprites(vars);
+		free(vars->p);
+		free(vars->keys);
+	
 	i = 0;
 	while (i < 4)
 		mlx_destroy_image(vars->mlx, vars->text[i++]->ptr);
@@ -27,6 +30,7 @@ int		exit_game(t_vars *vars, int bol)
 	while (i < 4)
 		free(vars->text[i++]);
 	free(vars->map);
+	}
 	if (bol == 1)
 	{
 		mlx_clear_window(vars->mlx, vars->win);

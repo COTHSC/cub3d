@@ -6,7 +6,7 @@
 /*   By: jescully <jescully@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 16:23:04 by jescully          #+#    #+#             */
-/*   Updated: 2021/03/14 17:01:34 by jescully         ###   ########.fr       */
+/*   Updated: 2021/03/15 10:05:00 by jescully         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,32 +47,9 @@ static void	free_farray(char **farray)
 	c = 0;
 	while (c < 8)
 		free(farray[c++]);
+	free(farray);
 }
-/*
-void		select_ft(t_vars *vars, char *buf, int j)
-{
-	char	**farray;
-	fptr	functions[8];
-	int 	c;
-	int		h;
 
-	h = 0;
-	c = 0;
-	farray = malloc(sizeof(char *) * 8);
-	innit_arrayf(farray, functions);
-	while (c < 8)
-	{
-		if (ft_strnstr(buf, farray[c], 3))
-			(*functions[c])(vars->res, buf);
-		else if (ft_isdigit(buf[j]))
-		{
-			parse_map(vars, buf, h++);
-			break ;
-		}
-		c++;
-	}
-}
-*/
 int			parse_lines(t_vars *vars, int fd)
 {
 	char	**farray;
@@ -94,13 +71,20 @@ int			parse_lines(t_vars *vars, int fd)
 		while (c < 8)
 		{
 			if (ft_strnstr(buf, farray[c], 3))
-				(*functions[c])(vars->res, buf);
+			{
+				if (!(*functions[c])(vars->res, buf))
+				{
+					printf("Error\n");
+					exit_game(vars, 0);
+				}
+			}
 			else if (ft_isdigit(buf[j]))
 			{
-				//check the rest;
 				if (!check_struct(vars->res))
 				{
-					printf("error \n");
+					printf("Error\n");
+					free(buf);
+					free_farray(farray);
 					exit_game(vars, 0);
 					return (0);
 				}	
@@ -134,10 +118,18 @@ int			parse_colors(t_res *res, char *buf)
 		i++;
 	r = ft_atoi(&buf[i]);
 	while (buf[i] != ',')
+	{
+		if (!ft_isdigit(buf[i]))
+			return (0);
 		i++;
+	}
 	g = ft_atoi(&buf[i + 1]);
 	while (buf[i] != ',')
+	{
+		if (!ft_isdigit(buf[i]))
+			return (0);
 		i++;
+	}
 	b = ft_atoi(&buf[i + 1]);
 	color = ft_get_color(r, g, b);
 	if (ft_strnstr(buf, "F ", 3))
@@ -166,12 +158,22 @@ int			parse_resolution(t_res *res, char *buf)
 		return (0);
 	i = 0;
 	while (!ft_isdigit(buf[i]))
+	{
+		if (buf[i] != ' ' && buf[i] != '\t' && buf[i] != 'R')
+			return (0);
 		i++;
+
+	}
 	res->w = ft_atoi(&buf[i]);
 	while (ft_isdigit(buf[i]))
 		i++;
 	while (!ft_isdigit(buf[i]))
+	{
+		if (buf[i] != ' ' && buf[i] != '\t' && buf[i] != 'R')
+			return (0);
 		i++;
+
+	}
 	res->h = ft_atoi(&buf[i]);
 	return (1);
 }
@@ -338,7 +340,7 @@ int			check_map(t_vars *vars)
 	int		w;
 	int		ret;
 
-	h = 1;
+	h = 0;
 	ret = 0;
 	while (h < vars->map_h)
 	{
@@ -428,7 +430,9 @@ int			parse_map(t_vars *vars, int fd)
 				*(vars->map + sia(vars->collumn, h) + j++) = 5;
 		}
 		*(vars->map + sia(vars->collumn, h) + j) = 5;
+		free(buf);
 		h++;
 	}
+	free(buf);
 	return (h);
 }

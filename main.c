@@ -6,24 +6,34 @@
 /*   By: jescully <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 14:14:27 by jescully          #+#    #+#             */
-/*   Updated: 2021/03/14 15:35:23 by jescully         ###   ########.fr       */
+/*   Updated: 2021/03/15 07:44:07 by jescully         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	load_image(t_vars *vars, t_img *img, char *path)
+int		load_image(t_vars *vars, t_img *img, char *path)
 {
+
 	img->ptr = mlx_xpm_file_to_image(vars->mlx, path, &img->width, &img->height);
+	if (img->ptr == NULL)
+		return (0);
 	img->data = (int *)mlx_get_data_addr(img->ptr, &img->bpp, &img->size_l, &img->endian);
+	return (1);
 }
 
-void	load_texture (t_vars *vars)
+int		load_texture (t_vars *vars)
 {
-	load_image(vars, vars->text[0], vars->res->EA);
-	load_image(vars, vars->text[1], vars->res->WE);
-	load_image(vars, vars->text[2], vars->res->SO);
-	load_image(vars, vars->text[3], vars->res->NO);
+	int i;
+
+	i = 0;
+	i += load_image(vars, vars->text[0], vars->res->EA);
+	i += load_image(vars, vars->text[1], vars->res->WE);
+	i += load_image(vars, vars->text[2], vars->res->SO);
+	i += load_image(vars, vars->text[3], vars->res->NO);
+	if (i == 4)
+		return (1);
+	return (0);
 }
 
 void	load_sprites(t_vars *vars)
@@ -46,8 +56,18 @@ int main(int argc, char **argv)
 	innit_keys(&vars);
 	while (i < 4)
 		vars.text[i++] = (t_img *)malloc(sizeof(t_img));
+    if(check_map(&vars) == -1)
+    {
+        printf("Error\n Map in invalid \n");
+        exit_game(&vars, 0);
+        return 0;
+    }
 	vars.mlx = mlx_init();
-	load_texture(&vars);
+	if (!load_texture(&vars))
+	{		
+        printf("Error\n textures invalid \n");
+		exit_game(&vars, 0);
+	}
     i = 0;
     vars.buf = malloc(sizeof(int *) * vars.res->h);
     while (i < vars.res->h)
@@ -55,12 +75,7 @@ int main(int argc, char **argv)
     vars.sprite = (t_img *)malloc(sizeof(t_img));
 	load_sprites(&vars);
     init_sprites(&vars);
-    if(check_map(&vars) == -1)
-    {
-        printf("Error, Map in invalid \n");
-        exit_game(&vars, 0);
-        return 0;
-    }
+
 	
 	vars.win = mlx_new_window(vars.mlx, vars.res->w, vars.res->h, "Hello world!");
 	mlx_hook(vars.win, 2, 1L << 0, &key_press, &vars);
