@@ -6,7 +6,7 @@
 /*   By: jescully <jescully@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 16:23:04 by jescully          #+#    #+#             */
-/*   Updated: 2021/03/15 13:05:44 by jescully         ###   ########.fr       */
+/*   Updated: 2021/03/15 14:57:22 by jescully         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int			parse_lines(t_vars *vars, int fd)
 			{
 				if (!(*functions[c])(vars->res, buf))
 				{
-					printf("Error\n");
+					printf("Error funct\n");
 					exit_game(vars, 0);
 				}
 			}
@@ -98,7 +98,7 @@ int			parse_lines(t_vars *vars, int fd)
 		free(buf);
 	}
 	free_farray(farray);
-	printf("Error\n");
+	printf("Error no map?\n");
 	exit_game(vars, 0);
 	return (0);
 }
@@ -334,50 +334,6 @@ int			sia(int *array, int h)
 	}
 	return (result);
 }
-/*
-   int			check_map(t_vars *vars)
-   {
-   int		h;
-   int		w;
-   int		ret;
-
-   h =1;
-   ret = 0;
-   while (h < vars->map_h)
-   {
-   w = 1;
-   while (w < vars->collumn[h] && w < vars->collumn[h - 1])
-   {
-   if (get_value(vars, h, w) + get_value(vars, h - 1, w) == 5)
-   ret = -1;
-   if (get_value(vars, h, w) + get_value(vars, h, w - 1) == 5)
-   ret = -1;
-   if (get_value(vars, h, w) + get_value(vars, h - 1, w) == 7)
-   ret = -1;
-   if (get_value(vars, h, w) + get_value(vars, h, w - 1) == 7)
-   ret = -1;
-   w++;
-   }
-   w = 1;
-
-   while (w < vars->collumn[h])
-   {
-   if (get_value(vars, 0, w) == 0)
-   ret = -1;
-   if (get_value(vars, h, w) == 0 && w > vars->collumn[h + 1])
-   ret = -1;
-   if (get_value(vars, h, w) == 2 && w > vars->collumn[h + 1])
-   ret = -1;
-   if (get_value(vars, h, w) == 0 && w > vars->collumn[h - 1])
-   ret = -1;
-   if (get_value(vars, h, w) == 2 && w > vars->collumn[h - 1])
-   ret = -1;
-   w++;
-   }
-   h++;
-   }
-   return (ret);
-   }*/
 
 int			check_map(t_vars *vars)
 {
@@ -387,7 +343,7 @@ int			check_map(t_vars *vars)
 
 	h = 1;
 	ret = 0;
-	while (h <= vars->map_h)
+	while (h < vars->map_h)
 	{
 		w = 1;
 		while (w < vars->collumn[h] && w < vars->collumn[h - 1])
@@ -405,11 +361,15 @@ int			check_map(t_vars *vars)
 			if (get_value(vars, h, 0) == 0)
 				ret = -1;
 			if (get_value(vars, h, w) == 0 && w == (vars->collumn[h] - 1))
+				ret = -1;
+			if (get_value(vars, h, w) == 0 && w >= (vars->collumn[h - 1] - 1))
 			{
 				ret = -1;
-				printf("this is h %i and w %i, and col size %i\n",h,w , vars->collumn[h]);
-				printf("this is val %i\n", get_value(vars,1 ,1));
+				printf("here h %i and w %i \n", h, w);
 			}
+
+			if (get_value(vars, h, w) == 0 && h == vars->map_h - 1)
+				ret = -1;
 			w++;
 		}
 		h++;
