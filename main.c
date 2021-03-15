@@ -6,7 +6,7 @@
 /*   By: jescully <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 14:14:27 by jescully          #+#    #+#             */
-/*   Updated: 2021/03/15 07:44:07 by jescully         ###   ########.fr       */
+/*   Updated: 2021/03/15 11:34:48 by jescully         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,11 @@ int main(int argc, char **argv)
 	while (i < 4)
 		vars.text[i++] = (t_img *)malloc(sizeof(t_img));
     if(check_map(&vars) == -1)
-    {
-        printf("Error\n Map in invalid \n");
-        exit_game(&vars, 0);
-        return 0;
-    }
+   	{
+       printf("Error\n Map in invalid \n");
+       exit_game(&vars, 0);
+       return 0;
+  	}
 	vars.mlx = mlx_init();
 	if (!load_texture(&vars))
 	{		

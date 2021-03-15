@@ -6,7 +6,7 @@
 /*   By: jescully <jescully@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 16:23:04 by jescully          #+#    #+#             */
-/*   Updated: 2021/03/15 10:05:00 by jescully         ###   ########.fr       */
+/*   Updated: 2021/03/15 13:05:44 by jescully         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../libft/libft.h"
 #include <fcntl.h>
 
-int			innit_arrayf(char **farray, fptr functions[8])
+int			innit_arrayf(char **farray, fptr functions[8], t_res *res)
 {
 	int		i;
 
@@ -37,7 +37,15 @@ int			innit_arrayf(char **farray, fptr functions[8])
 	functions[5] = &parse_sprite;
 	functions[6] = &parse_colors;
 	functions[7] = &parse_colors;
+	res->F = - 1;
+	res->C = - 1;
 	return (1);
+}
+
+void	init_fc(t_res *res)
+{
+	res->F = - 1;
+	res->C = - 1;
 }
 
 static void	free_farray(char **farray)
@@ -61,7 +69,7 @@ int			parse_lines(t_vars *vars, int fd)
 
 	h = 0;
 	farray = malloc(sizeof(char *) * 8);
-	innit_arrayf(farray, functions);
+	innit_arrayf(farray, functions, vars->res);
 	while (get_next_line(fd, &buf) != 0)
 	{
 		c = 0;
@@ -78,17 +86,8 @@ int			parse_lines(t_vars *vars, int fd)
 					exit_game(vars, 0);
 				}
 			}
-			else if (ft_isdigit(buf[j]))
+			if (check_struct(vars->res))
 			{
-				if (!check_struct(vars->res))
-				{
-					printf("Error\n");
-					free(buf);
-					free_farray(farray);
-					exit_game(vars, 0);
-					return (0);
-				}	
-
 				h = parse_map(vars, fd);
 				free(buf);
 				free_farray(farray);
@@ -99,7 +98,9 @@ int			parse_lines(t_vars *vars, int fd)
 		free(buf);
 	}
 	free_farray(farray);
-	return (h);
+	printf("Error\n");
+	exit_game(vars, 0);
+	return (0);
 }
 
 int			parse_colors(t_res *res, char *buf)
@@ -333,6 +334,50 @@ int			sia(int *array, int h)
 	}
 	return (result);
 }
+/*
+   int			check_map(t_vars *vars)
+   {
+   int		h;
+   int		w;
+   int		ret;
+
+   h =1;
+   ret = 0;
+   while (h < vars->map_h)
+   {
+   w = 1;
+   while (w < vars->collumn[h] && w < vars->collumn[h - 1])
+   {
+   if (get_value(vars, h, w) + get_value(vars, h - 1, w) == 5)
+   ret = -1;
+   if (get_value(vars, h, w) + get_value(vars, h, w - 1) == 5)
+   ret = -1;
+   if (get_value(vars, h, w) + get_value(vars, h - 1, w) == 7)
+   ret = -1;
+   if (get_value(vars, h, w) + get_value(vars, h, w - 1) == 7)
+   ret = -1;
+   w++;
+   }
+   w = 1;
+
+   while (w < vars->collumn[h])
+   {
+   if (get_value(vars, 0, w) == 0)
+   ret = -1;
+   if (get_value(vars, h, w) == 0 && w > vars->collumn[h + 1])
+   ret = -1;
+   if (get_value(vars, h, w) == 2 && w > vars->collumn[h + 1])
+   ret = -1;
+   if (get_value(vars, h, w) == 0 && w > vars->collumn[h - 1])
+   ret = -1;
+   if (get_value(vars, h, w) == 2 && w > vars->collumn[h - 1])
+   ret = -1;
+   w++;
+   }
+   h++;
+   }
+   return (ret);
+   }*/
 
 int			check_map(t_vars *vars)
 {
@@ -340,9 +385,9 @@ int			check_map(t_vars *vars)
 	int		w;
 	int		ret;
 
-	h = 0;
+	h = 1;
 	ret = 0;
-	while (h < vars->map_h)
+	while (h <= vars->map_h)
 	{
 		w = 1;
 		while (w < vars->collumn[h] && w < vars->collumn[h - 1])
@@ -355,17 +400,16 @@ int			check_map(t_vars *vars)
 				ret = -1;
 			if (get_value(vars, h, w) + get_value(vars, h, w - 1) == 7)
 				ret = -1;
-			w++;
-		}
-		w = 1;
-		while (w < vars->collumn[h])
-		{
 			if (get_value(vars, 0, w) == 0)
 				ret = -1;
-			if (get_value(vars, h, w) == 0 && w > vars->collumn[h + 1])
+			if (get_value(vars, h, 0) == 0)
 				ret = -1;
-			if (get_value(vars, h, w) == 2 && w > vars->collumn[h + 1])
+			if (get_value(vars, h, w) == 0 && w == (vars->collumn[h] - 1))
+			{
 				ret = -1;
+				printf("this is h %i and w %i, and col size %i\n",h,w , vars->collumn[h]);
+				printf("this is val %i\n", get_value(vars,1 ,1));
+			}
 			w++;
 		}
 		h++;
@@ -409,29 +453,31 @@ int			parse_map(t_vars *vars, int fd)
 	h = 0;
 	while(get_next_line(fd, &buf) != 0)
 	{
-		length = ft_strlen(buf) + 1;
-		j = realloc_map(vars, length, h);
-		i = -1;
-		*(vars->map + sia(vars->collumn, h) + j++) = 5;
-		while (buf[++i])
+		if (ft_strchr(buf, '1'))
 		{
-			if (buf[i] == '1')
-				*(vars->map + sia(vars->collumn, h) + j++) = 1;
-			else if (buf[i] == '0')
-				*(vars->map + sia(vars->collumn, h) + j++) = 0;
-			else if (buf[i] == '2')
-				*(vars->map + sia(vars->collumn, h) + j++) = 2;
-			else if (ft_strchr("NSEW", buf[i]))
+			length = ft_strlen(buf);
+			j = realloc_map(vars, length, h);
+			i = -1;
+			while (buf[++i])
 			{
-				*(vars->map + sia(vars->collumn, h) + j++) = 0;
-				save_position(vars, buf[i], h, j);
+				if (buf[i] == '1')
+					*(vars->map + sia(vars->collumn, h) + j++) = 1;
+				else if (buf[i] == '0')
+					*(vars->map + sia(vars->collumn, h) + j++) = 0;
+				else if (buf[i] == '2')
+					*(vars->map + sia(vars->collumn, h) + j++) = 2;
+				else if (ft_strchr("NSEW", buf[i]))
+				{
+					*(vars->map + sia(vars->collumn, h) + j++) = 0;
+					save_position(vars, buf[i], h, j);
+				}
+				else
+					*(vars->map + sia(vars->collumn, h) + j++) = 5;
 			}
-			else
-				*(vars->map + sia(vars->collumn, h) + j++) = 5;
+			h++;
 		}
-		*(vars->map + sia(vars->collumn, h) + j) = 5;
 		free(buf);
-		h++;
+
 	}
 	free(buf);
 	return (h);
