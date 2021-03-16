@@ -6,7 +6,7 @@
 /*   By: jescully <jescully@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 16:23:04 by jescully          #+#    #+#             */
-/*   Updated: 2021/03/15 16:05:00 by jescully         ###   ########.fr       */
+/*   Updated: 2021/03/16 07:58:21 by jescully         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ int			innit_arrayf(char **farray, fptr functions[8], t_res *res)
 	functions[5] = &parse_sprite;
 	functions[6] = &parse_colors;
 	functions[7] = &parse_colors;
-	res->F = - 1;
-	res->C = - 1;
+	res->F = -1;
+	res->C = -1;
 	return (1);
 }
 
@@ -58,6 +58,13 @@ static void	free_farray(char **farray)
 	free(farray);
 }
 
+int	ft_isspace(char c)
+{
+	if (c == ' ' || c == '\t')
+		return (1);
+	return (0);
+}
+
 int			parse_lines(t_vars *vars, int fd)
 {
 	char	**farray;
@@ -74,26 +81,28 @@ int			parse_lines(t_vars *vars, int fd)
 	{
 		c = 0;
 		j = 0;
-		while (buf[j] == ' ')
+		while (ft_isspace(buf[j]))
 			j++;
 		while (c < 8)
 		{
 			if (ft_strnstr(&buf[j], farray[c], 3))
 			{
-				if (!(*functions[c])(vars->res, buf))
+				if (!(*functions[c])(vars->res, &buf[j]))
 				{
 					printf("Error\n funct\n");
 					exit_game(vars, 0);
 				}
 			}
-			if (check_struct(vars->res))
-			{
-				h = parse_map(vars, fd);
-				free(buf);
-				free_farray(farray);
-				return (h);
-			}
 			c++;
+		}
+		if (check_struct(vars->res))
+		{
+
+			printf("I am In  \n");
+			h = parse_map(vars, fd);
+			free(buf);
+			free_farray(farray);
+			return (h);
 		}
 		free(buf);
 	}
@@ -113,22 +122,22 @@ int			parse_colors(t_res *res, char *buf)
 
 	i = 0;
 	color = 0;
-	if (!buf)
-		return (0);
+//	if (!buf)
+//		return (0);
 	while (!ft_isdigit(buf[i]))
 		i++;
 	r = ft_atoi(&buf[i]);
 	while (buf[i] != ',')
 	{
-		if (!ft_isdigit(buf[i]))
-			return (0);
+//		if (!ft_isdigit(buf[i]))
+//			return (0);
 		i++;
 	}
 	g = ft_atoi(&buf[i + 1]);
 	while (buf[i] != ',')
 	{
-		if (!ft_isdigit(buf[i]))
-			return (0);
+//		if (!ft_isdigit(buf[i]))
+//			return (0);
 		i++;
 	}
 	b = ft_atoi(&buf[i + 1]);
@@ -137,6 +146,7 @@ int			parse_colors(t_res *res, char *buf)
 		res->F = color;
 	else if (ft_strnstr(buf, "C ", 3))
 		res->C = color;
+	printf("this is col %X  %X \n" , res->F, res->C);
 	return (1);
 }
 
@@ -175,9 +185,9 @@ int			parse_resolution(t_res *res, char *buf)
 		i++;
 
 	}
-	//if (buf[i] == '\0')
-	//	return (0);
 	res->h = ft_atoi(&buf[i]);
+	
+	printf("this is R %i  %i \n" , res->w, res->h);
 	return (1);
 }
 
@@ -205,21 +215,25 @@ int			parse_paths(t_res *res, char *buf)
 	{
 		res->NO = malloc(length + 1);
 		ft_strlcpy(res->NO, &buf[start], length + 1);
+		printf("this is NO %s \n" , res->NO);
 	}
 	else if (ft_strnstr(buf, "SO", 3))
 	{
 		res->SO = malloc(length + 1);
 		ft_strlcpy(res->SO, &buf[start], length + 1);
+		printf("this is SO %s \n" , res->SO);
 	}
 	else if (ft_strnstr(buf, "WE", 3))
 	{
 		res->WE = malloc(length + 1);
 		ft_strlcpy(res->WE, &buf[start], length + 1);
+		printf("this is WE %s \n" , res->WE);
 	}
 	else if (ft_strnstr(buf, "EA", 3))
 	{
 		res->EA = malloc(length + 1);
 		ft_strlcpy(res->EA, &buf[start], length + 1);
+		printf("this is EA %s \n" , res->EA);
 	}
 	return (1);
 }

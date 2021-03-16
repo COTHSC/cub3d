@@ -6,7 +6,7 @@
 /*   By: jescully <jescully@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/14 16:22:32 by jescully          #+#    #+#             */
-/*   Updated: 2021/03/15 15:55:38 by jescully         ###   ########.fr       */
+/*   Updated: 2021/03/16 08:01:35 by jescully         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,14 @@ int	check_struct(t_res *res)
 		return (0);
 	if (res->EA == NULL)
 		return (0);
-	if (res->S == NULL)
-		return (0);
+//	if (res->S == NULL)
+//		return (0);
 	if (!check_paths(res))
+	{
+		printf("error paths \n");
 		return (0);
+	}
+
 
 
 	return (1);
