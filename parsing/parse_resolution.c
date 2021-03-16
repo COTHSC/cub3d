@@ -6,7 +6,7 @@
 /*   By: jescully <jescully@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 16:23:04 by jescully          #+#    #+#             */
-/*   Updated: 2021/03/16 12:05:26 by jescully         ###   ########.fr       */
+/*   Updated: 2021/03/16 15:32:23 by jescully         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@ int			innit_arrayf(char **farray, fptr functions[8], t_res *res)
 	i = 0;
 	while (i < 8)
 		farray[i++] = malloc(sizeof(char) * 4);
-	ft_strlcpy(farray[0], "R ", 3);
-	ft_strlcpy(farray[1], "NO ", 3);
-	ft_strlcpy(farray[2], "SO ", 3);
-	ft_strlcpy(farray[3], "WE ", 3);
-	ft_strlcpy(farray[4], "EA ", 3);
-	ft_strlcpy(farray[5], "S ", 3);
-	ft_strlcpy(farray[6], "F ", 3);
-	ft_strlcpy(farray[7], "C ", 3);
+	ft_strlcpy(farray[0], "R ", 4);
+	ft_strlcpy(farray[1], "NO ", 4);
+	ft_strlcpy(farray[2], "SO ", 4);
+	ft_strlcpy(farray[3], "WE ", 4);
+	ft_strlcpy(farray[4], "EA ", 4);
+	ft_strlcpy(farray[5], "S ", 4);
+	ft_strlcpy(farray[6], "F ", 4);
+	ft_strlcpy(farray[7], "C ", 4);
 	functions[0] = &parse_resolution;
 	functions[1] = &parse_paths;
 	functions[2] = &parse_paths;
@@ -75,6 +75,7 @@ int			parse_lines(t_vars *vars, int fd)
 	fptr	functions[8];
 
 	h = 0;
+	vars->res->count = 0;
 	farray = malloc(sizeof(char *) * 8);
 	innit_arrayf(farray, functions, vars->res);
 	while (get_next_line(fd, &buf) != 0)
@@ -85,13 +86,14 @@ int			parse_lines(t_vars *vars, int fd)
 			j++;
 		while (c < 8)
 		{
-			if (ft_strnstr(&buf[j], farray[c], 4))
+			if (!ft_strncmp(&buf[j], farray[c], ft_strlen(farray[c])))
 			{
 				if (!(*functions[c])(vars->res, &buf[j]))
 				{
 					printf("Error\n funct\n");
 					exit_game(vars, 0);
 				}
+				++vars->res->count;
 			}
 			c++;
 		}
@@ -145,7 +147,11 @@ int			parse_colors(t_res *res, char *buf)
 	if (!buf)
 		return (0);
 	while (!ft_isdigit(buf[i]))
+	{
+		if (!ft_isspace(buf[i]) && buf[i] != 'F' && buf[i] != 'C')
+			return (0);
 		i++;
+	}
 	r = ft_atoi(&buf[i]);
 	while (buf[i] != ',')
 	{
@@ -167,10 +173,12 @@ int			parse_colors(t_res *res, char *buf)
 	while (buf[i] && buf[i++] != '\n')
 		if (buf[i] != ' ' && buf[i] != '\t')
 			return (0);
+	if ( r > 255 || g > 255 || b > 255)
+		return (0);
 	color = ft_get_color(r, g, b);
-	if (ft_strnstr(buf, "F ", 3))
+	if (ft_strnstr(buf, "F ", 2))
 		res->F = color;
-	else if (ft_strnstr(buf, "C ", 3))
+	else if (ft_strnstr(buf, "C ", 2))
 		res->C = color;
 	return (1);
 }
@@ -453,7 +461,7 @@ int			parse_map(t_vars *vars, int fd)
 	h = 0;
 	while(get_next_line(fd, &buf) != 0 ||ft_strchr(buf, '1'))
 	{
-		if (ft_strchr(buf, '1'))
+		if (buf[0] != '\n')
 		{
 			length = ft_strlen(buf);
 			j = realloc_map(vars, length, h);
@@ -472,8 +480,14 @@ int			parse_map(t_vars *vars, int fd)
 					save_position(vars, buf[i], h, j);
 					bol++;
 				}
-				else
+				else if (buf[i] == ' ')
 					*(vars->map + sia(vars->collumn, h) + j++) = 5;
+				else
+				{
+					printf("Error\n");
+					exit_game(vars, 0);
+				}
+
 			}
 			h++;
 		}

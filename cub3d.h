@@ -79,6 +79,7 @@ typedef struct	s_res {
 	char *S;
 	int  C;
 	int  F;
+	int		count;
 }		t_res;
 
 typedef int (*fptr)(t_res *, char *);
