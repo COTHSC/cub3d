@@ -6,7 +6,7 @@
 /*   By: jescully <jescully@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 16:23:04 by jescully          #+#    #+#             */
-/*   Updated: 2021/03/16 07:58:21 by jescully         ###   ########.fr       */
+/*   Updated: 2021/03/16 12:05:26 by jescully         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ int			innit_arrayf(char **farray, fptr functions[8], t_res *res)
 
 	i = 0;
 	while (i < 8)
-		farray[i++] = malloc(sizeof(char) * 3);
+		farray[i++] = malloc(sizeof(char) * 4);
 	ft_strlcpy(farray[0], "R ", 3);
-	ft_strlcpy(farray[1], "NO", 3);
-	ft_strlcpy(farray[2], "SO", 3);
-	ft_strlcpy(farray[3], "WE", 3);
-	ft_strlcpy(farray[4], "EA", 3);
+	ft_strlcpy(farray[1], "NO ", 3);
+	ft_strlcpy(farray[2], "SO ", 3);
+	ft_strlcpy(farray[3], "WE ", 3);
+	ft_strlcpy(farray[4], "EA ", 3);
 	ft_strlcpy(farray[5], "S ", 3);
 	ft_strlcpy(farray[6], "F ", 3);
 	ft_strlcpy(farray[7], "C ", 3);
@@ -60,7 +60,7 @@ static void	free_farray(char **farray)
 
 int	ft_isspace(char c)
 {
-	if (c == ' ' || c == '\t')
+	if (c == ' ' || c == '\t' || c == '\n')
 		return (1);
 	return (0);
 }
@@ -85,7 +85,7 @@ int			parse_lines(t_vars *vars, int fd)
 			j++;
 		while (c < 8)
 		{
-			if (ft_strnstr(&buf[j], farray[c], 3))
+			if (ft_strnstr(&buf[j], farray[c], 4))
 			{
 				if (!(*functions[c])(vars->res, &buf[j]))
 				{
@@ -97,8 +97,6 @@ int			parse_lines(t_vars *vars, int fd)
 		}
 		if (check_struct(vars->res))
 		{
-
-			printf("I am In  \n");
 			h = parse_map(vars, fd);
 			free(buf);
 			free_farray(farray);
@@ -107,9 +105,31 @@ int			parse_lines(t_vars *vars, int fd)
 		free(buf);
 	}
 	free_farray(farray);
-	printf("Error\n no map?\n");
+	printf("Error\n Incomplete config\n");
 	exit_game(vars, 0);
 	return (0);
+}
+
+int			check_forbidden_char(char *buf, char *permitted)
+{
+	int i;
+	int j;
+	int yes;
+
+	yes = 0;
+	j = 0;
+	while (buf[j])
+	{
+		i = 0;
+		while (permitted[i])
+		{
+			if (buf[i] == permitted[i])
+				yes++;
+		}
+		if (yes != 1)
+			return 0;
+	}
+	return (1);
 }
 
 int			parse_colors(t_res *res, char *buf)
@@ -122,31 +142,36 @@ int			parse_colors(t_res *res, char *buf)
 
 	i = 0;
 	color = 0;
-//	if (!buf)
-//		return (0);
+	if (!buf)
+		return (0);
 	while (!ft_isdigit(buf[i]))
 		i++;
 	r = ft_atoi(&buf[i]);
 	while (buf[i] != ',')
 	{
-//		if (!ft_isdigit(buf[i]))
-//			return (0);
+		if (!ft_isdigit(buf[i]))
+			return (0);
 		i++;
 	}
 	g = ft_atoi(&buf[i + 1]);
-	while (buf[i] != ',')
+	while (buf[++i] != ',')
 	{
-//		if (!ft_isdigit(buf[i]))
-//			return (0);
-		i++;
+		if (!ft_isdigit(buf[i]))
+			return (0);
 	}
-	b = ft_atoi(&buf[i + 1]);
+	if (!ft_isdigit(buf[i + 1]))
+		return 0;
+	b = ft_atoi(&buf[++i]);
+	while (ft_isdigit(buf[i]))
+		i++;
+	while (buf[i] && buf[i++] != '\n')
+		if (buf[i] != ' ' && buf[i] != '\t')
+			return (0);
 	color = ft_get_color(r, g, b);
 	if (ft_strnstr(buf, "F ", 3))
 		res->F = color;
 	else if (ft_strnstr(buf, "C ", 3))
 		res->C = color;
-	printf("this is col %X  %X \n" , res->F, res->C);
 	return (1);
 }
 
@@ -186,8 +211,13 @@ int			parse_resolution(t_res *res, char *buf)
 
 	}
 	res->h = ft_atoi(&buf[i]);
+	while (ft_isdigit(buf[i]))
+		i++;
+	while (buf[i] && buf[i++] != '\n')
+		if (buf[i] != ' ' && buf[i] != '\t')
+			return (0);
+
 	
-	printf("this is R %i  %i \n" , res->w, res->h);
 	return (1);
 }
 
@@ -215,25 +245,21 @@ int			parse_paths(t_res *res, char *buf)
 	{
 		res->NO = malloc(length + 1);
 		ft_strlcpy(res->NO, &buf[start], length + 1);
-		printf("this is NO %s \n" , res->NO);
 	}
 	else if (ft_strnstr(buf, "SO", 3))
 	{
 		res->SO = malloc(length + 1);
 		ft_strlcpy(res->SO, &buf[start], length + 1);
-		printf("this is SO %s \n" , res->SO);
 	}
 	else if (ft_strnstr(buf, "WE", 3))
 	{
 		res->WE = malloc(length + 1);
 		ft_strlcpy(res->WE, &buf[start], length + 1);
-		printf("this is WE %s \n" , res->WE);
 	}
 	else if (ft_strnstr(buf, "EA", 3))
 	{
 		res->EA = malloc(length + 1);
 		ft_strlcpy(res->EA, &buf[start], length + 1);
-		printf("this is EA %s \n" , res->EA);
 	}
 	return (1);
 }
@@ -379,11 +405,7 @@ int			check_map(t_vars *vars)
 			if (get_value(vars, h, w) == 0 && w == (vars->collumn[h] - 1))
 				ret = -1;
 			if (get_value(vars, h, w) == 0 && w >= (vars->collumn[h - 1] - 1))
-			{
 				ret = -1;
-				printf("here h %i and w %i \n", h, w);
-			}
-
 			if (get_value(vars, h, w) == 0 && h == vars->map_h - 1)
 				ret = -1;
 			w++;
@@ -429,7 +451,7 @@ int			parse_map(t_vars *vars, int fd)
 	
 	bol = 0;
 	h = 0;
-	while(get_next_line(fd, &buf) != 0)
+	while(get_next_line(fd, &buf) != 0 ||ft_strchr(buf, '1'))
 	{
 		if (ft_strchr(buf, '1'))
 		{
