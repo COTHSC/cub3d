@@ -6,11 +6,12 @@
 /*   By: jescully <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 14:14:27 by jescully          #+#    #+#             */
-/*   Updated: 2021/03/15 11:34:48 by jescully         ###   ########.fr       */
+/*   Updated: 2021/03/17 12:27:54 by jescully         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+#include "libft/libft.h"
 
 int		load_image(t_vars *vars, t_img *img, char *path)
 {
@@ -41,13 +42,44 @@ void	load_sprites(t_vars *vars)
 	load_image(vars, vars->sprite, vars->res->S);
 }
 
+int check_arg(char *str, char *str2)
+{
+	int 	len;
+	int		count;
+
+	count = 0;
+	if (!str)
+		printf("Error\nPlease enter an arg");
+	len = ft_strlen(str);
+	if (!ft_strncmp(&str[len - 4], ".cub", 4))
+	{
+		count++;
+	}
+
+	if (ft_strlen(str2) != 0)
+	{
+		if (!ft_strncmp(str2, "--save", 6) && ft_strlen(str2) == 6)
+		{
+			count++;
+		}
+		else
+			count--;
+	}
+	return (count);
+}
+
 int main(int argc, char **argv)
 {
 	t_vars	vars;
 	int i = 0;
-    int fd;  
+    int fd;
 
-    fd = open(argv[1], O_RDONLY);
+    if (!check_arg(argv[1], argv[2]))
+	{
+		printf("Error\nInvalid Arg");
+		exit_game(&vars, 0);
+	}
+	fd = open(argv[1], O_RDONLY);
     vars.res = malloc(sizeof(t_res));
     vars.p = malloc(sizeof(t_pos));
     vars.map_h = parse_lines(&vars, fd);
