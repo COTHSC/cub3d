@@ -6,7 +6,7 @@
 /*   By: jescully <jescully@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/14 16:22:32 by jescully          #+#    #+#             */
-/*   Updated: 2021/03/16 14:56:40 by jescully         ###   ########.fr       */
+/*   Updated: 2021/03/17 10:14:26 by jescully         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	check_struct(t_res *res)
 		return (0);
 	if (!check_paths(res))
 		return (0);
-	if (res->count != 8)
+	if ((res->count / 8) != 8)
 		return (0);
 	return (1);
 }

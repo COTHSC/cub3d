@@ -6,7 +6,7 @@
 /*   By: jescully <jescully@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 16:23:04 by jescully          #+#    #+#             */
-/*   Updated: 2021/03/16 15:32:23 by jescully         ###   ########.fr       */
+/*   Updated: 2021/03/17 11:49:36 by jescully         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,15 @@ int	ft_isspace(char c)
 	return (0);
 }
 
+int	empty_line(char *str)
+{
+	while  (*str++)
+		if (!ft_isspace(*str))
+			return (0);
+	return (1);
+			
+}
+
 int			parse_lines(t_vars *vars, int fd)
 {
 	char	**farray;
@@ -86,6 +95,8 @@ int			parse_lines(t_vars *vars, int fd)
 			j++;
 		while (c < 8)
 		{
+			if (!empty_line(buf))
+				++vars->res->count;
 			if (!ft_strncmp(&buf[j], farray[c], ft_strlen(farray[c])))
 			{
 				if (!(*functions[c])(vars->res, &buf[j]))
@@ -93,7 +104,7 @@ int			parse_lines(t_vars *vars, int fd)
 					printf("Error\n funct\n");
 					exit_game(vars, 0);
 				}
-				++vars->res->count;
+
 			}
 			c++;
 		}
@@ -170,8 +181,9 @@ int			parse_colors(t_res *res, char *buf)
 	b = ft_atoi(&buf[++i]);
 	while (ft_isdigit(buf[i]))
 		i++;
-	while (buf[i] && buf[i++] != '\n')
-		if (buf[i] != ' ' && buf[i] != '\t')
+	i -= 1;
+	while (buf[++i] && buf[i] != '\n')
+		if (!ft_isspace(buf[i]))
 			return (0);
 	if ( r > 255 || g > 255 || b > 255)
 		return (0);
@@ -221,8 +233,9 @@ int			parse_resolution(t_res *res, char *buf)
 	res->h = ft_atoi(&buf[i]);
 	while (ft_isdigit(buf[i]))
 		i++;
-	while (buf[i] && buf[i++] != '\n')
-		if (buf[i] != ' ' && buf[i] != '\t')
+	i -= 1;
+	while (buf[++i] && buf[i] != '\n')
+		if (!ft_isspace(buf[i]))
 			return (0);
 
 	
@@ -364,7 +377,7 @@ int			save_position(t_vars *vars, char c, int h, int i)
 	vars->p->dy = 0;
 	vars->p->plx = 0;
 	vars->p->ply = 0.66;
-	vars->p->ms = 0.03;
+	vars->p->ms = 0.08;
 	vars->p->rs = 0.03;
 	init_orientation(vars, rot);
 	return (1);
@@ -406,7 +419,7 @@ int			check_map(t_vars *vars)
 				ret = -1;
 			if (get_value(vars, h, w) + get_value(vars, h, w - 1) == 7)
 				ret = -1;
-			if (get_value(vars, 0, w) == 0)
+			if (get_value(vars, 0, w) == 0 && h == 2)
 				ret = -1;
 			if (get_value(vars, h, 0) == 0)
 				ret = -1;
@@ -471,7 +484,11 @@ int			parse_map(t_vars *vars, int fd)
 				if (buf[i] == '1')
 					*(vars->map + sia(vars->collumn, h) + j++) = 1;
 				else if (buf[i] == '0')
+				{
+					if (h == 0)
+						printf("I am here \n");
 					*(vars->map + sia(vars->collumn, h) + j++) = 0;
+				}
 				else if (buf[i] == '2')
 					*(vars->map + sia(vars->collumn, h) + j++) = 2;
 				else if (ft_strchr("NSEW", buf[i]))
@@ -497,7 +514,7 @@ int			parse_map(t_vars *vars, int fd)
 	free(buf);
 	if (bol != 1)
 	{
-		printf("Error\n");
+		printf("Error\nPlayer pos not fount or duplicate");
 		exit_game(vars, 0);
 	}
 
