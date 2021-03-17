@@ -55,16 +55,16 @@ static void	strafe(t_vars *v)
 	p = v->p;
 	if (v->keys->d)
 	{
-		if (!get_value(v, (int)(p->px + p->plx * p->ms), (int)p->py))
+		if (get_value(v, (int)(p->px + p->plx * p->ms), (int)p->py) == 3)
 			p->px += p->plx * p->ms;
-		if (!get_value(v, (int)p->px, (int)(p->py + p->ply * p->ms)))
+		if (get_value(v, (int)p->px, (int)(p->py + p->ply * p->ms)) == 3)
 			p->py += p->ply * p->ms;
 	}
 	if (v->keys->a)
 	{
-		if (!get_value(v, (int)(p->px - p->plx * p->ms), (int)p->py))
+		if (get_value(v, (int)(p->px - p->plx * p->ms), (int)p->py) == 3)
 			p->px -= p->plx * p->ms;
-		if (!get_value(v, (int)p->px, (int)(p->py - p->ply * p->ms)))
+		if (get_value(v, (int)p->px, (int)(p->py - p->ply * p->ms)) == 3)
 			p->py -= p->ply * p->ms;
 	}
 }
@@ -76,16 +76,16 @@ int			key_hook(t_vars *v)
 	p = v->p;
 	if (v->keys->w)
 	{
-		if (!get_value(v, (int)(p->px + p->dx * p->ms), (int)p->py))
+		if (get_value(v, (int)(p->px + p->dx * p->ms), (int)p->py) == 3)
 			p->px += p->dx * p->ms;
-		if (!get_value(v, (int)p->px, (int)(p->py + p->dy * p->ms)))
+		if (get_value(v, (int)p->px, (int)(p->py + p->dy * p->ms)) == 3)
 			p->py += p->dy * p->ms;
 	}
 	if (v->keys->s)
 	{
-		if (!get_value(v, (int)(p->px - p->dx * p->ms), (int)p->py))
+		if (get_value(v, (int)(p->px - p->dx * p->ms), (int)p->py) == 3)
 			p->px -= p->dx * p->ms;
-		if (!get_value(v, (int)p->px, (int)(p->py - p->dy * p->ms)))
+		if (get_value(v, (int)p->px, (int)(p->py - p->dy * p->ms)) == 3)
 			p->py -= p->dy * p->ms;
 	}
 	strafe(v);

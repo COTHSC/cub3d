@@ -179,5 +179,18 @@ int     get_texnum(t_raycast *r, int side);
 void        init_dirs(t_vars *vars, t_raycast *r);
 int     calc_line_height(t_vars *vars, t_raycast *r, int side);
 int check_struct(t_res *res);
+int empty_line(char *str);
+int ft_isspace(char c);
+void    free_farray(char **farray);
+int         innit_arrayf(char **farray, fptr functions[8], t_res *res);
+int         ft_get_color(int r, int g, int b);
+void        *ft_realloc(void *ptr, int size, int newsize);
+int         array_length(int *array);
+int         sia(int *array, int h);
+int             realloc_map(t_vars *vars, int length, int h);
+int         save_position(t_vars *vars, char c, int h, int i);
+int         init_orientation(t_vars *vars, double h);
+
+
 
 #endif

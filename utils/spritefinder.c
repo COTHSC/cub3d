@@ -35,7 +35,7 @@ int		spritefinder(t_sprites **sprite, t_vars *vars)
 		w = 0;
 		while (w < vars->collumn[h])
 		{
-			if (get_value(vars, h, w) == 2)
+			if (get_value(vars, h, w) == 7)
 			{
 				innit_sprites(sprite, h + 0.5, w + 0.5, i);
 				i++;

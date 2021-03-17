@@ -68,7 +68,7 @@ int				count_sprites(t_vars *vars)
 		w = 0;
 		while (w < vars->collumn[h])
 		{
-			if (get_value(vars, h, w) == 2)
+			if (get_value(vars, h, w) == 7)
 				num_sprite++;
 			w++;
 		}
