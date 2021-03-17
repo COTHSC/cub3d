@@ -6,7 +6,7 @@
 /*   By: jescully <jescully@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 16:23:04 by jescully          #+#    #+#             */
-/*   Updated: 2021/03/17 11:49:36 by jescully         ###   ########.fr       */
+/*   Updated: 2021/03/17 14:42:00 by jescully         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,6 @@ int			innit_arrayf(char **farray, fptr functions[8], t_res *res)
 	res->F = -1;
 	res->C = -1;
 	return (1);
-}
-
-void	init_fc(t_res *res)
-{
-	res->F = - 1;
-	res->C = - 1;
 }
 
 static void	free_farray(char **farray)
@@ -415,11 +409,17 @@ int			check_map(t_vars *vars)
 				ret = -1;
 			if (get_value(vars, h, w) + get_value(vars, h, w - 1) == 5)
 				ret = -1;
+			if (get_value(vars, h, w) + get_value(vars, h - 1, w - 1) == 5)
+				ret = -1;
+			if (get_value(vars, h, w) + get_value(vars, h - 1, w - 1) == 7)
+				ret = -1;
 			if (get_value(vars, h, w) + get_value(vars, h - 1, w) == 7)
 				ret = -1;
 			if (get_value(vars, h, w) + get_value(vars, h, w - 1) == 7)
 				ret = -1;
 			if (get_value(vars, 0, w) == 0 && h == 2)
+				ret = -1;
+			if (get_value(vars, 0, 0) == 0)
 				ret = -1;
 			if (get_value(vars, h, 0) == 0)
 				ret = -1;
