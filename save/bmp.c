@@ -7,52 +7,45 @@
 #include "../cub3d.h"
 #include <fcntl.h>
 
-void    ft_header(t_vars *vars, int fd)
+void			write_header(t_vars *vars, int size, int fd)
 {
-    int tmp;
-	int tmp2;
+	unsigned char	header[54];
 
-    write(fd, "BM", 2);
-    tmp = 14 + 40 + 4 * vars->res->h * vars->res->w;
-    write(fd, &tmp, 4);
-    tmp = 0;
-    write(fd, &tmp, 2);
-    write(fd, &tmp, 2);
-    tmp = 54;
-    write(fd, &tmp, 4);
-    tmp = 40;
-    write(fd, &tmp, 4);
-	tmp2 = vars->res->w;
-    write(fd, &tmp2, 4);
-    write(fd, &tmp2, 4);
-    tmp = 1;
-    write(fd, &tmp, 2);
-	tmp2 = vars->img->bpp;
-    write(fd, &tmp2, 2);
-    tmp = 0;
-    write(fd, &tmp, 4);
-    write(fd, &tmp, 4);
-    write(fd, &tmp, 4);
-    write(fd, &tmp, 4);
-    write(fd, &tmp, 4);
-    write(fd, &tmp, 4);
+	header[0] = (unsigned char)('B');
+	header[1] = (unsigned char)('M');
+	header[2] = (unsigned char)(size);
+	header[3] = (unsigned char)(size >> 8);
+	header[4] = (unsigned char)(size >> 16);
+	header[5] = (unsigned char)(size >> 24);
+	header[10] = (unsigned char)(54);
+	header[14] = (unsigned char)(40);
+	header[18] = (unsigned char)(vars->res->w);
+	header[19] = (unsigned char)(vars->res->w >> 8);
+	header[20] = (unsigned char)(vars->res->w >> 16);
+	header[21] = (unsigned char)(vars->res->w >> 24);
+	header[22] = (unsigned char)(vars->res->h);
+	header[23] = (unsigned char)(vars->res->h >> 8);
+	header[24] = (unsigned char)(vars->res->h >> 16);
+	header[25] = (unsigned char)(vars->res->h >> 24);
+	header[26] = (unsigned char)(1);
+	header[28] = (unsigned char)(32);
+	write(fd, header, 54);
 }
 
-int save_img(t_vars *vars,const char* fichier)
+int save_img(t_vars *vars)
 {
-	int i,j,tailledata,pitch;
-	unsigned char bgrpix[3];
+	int i;
+    int j;
 	int fd;
 
-    fd = open("./save/screenshot.bmp", O_CREAT|O_RDWR, S_IRWXU|S_IRWXG);	
-	ft_header(vars, fd);
-	for(j=vars->res->h;j > 0;j--)
+    fd = open("./screenshot.bmp", O_CREAT|O_RDWR, S_IRWXU|S_IRWXG);	
+	write_header(vars, 54 + vars->res->h * vars->res->w, fd );
+	for(j= vars->res->h;j > 0;j--)
 	{
 		for(i=0;i<vars->res->w;i++)
 		{
 			write(fd, &vars->img->data[j * (vars->img->size_l/4) + i], 4);
 		}
-//		write(fd, &bgrpix, pitch);
 	}
 	close(fd);
 	return 0;

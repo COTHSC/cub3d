@@ -42,7 +42,8 @@ int			parse_lines(t_vars *vars, int fd)
 				if (!(*functions[c])(vars->res, &buf[j]))
 				{
 					printf("Error\n funct\n");
-					exit_game(vars, 0);
+                    free_farray(farray);
+					exit_game(vars, 1);
 				}
 
 			}
@@ -288,7 +289,6 @@ int			check_map(t_vars *vars)
 		}
 		h++;
 	}
-	
     h = 0;
     while (h < vars->map_h)
 	{
@@ -303,7 +303,6 @@ int			check_map(t_vars *vars)
 		}
 		h++;
 	}
-
 	return (ret);
 }
 
@@ -344,6 +343,7 @@ int			parse_map(t_vars *vars, int fd)
 				else
 				{
 					printf("Error\n");
+                    free(buf);
 					exit_game(vars, 0);
 				}
 
@@ -359,6 +359,5 @@ int			parse_map(t_vars *vars, int fd)
 		printf("Error\nPlayer pos not fount or duplicate");
 		exit_game(vars, 0);
 	}
-
 	return (h);
 }

@@ -135,6 +135,7 @@ typedef struct  s_vars {
 	int		    *map;
 	int		    *collumn;
 	int	    	map_h;
+	int	    	save;
 }               t_vars;
 
 void		pixel_put(t_img *image, int x, int y, int color);
@@ -168,7 +169,7 @@ int     check_map(t_vars *vars);
 int     init_sprites(t_vars *vars);
 int     free_sprites(t_vars *vars);
 int exit_game(t_vars *vars, int bol);
-int save_img(t_vars *vars,const char* fichier);
+int save_img(t_vars *vars);
 int             init_sprites(t_vars *vars);
 int             free_sprites(t_vars *vars);
 int             count_sprites(t_vars *vars);

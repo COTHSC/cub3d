@@ -13,7 +13,7 @@
 #include "../cub3d.h"
 #include "../libft/libft.h"
 #include <fcntl.h>
-
+/*
 int			innit_arrayf(char **farray, fptr functions[8], t_res *res)
 {
 	int		i;
@@ -51,14 +51,13 @@ void	free_farray(char **farray)
 		free(farray[c++]);
 	free(farray);
 }
-
+/*
 int	ft_isspace(char c)
 {
 	if (c == ' ' || c == '\t' || c == '\n')
 		return (1);
 	return (0);
 }
-
 int	empty_line(char *str)
 {
 	while  (*str++)
@@ -66,4 +65,4 @@ int	empty_line(char *str)
 			return (0);
 	return (1);
 			
-}
+}*/

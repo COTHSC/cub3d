@@ -28,6 +28,11 @@ void	draw(t_vars *vars)
 		}
 		y++;
 	}
+    if (vars->save == 1)
+    {
+        save_img(vars);
+        exit_game(vars, 0);
+    }
 	reset_buffer(vars);
 	mlx_put_image_to_window(vars->mlx, vars->win, vars->img->ptr, 0, 0);
 	mlx_destroy_image(vars->mlx, vars->img->ptr);

@@ -49,7 +49,7 @@ int			save_position(t_vars *vars, char c, int h, int i)
 	vars->p->plx = 0;
 	vars->p->ply = 0.66;
 	vars->p->ms = 0.08;
-	vars->p->rs = 0.03;
+	vars->p->rs = 0.01;
 	init_orientation(vars, rot);
 	return (1);
 }
