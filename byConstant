@@ -1,9 +1,0 @@
-//- Orientation du joueur au spawn et textures mismatched
-//- Option "save" ouvre une fenetre mlx avant de sauvegarder l'image
-- Vraies leaks quand une ligne de config de textures est en double
-- Verifier que le fichier save doit etre mis a la racine ou pas
-- MAKEFILE: compiler la mlx comme la libft depuis le makefile cub3d
-//- Afficher des textures differentes pour chaque direction 
-//- Devrait retourner une erreur si nombre d'argument est superieur a 3 par exemple ./cub3d map.cub --save erjwelr
-//- ATTENTION : segfaut quand tu run ./cub3d sans argument
--limit window size

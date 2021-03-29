@@ -1,33 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw_floor_cieling.c                               :+:      :+:    :+:   */
+/*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jescully <jescully@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/13 14:55:31 by jescully          #+#    #+#             */
-/*   Updated: 2021/03/13 14:55:37 by jescully         ###   ########.fr       */
+/*   Created: 2020/11/24 18:09:47 by jescully          #+#    #+#             */
+/*   Updated: 2020/11/24 18:51:57 by jescully         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "libft.h"
 
-int		draw_cieling(t_vars *vars, int x, int draw_start)
+void	ft_lstadd_front(t_list **alst, t_list *new)
 {
-	int i;
-
-	i = 0;
-	while (i < draw_start)
-		vars->img->data[i++ * vars->res->w + x] = vars->res->C;
-	return (1);
-}
-
-int		draw_floor(t_vars *vars, int x, int draw_end)
-{
-	int i;
-
-	i = draw_end;
-	while (i < vars->res->h)
-		vars->img->data[i++ * vars->res->w + x] = vars->res->F;
-	return (1);
+	if (alst && new)
+	{
+		if (alst != NULL)
+			new->next = *alst;
+		else
+			new->next = NULL;
+		*alst = new;
+	}
 }

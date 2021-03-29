@@ -6,7 +6,7 @@
 /*   By: jescully <jescully@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/14 16:22:32 by jescully          #+#    #+#             */
-/*   Updated: 2021/03/17 10:14:26 by jescully         ###   ########.fr       */
+/*   Updated: 2021/03/28 21:09:10 by jean             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	check_paths(t_res *res)
 		return (0);
 	else
 		close(fd);
-	return 1;
+	return (1);
 }
 
 int	check_struct(t_res *res)

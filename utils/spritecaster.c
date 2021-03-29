@@ -6,13 +6,13 @@
 /*   By: jescully <jescully@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 14:56:49 by jescully          #+#    #+#             */
-/*   Updated: 2021/03/14 15:29:01 by jescully         ###   ########.fr       */
+/*   Updated: 2021/03/28 20:06:02 by jean             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-static void			dist_sprite(t_vars *vars, t_raysprite *r)
+static void		dist_sprite(t_vars *vars, t_raysprite *r)
 {
 	while (++r->i < r->num_sprite)
 		vars->sprites[r->i]->dist = ((vars->p->px - \
@@ -22,7 +22,7 @@ static void			dist_sprite(t_vars *vars, t_raysprite *r)
 				(vars->p->py - vars->sprites[r->i]->y));
 }
 
-static	void		init_sprite_dir(t_vars *vars, t_raysprite *r)
+static	void	init_sprite_dir(t_vars *vars, t_raysprite *r)
 {
 	r->sx = vars->sprites[r->i]->x - vars->p->px;
 	r->sy = vars->sprites[r->i]->y - vars->p->py;
@@ -34,12 +34,12 @@ static	void		init_sprite_dir(t_vars *vars, t_raysprite *r)
 	r->dsy = -r->sheight / 2 + vars->res->h / 2;
 }
 
-static void			dr_sprite(t_vars *vars, t_raysprite *r, int texy, int texx)
+static void		dr_sprite(t_vars *vars, t_raysprite *r, int texy, int texx)
 {
-	int				st;
-	int				color;
-	int				y;
-	int				d;
+	int			st;
+	int			color;
+	int			y;
+	int			d;
 
 	st = r->dsx;
 	while (st < r->dex)
@@ -56,14 +56,14 @@ static void			dr_sprite(t_vars *vars, t_raysprite *r, int texy, int texx)
 				texy = ((d * 64) / r->sheight) / 256;
 				color = vars->sprite->data[64 * texy + texx];
 				if ((color & 0x00FFFFFF) != 0)
-					vars->buf[y][st] = color;
+					vars->img->data[y * vars->res->w + st] = color;
 			}
 		}
 		st++;
 	}
 }
 
-static void			fill_raysprite(t_vars *vars, t_raysprite *r)
+static void		fill_raysprite(t_vars *vars, t_raysprite *r)
 {
 	if (r->dsy < 0)
 		r->dsy = 0;
@@ -79,9 +79,9 @@ static void			fill_raysprite(t_vars *vars, t_raysprite *r)
 		r->dex = vars->res->w - 1;
 }
 
-int					spritecaster(t_vars *vars, int texx, int texy, double *zbuffer)
+int				spritecaster(t_vars *vars, int texx, int texy, double *zbuffer)
 {
-	t_raysprite		*r;
+	t_raysprite	*r;
 
 	r = malloc(sizeof(t_raysprite));
 	r->num_sprite = count_sprites(vars);

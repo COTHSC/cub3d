@@ -1,33 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw_floor_cieling.c                               :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jescully <jescully@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/13 14:55:31 by jescully          #+#    #+#             */
-/*   Updated: 2021/03/13 14:55:37 by jescully         ###   ########.fr       */
+/*   Created: 2020/11/17 14:33:02 by jescully          #+#    #+#             */
+/*   Updated: 2020/11/24 15:48:22 by jescully         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "libft.h"
 
-int		draw_cieling(t_vars *vars, int x, int draw_start)
+char	*ft_strrchr(const char *s, int c)
 {
 	int i;
 
 	i = 0;
-	while (i < draw_start)
-		vars->img->data[i++ * vars->res->w + x] = vars->res->C;
-	return (1);
-}
-
-int		draw_floor(t_vars *vars, int x, int draw_end)
-{
-	int i;
-
-	i = draw_end;
-	while (i < vars->res->h)
-		vars->img->data[i++ * vars->res->w + x] = vars->res->F;
-	return (1);
+	while (s[i])
+		i++;
+	while (i >= 0)
+	{
+		if (s[i] == c)
+		{
+			return (char *)&s[i];
+		}
+		i--;
+	}
+	return (0);
 }

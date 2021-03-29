@@ -1,33 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw_floor_cieling.c                               :+:      :+:    :+:   */
+/*   ft_lstsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jescully <jescully@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/13 14:55:31 by jescully          #+#    #+#             */
-/*   Updated: 2021/03/13 14:55:37 by jescully         ###   ########.fr       */
+/*   Created: 2020/11/24 18:21:16 by jescully          #+#    #+#             */
+/*   Updated: 2020/11/24 19:01:44 by jescully         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "libft.h"
 
-int		draw_cieling(t_vars *vars, int x, int draw_start)
+int	ft_lstsize(t_list *lst)
 {
 	int i;
 
 	i = 0;
-	while (i < draw_start)
-		vars->img->data[i++ * vars->res->w + x] = vars->res->C;
-	return (1);
-}
-
-int		draw_floor(t_vars *vars, int x, int draw_end)
-{
-	int i;
-
-	i = draw_end;
-	while (i < vars->res->h)
-		vars->img->data[i++ * vars->res->w + x] = vars->res->F;
-	return (1);
+	while (lst)
+	{
+		lst = lst->next;
+		i++;
+	}
+	return (i);
 }

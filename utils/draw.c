@@ -6,7 +6,7 @@
 /*   By: jescully <jescully@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 14:54:54 by jescully          #+#    #+#             */
-/*   Updated: 2021/03/13 14:58:29 by jescully         ###   ########.fr       */
+/*   Updated: 2021/03/28 20:03:24 by jean             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,11 @@
 
 void	draw(t_vars *vars)
 {
-	int y;
-	int x;
-
-	y = 0;
-	while (y < vars->res->h)
+	if (vars->save == 1)
 	{
-		x = 0;
-		while (x < vars->res->w)
-		{
-			vars->img->data[y * vars->res->w + x] = vars->buf[y][x];
-			x++;
-		}
-		y++;
+		save_img(vars);
+		exit_game(vars, 3, 7);
 	}
-    if (vars->save == 1)
-    {
-        save_img(vars);
-        exit_game(vars, 0);
-    }
-	reset_buffer(vars);
 	mlx_put_image_to_window(vars->mlx, vars->win, vars->img->ptr, 0, 0);
 	mlx_destroy_image(vars->mlx, vars->img->ptr);
 	free(vars->img);

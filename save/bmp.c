@@ -1,16 +1,28 @@
-#define _CRT_SECURE_NO_WARNINGS
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   bmp.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jean <jescully@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/03/29 18:25:35 by jean              #+#    #+#             */
+/*   Updated: 2021/03/29 18:25:39 by jean             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdlib.h>
 #include <unistd.h>
-#include <string.h>
-#include <assert.h>
-#include "bmp.h"
 #include "../cub3d.h"
 #include <fcntl.h>
 
-void			write_header(t_vars *vars, int size, int fd)
+void				write_header(t_vars *vars, int size, int fd)
 {
 	unsigned char	header[54];
+	int				i;
 
+	i = 0;
+	while (i < 54)
+		header[i++] = 0;
 	header[0] = (unsigned char)('B');
 	header[1] = (unsigned char)('M');
 	header[2] = (unsigned char)(size);
@@ -32,21 +44,25 @@ void			write_header(t_vars *vars, int size, int fd)
 	write(fd, header, 54);
 }
 
-int save_img(t_vars *vars)
+int					save_img(t_vars *vars)
 {
-	int i;
-    int j;
-	int fd;
+	int				i;
+	int				j;
+	int				fd;
 
-    fd = open("./screenshot.bmp", O_CREAT|O_RDWR, S_IRWXU|S_IRWXG);	
-	write_header(vars, 54 + vars->res->h * vars->res->w, fd );
-	for(j= vars->res->h;j > 0;j--)
+	j = vars->res->h;
+	fd = open("./screenshot.bmp", O_CREAT | O_RDWR, S_IRWXU | S_IRWXG);
+	write_header(vars, 54 + vars->res->h * vars->res->w, fd);
+	while (j > 0)
 	{
-		for(i=0;i<vars->res->w;i++)
+		i = 0;
+		while (i < vars->res->w)
 		{
-			write(fd, &vars->img->data[j * (vars->img->size_l/4) + i], 4);
+			write(fd, &vars->img->data[j * (vars->img->size_l / 4) + i], 4);
+			i++;
 		}
+		j--;
 	}
 	close(fd);
-	return 0;
+	return (0);
 }

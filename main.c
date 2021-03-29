@@ -3,59 +3,57 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jescully <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jean <jescully@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/11 14:14:27 by jescully          #+#    #+#             */
-/*   Updated: 2021/03/17 12:27:54 by jescully         ###   ########.fr       */
+/*   Created: 2021/03/28 19:36:54 by jean              #+#    #+#             */
+/*   Updated: 2021/03/28 20:01:11 by jean             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #include "libft/libft.h"
 
-int		load_image(t_vars *vars, t_img *img, char *path)
+int			load_image(t_vars *v, t_img *i, char *path)
 {
-
-	img->ptr = mlx_xpm_file_to_image(vars->mlx, path, &img->width, &img->height);
-	if (img->ptr == NULL)
+	i->ptr = mlx_xpm_file_to_image(v->mlx, path, &i->width, &i->height);
+	if (i->ptr == NULL)
 		return (0);
-	img->data = (int *)mlx_get_data_addr(img->ptr, &img->bpp, &img->size_l, &img->endian);
+	i->data = (int *)mlx_get_data_addr(i->ptr, &i->bpp, &i->size_l, &i->endian);
 	return (1);
 }
 
-int		load_texture (t_vars *vars)
+int			load_texture(t_vars *vars)
 {
-	int i;
+	int		i;
 
+	i = 0;
+	while (i < 4)
+		vars->text[i++] = (t_img *)malloc(sizeof(t_img));
 	i = 0;
 	i += load_image(vars, vars->text[0], vars->res->SO);
 	i += load_image(vars, vars->text[1], vars->res->NO);
 	i += load_image(vars, vars->text[2], vars->res->EA);
 	i += load_image(vars, vars->text[3], vars->res->WE);
-	if (i == 4)
+	vars->sprite = (t_img *)malloc(sizeof(t_img));
+	i += load_image(vars, vars->sprite, vars->res->S);
+	if (i == 5)
+	{
+		init_sprites(vars);
 		return (1);
+	}
+	exit_game(vars, 2, 6);
 	return (0);
 }
 
-void	load_sprites(t_vars *vars)
+int			cmp_args(char *str, char *str2)
 {
-	load_image(vars, vars->sprite, vars->res->S);
-}
-
-int check_arg(char *str, char *str2)
-{
-	int 	len;
+	int		len;
 	int		count;
 
 	count = 0;
-	if (!str)
-		printf("Error\nPlease enter an arg");
 	len = ft_strlen(str);
 	if (!ft_strncmp(&str[len - 4], ".cub", 4))
-	{
 		count++;
-	}
-
 	if (ft_strlen(str2) != 0)
 	{
 		if (!ft_strncmp(str2, "--save", 6) && ft_strlen(str2) == 6)
@@ -66,71 +64,45 @@ int check_arg(char *str, char *str2)
 	return (count);
 }
 
-int main(int argc, char **argv)
+void		check_arg(t_vars *vars, int argc, char *arg1, char *arg2)
+{
+	int		args;
+
+	init_error(vars);
+	args = 0;
+	vars->save = 0;
+	if (argc > 3 || argc == 1)
+		exit_game(vars, 0, 0);
+	if ((args = cmp_args(arg1, arg2)) == 0)
+		exit_game(vars, 0, 0);
+	if (args == 2)
+		vars->save = 1;
+}
+
+int			main(int argc, char **argv)
 {
 	t_vars	vars;
-	int i = 0;
-    int fd;
-    int args;
+	int		fd;
 
-    vars.save = 0;
-    if ( argc > 3 || argc == 1)
-	{
-		printf("Error\nInvalid Arg");
-		exit_game(&vars, 0);
-    }
-    if ((args = check_arg(argv[1], argv[2])) == 0)
-	{
-		printf("Error\nInvalid Arg");
-		exit_game(&vars, 0);
-    }
-    if (args == 2)
-        vars.save = 1;
-    fd = open(argv[1], O_RDONLY);
-    //from here its another ballgame of freeing stuff
-    
-    vars.res = malloc(sizeof(t_res));
-    vars.p = malloc(sizeof(t_pos));
-    vars.map_h = parse_lines(&vars, fd);
-   // this is free it post past lines from here all is to be freed 
-
-
+	vars.save = 0;
+	check_arg(&vars, argc, argv[1], argv[2]);
+	fd = open(argv[1], O_RDONLY);
 	vars.keys = malloc(sizeof(t_keys));
+	vars.res = malloc(sizeof(t_res));
+	vars.p = malloc(sizeof(t_pos));
+	vars.map_h = parse_lines(&vars, fd);
 	innit_keys(&vars);
-	while (i < 4)
-		vars.text[i++] = (t_img *)malloc(sizeof(t_img));
-    if(check_map(&vars) == -1)
-   	{
-       printf("Error\n Map in invalid \n");
-       exit_game(&vars, 1);
-       return 0;
-  	}
+	check_map(&vars);
 	vars.mlx = mlx_init();
-	if (!load_texture(&vars))
-	{		
-        printf("Error\n textures invalid \n");
-		exit_game(&vars, 2);
-	}
-    i = 0;
-    vars.buf = malloc(sizeof(int *) * vars.res->h);
-    while (i < vars.res->h)
-        vars.buf[i++] = malloc(sizeof(int) * vars.res->w);
-    vars.sprite = (t_img *)malloc(sizeof(t_img));
-	load_sprites(&vars);
-    init_sprites(&vars);
-
-    if (vars.save != 1)
-    {
-    	vars.win = mlx_new_window(vars.mlx, vars.res->w, vars.res->h, "Cub3d");
-    }
-    else
-    {
-        draw_frame(&vars);
-    } 
+	check_max_screen_size(&vars);
+	load_texture(&vars);
+	if (vars.save == 1)
+		draw_frame(&vars);
+	vars.win = mlx_new_window(vars.mlx, vars.res->w, vars.res->h, "Cub3d");
 	mlx_hook(vars.win, 2, 1L << 0, &key_press, &vars);
 	mlx_hook(vars.win, 3, 1L << 1, &key_release, &vars);
 	mlx_hook(vars.win, 33, 1L << 17, &exit_game, &vars);
 	mlx_loop_hook(vars.mlx, key_hook, &vars);
 	mlx_loop(vars.mlx);
-	return 0;
+	return (0);
 }

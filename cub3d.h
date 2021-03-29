@@ -136,6 +136,8 @@ typedef struct  s_vars {
 	int		    *collumn;
 	int	    	map_h;
 	int	    	save;
+	char	    **error;
+	char	    **farray;
 }               t_vars;
 
 void		pixel_put(t_img *image, int x, int y, int color);
@@ -165,10 +167,10 @@ int     parse_map(t_vars *vars, int fd);
 int     sia(int *array, int h);
 void    innit_keys(t_vars *vars);
 int     get_value(t_vars *vars, int h, int w);
-int     check_map(t_vars *vars);
+void     check_map(t_vars *vars);
 int     init_sprites(t_vars *vars);
 int     free_sprites(t_vars *vars);
-int exit_game(t_vars *vars, int bol);
+int exit_game(t_vars *vars, int bol, int error);
 int save_img(t_vars *vars);
 int             init_sprites(t_vars *vars);
 int             free_sprites(t_vars *vars);
@@ -183,7 +185,7 @@ int check_struct(t_res *res);
 int empty_line(char *str);
 int ft_isspace(char c);
 void    free_farray(char **farray);
-int         innit_arrayf(char **farray, fptr functions[8], t_res *res);
+int         innit_arrayf(fptr functions[8], t_vars *vars);
 int         ft_get_color(int r, int g, int b);
 void        *ft_realloc(void *ptr, int size, int newsize);
 int         array_length(int *array);
@@ -191,6 +193,12 @@ int         sia(int *array, int h);
 int             realloc_map(t_vars *vars, int length, int h);
 int         save_position(t_vars *vars, char c, int h, int i);
 int         init_orientation(t_vars *vars, double h);
+void        check_max_screen_size(t_vars *vars);
+ void    init_error(t_vars *vars);
+  void    little_free(t_vars *vars);
+  void    big_free(t_vars *vars);
+   void    path_sorter(t_res *res, char *buf, int start, int length);
+    int             parse_map_string(t_vars *vars, char *buf, int h, int *j);
 
 
 

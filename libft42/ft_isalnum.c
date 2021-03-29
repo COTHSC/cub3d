@@ -1,33 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw_floor_cieling.c                               :+:      :+:    :+:   */
+/*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jescully <jescully@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/13 14:55:31 by jescully          #+#    #+#             */
-/*   Updated: 2021/03/13 14:55:37 by jescully         ###   ########.fr       */
+/*   Created: 2020/11/16 21:43:32 by jescully          #+#    #+#             */
+/*   Updated: 2020/12/01 17:22:20 by jean             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
-
-int		draw_cieling(t_vars *vars, int x, int draw_start)
+static int	ft_isalphaa(int c)
 {
-	int i;
-
-	i = 0;
-	while (i < draw_start)
-		vars->img->data[i++ * vars->res->w + x] = vars->res->C;
-	return (1);
+	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
+		return (1);
+	else
+		return (0);
 }
 
-int		draw_floor(t_vars *vars, int x, int draw_end)
+static int	ft_isdigitt(int c)
 {
-	int i;
+	if (c >= '0' && c <= '9')
+		return (1);
+	else
+		return (0);
+}
 
-	i = draw_end;
-	while (i < vars->res->h)
-		vars->img->data[i++ * vars->res->w + x] = vars->res->F;
-	return (1);
+int			ft_isalnum(int c)
+{
+	if (ft_isalphaa(c) || ft_isdigitt(c))
+		return (1);
+	else
+		return (0);
 }

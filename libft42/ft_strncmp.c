@@ -1,33 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw_floor_cieling.c                               :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jescully <jescully@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/13 14:55:31 by jescully          #+#    #+#             */
-/*   Updated: 2021/03/13 14:55:37 by jescully         ###   ########.fr       */
+/*   Created: 2020/11/17 16:54:28 by jescully          #+#    #+#             */
+/*   Updated: 2020/11/27 12:56:15 by jean             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "libft.h"
 
-int		draw_cieling(t_vars *vars, int x, int draw_start)
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	int i;
+	size_t i;
 
 	i = 0;
-	while (i < draw_start)
-		vars->img->data[i++ * vars->res->w + x] = vars->res->C;
-	return (1);
-}
-
-int		draw_floor(t_vars *vars, int x, int draw_end)
-{
-	int i;
-
-	i = draw_end;
-	while (i < vars->res->h)
-		vars->img->data[i++ * vars->res->w + x] = vars->res->F;
-	return (1);
+	while (i < n)
+	{
+		if (s1[i] == s2[i] && s1[i] != '\0' && s2[i] != '\0')
+			i++;
+		else
+			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+	}
+	return (0);
 }

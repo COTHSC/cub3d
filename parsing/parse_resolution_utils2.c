@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_resolution.c                                 :+:      :+:    :+:   */
+/*   parse_resolution_utils2.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jescully <jescully@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 16:23:04 by jescully          #+#    #+#             */
-/*   Updated: 2021/03/17 14:42:00 by jescully         ###   ########.fr       */
+/*   Updated: 2021/03/28 21:06:42 by jean             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,85 +14,9 @@
 #include "../libft/libft.h"
 #include <fcntl.h>
 
-int			innit_arrayf(char **farray, fptr functions[8], t_res *res)
+int				ft_get_color(int r, int g, int b)
 {
-	int		i;
-
-	i = 0;
-	while (i < 8)
-		farray[i++] = malloc(sizeof(char) * 4);
-	ft_strlcpy(farray[0], "R ", 4);
-	ft_strlcpy(farray[1], "NO ", 4);
-	ft_strlcpy(farray[2], "SO ", 4);
-	ft_strlcpy(farray[3], "WE ", 4);
-	ft_strlcpy(farray[4], "EA ", 4);
-	ft_strlcpy(farray[5], "S ", 4);
-	ft_strlcpy(farray[6], "F ", 4);
-	ft_strlcpy(farray[7], "C ", 4);
-	functions[0] = &parse_resolution;
-	functions[1] = &parse_paths;
-	functions[2] = &parse_paths;
-	functions[3] = &parse_paths;
-	functions[4] = &parse_paths;
-	functions[5] = &parse_sprite;
-	functions[6] = &parse_colors;
-	functions[7] = &parse_colors;
-	res->F = -1;
-	res->C = -1;
-	return (1);
-}
-
-void	free_farray(char **farray)
-{
-	int c;
-
-	c = 0;
-	while (c < 8)
-		free(farray[c++]);
-	free(farray);
-}
-
-int	ft_isspace(char c)
-{
-	if (c == ' ' || c == '\t' || c == '\n')
-		return (1);
-	return (0);
-}
-
-int	empty_line(char *str)
-{
-	while  (*str++)
-		if (!ft_isspace(*str))
-			return (0);
-	return (1);
-			
-}
-
-int			check_forbidden_char(char *buf, char *permitted)
-{
-	int i;
-	int j;
-	int yes;
-
-	yes = 0;
-	j = 0;
-	while (buf[j])
-	{
-		i = 0;
-		while (permitted[i])
-		{
-			if (buf[i] == permitted[i])
-				yes++;
-		}
-		if (yes != 1)
-			return 0;
-	}
-	return (1);
-}
-
-int			ft_get_color(int r, int g, int b)
-{
-	int		color;
+	int			color;
 
 	color = 0;
 	color += r << 16;
@@ -101,11 +25,11 @@ int			ft_get_color(int r, int g, int b)
 	return (color);
 }
 
-void		*ft_realloc(void *ptr, int size, int newsize)
+void			*ft_realloc(void *ptr, int size, int newsize)
 {
-	char	*str;
-	char	*new;
-	int		i;
+	char		*str;
+	char		*new;
+	int			i;
 
 	str = (char*)ptr;
 	if (!(new = (char*)malloc(sizeof(char) * newsize + 1)))
@@ -124,9 +48,9 @@ void		*ft_realloc(void *ptr, int size, int newsize)
 	return (new);
 }
 
-int			array_length(int *array)
+int				array_length(int *array)
 {
-	int		length;
+	int			length;
 
 	length = 0;
 	while (array[length])
@@ -134,10 +58,10 @@ int			array_length(int *array)
 	return (length);
 }
 
-int			sia(int *array, int h)
+int				sia(int *array, int h)
 {
-	int		result;
-	int		count;
+	int			result;
+	int			count;
 
 	result = 0;
 	count = 0;

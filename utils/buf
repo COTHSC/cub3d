@@ -1,0 +1,120 @@
+draw.c:	while (y < vars->res->h)
+draw.c:		while (x < vars->res->w)
+draw.c:	//		vars->img->data[y * vars->res->w + x] = vars->buf[y][x];
+draw.c:    if (vars->save == 1)
+draw.c:	mlx_put_image_to_window(vars->mlx, vars->win, vars->img->ptr, 0, 0);
+draw.c:	mlx_destroy_image(vars->mlx, vars->img->ptr);
+draw.c:	free(vars->img);
+draw_floor_cieling.c:		vars->img->data[i++ * vars->res->w + x] = vars->res->C;
+draw_floor_cieling.c:	while (i < vars->res->h)
+draw_floor_cieling.c:		vars->img->data[i++ * vars->res->w + x] = vars->res->F;
+draw_frame.c:		if (*(vars->map + sia(vars->collumn, r->mapx) + r->mapy) == 1)
+draw_frame.c:	r->draws = -r->lineh / 2 + vars->res->h / 2;
+draw_frame.c:		r->sdx = (vars->p->px - r->mapx) * r->ddx;
+draw_frame.c:		r->sdx = (r->mapx + 1.0 - vars->p->px) * r->ddx;
+draw_frame.c:		r->sdy = (vars->p->py - r->mapy) * r->ddy;
+draw_frame.c:		r->sdy = (r->mapy + 1.0 - vars->p->py) * r->ddy;
+draw_frame.c:		r->texy = (int)r->texp & (vars->text[tn]->height - 1);
+draw_frame.c:		color = vars->text[tn]->data[vars->text[tn]->width * r->texy + r->texx];
+draw_frame.c:		vars->img->data[y * vars->res->w + r->i] = color;
+draw_frame.c:	r->drawe = r->lineh / 2 + vars->res->h / 2;
+draw_frame.c:	if (r->drawe >= vars->res->h || r->drawe < 0)
+draw_frame.c:		r->drawe = vars->res->h - 1;
+draw_frame.c:		r->wx = vars->p->py + r->pwd * r->rdiry;
+draw_frame.c:		r->wx = vars->p->px + r->pwd * r->rdirx;
+draw_frame.c:	r->texx = (int)(r->wx * (double)vars->text[tn]->width);
+draw_frame.c:	r->texx = vars->text[tn]->width - r->texx - 1;
+draw_frame.c:	r->stp = 1.0 * vars->text[tn]->height / r->lineh;
+draw_frame.c:	r->texp = (r->draws - (vars->res->h / 2) + (r->lineh / 2)) * r->stp;
+draw_frame.c:	zbuffer = malloc(sizeof(double) * vars->res->w);
+draw_frame.c:	while (++r->i < vars->res->w - 1)
+key_hook.c:	i = *(vars->map + sia(vars->collumn, h) + w);
+keys.c:    if (vars->map)
+keys.c:        free(vars->map);
+keys.c:        free_config(vars->res);
+keys.c:        free(vars->res);
+keys.c:        free(vars->p);
+keys.c:        free(vars->keys);
+keys.c:        //while (i < vars->res->h)
+keys.c:          // free(vars->buf[i++]);
+keys.c:        free(vars->collumn);
+keys.c:            mlx_destroy_image(vars->mlx, vars->text[i++]->ptr);
+keys.c:        mlx_destroy_image(vars->mlx, vars->sprite->ptr);
+keys.c:        free(vars->sprite);
+keys.c:            free(vars->text[i++]);
+keys.c:        if (!vars->save)
+keys.c:            mlx_clear_window(vars->mlx, vars->win);
+keys.c:            mlx_destroy_window(vars->mlx, vars->win);
+keys.c:        mlx_destroy_display(vars->mlx);
+keys.c:        free(vars->mlx);
+keys.c:        free(vars->buf);
+keys.c:    vars->keys->w = 0;
+keys.c:    vars->keys->s = 0;
+keys.c:    vars->keys->r = 0;
+keys.c:    vars->keys->l = 0;
+keys.c:    vars->keys->a = 0;
+keys.c:    vars->keys->d = 0;
+keys.c:        vars->keys->w = 1;
+keys.c:        vars->keys->s = 1;
+keys.c:        vars->keys->r = 1;
+keys.c:        vars->keys->l = 1;
+keys.c:        vars->keys->a = 1;
+keys.c:        vars->keys->d = 1;
+keys.c:        vars->keys->w = 0;
+keys.c:        vars->keys->s = 0;
+keys.c:        vars->keys->r = 0;
+keys.c:        vars->keys->l = 0;
+keys.c:        vars->keys->a = 0;
+keys.c:        vars->keys->d = 0;
+raycast_utils.c:		r->pwd = (r->mapx - vars->p->px + (1 - r->stpx) / 2) / r->rdirx;
+raycast_utils.c:		r->pwd = (r->mapy - vars->p->py + (1 - r->stpy) / 2) / r->rdiry;
+raycast_utils.c:	lineh = (int)(vars->res->h / r->pwd);
+raycast_utils.c:	r->camx = (2 * r->i) / ((double)vars->res->w) - 1;
+raycast_utils.c:	r->rdirx = vars->p->dx + vars->p->plx * r->camx;
+raycast_utils.c:	r->rdiry = vars->p->dy + vars->p->ply * r->camx;
+raycast_utils.c:	r->mapx = (int)vars->p->px;
+raycast_utils.c:	r->mapy = (int)vars->p->py;
+raycast_utils.c:	vars->img = malloc(sizeof(t_img));
+raycast_utils.c:	vars->img->ptr = mlx_new_image(vars->mlx, vars->res->w, vars->res->h);
+raycast_utils.c:	vars->img->data = \
+raycast_utils.c:			(int *)mlx_get_data_addr(vars->img->ptr, &vars->img->bpp, \
+raycast_utils.c:			&vars->img->size_l, &vars->img->endian);
+render_next_frame.c:	mlx_put_image_to_window(vars->mlx, vars->win, \
+render_next_frame.c:			vars->img->ptr, vars->p->px, vars->p->py);
+render_next_frame.c:	mlx_destroy_image(vars->mlx, vars->img->ptr);
+reset_buffer.c:	while (y < vars->res->h)
+reset_buffer.c:		while (x < vars->res->w)
+reset_buffer.c:			vars->buf[y][x] = 0;
+spritecaster.c:		vars->sprites[r->i]->dist = ((vars->p->px - \
+spritecaster.c:					vars->sprites[r->i]->x) * \
+spritecaster.c:				(vars->p->px - vars->sprites[r->i]->x) + \
+spritecaster.c:				(vars->p->py - vars->sprites[r->i]->y) * \
+spritecaster.c:				(vars->p->py - vars->sprites[r->i]->y));
+spritecaster.c:	r->sx = vars->sprites[r->i]->x - vars->p->px;
+spritecaster.c:	r->sy = vars->sprites[r->i]->y - vars->p->py;
+spritecaster.c:	r->invd = 1.0 / (vars->p->plx * vars->p->dy - vars->p->dx * vars->p->ply);
+spritecaster.c:	r->tx = r->invd * (vars->p->dy * r->sx - vars->p->dx * r->sy);
+spritecaster.c:	r->ty = r->invd * (((-1) * vars->p->ply) * r->sx + vars->p->plx * r->sy);
+spritecaster.c:	r->ssx = (int)((vars->res->w / 2) * (1 + r->tx / r->ty));
+spritecaster.c:	r->sheight = abs((int)(vars->res->h / r->ty));
+spritecaster.c:	r->dsy = -r->sheight / 2 + vars->res->h / 2;
+spritecaster.c:		if (r->ty > 0 && st > 0 && st < vars->res->w \
+spritecaster.c:				d = (y) * 256 - vars->res->h * 128 + r->sheight * 128;
+spritecaster.c:				color = vars->sprite->data[64 * texy + texx];
+spritecaster.c:					vars->img->data[y * vars->res->w + st] = color;
+spritecaster.c:	r->dey = r->sheight / 2 + vars->res->h / 2;
+spritecaster.c:	if (r->dey >= vars->res->h)
+spritecaster.c:		r->dey = vars->res->h - 1;
+spritecaster.c:	r->swidth = abs((int)(vars->res->h / r->ty));
+spritecaster.c:	if (r->dex >= vars->res->w)
+spritecaster.c:		r->dex = vars->res->w - 1;
+spritecaster.c:	sprite_sort(vars->sprites, r->num_sprite);
+spritefinder.c:	while (h < vars->map_h)
+spritefinder.c:		while (w < vars->collumn[h])
+sprite_utils.c:	while (h < vars->map_h)
+sprite_utils.c:		while (w < vars->collumn[h])
+sprite_utils.c:	vars->sprites = malloc(sizeof(t_sprites) * num_sprite);
+sprite_utils.c:		vars->sprites[i++] = malloc(sizeof(t_sprites));
+sprite_utils.c:	spritefinder(vars->sprites, vars);
+sprite_utils.c:		free(vars->sprites[i++]);
+sprite_utils.c:	free(vars->sprites);

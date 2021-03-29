@@ -1,33 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw_floor_cieling.c                               :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jescully <jescully@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/13 14:55:31 by jescully          #+#    #+#             */
-/*   Updated: 2021/03/13 14:55:37 by jescully         ###   ########.fr       */
+/*   Created: 2020/11/17 14:05:59 by jescully          #+#    #+#             */
+/*   Updated: 2021/01/29 11:05:17 by jescully         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "libft.h"
 
-int		draw_cieling(t_vars *vars, int x, int draw_start)
+char	*ft_strchr(const char *s, int c)
 {
-	int i;
+	int		i;
+	char	*cs;
 
+	if (!s)
+		return (NULL);
+	cs = (char *)s;
 	i = 0;
-	while (i < draw_start)
-		vars->img->data[i++ * vars->res->w + x] = vars->res->C;
-	return (1);
-}
-
-int		draw_floor(t_vars *vars, int x, int draw_end)
-{
-	int i;
-
-	i = draw_end;
-	while (i < vars->res->h)
-		vars->img->data[i++ * vars->res->w + x] = vars->res->F;
-	return (1);
+	while (s[i])
+	{
+		if (cs[i] == c)
+			return (&cs[i]);
+		i++;
+	}
+	if (cs[i] == c)
+		return (&cs[i]);
+	return (NULL);
 }

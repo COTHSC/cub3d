@@ -6,7 +6,7 @@
 /*   By: jescully <jescully@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 14:57:10 by jescully          #+#    #+#             */
-/*   Updated: 2021/03/13 14:57:12 by jescully         ###   ########.fr       */
+/*   Updated: 2021/03/28 20:03:56 by jean             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,9 @@ int				free_sprites(t_vars *vars)
 	num_sprites = count_sprites(vars);
 	i = 0;
 	while (i < num_sprites)
-		free(vars->sprites[i++]);
-	free(vars->sprites);
+		if (vars->sprite[i].ptr)
+			free(vars->sprites[i++]);
+	if (vars->sprite)
+		free(vars->sprites);
 	return (1);
 }

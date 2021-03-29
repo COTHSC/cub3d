@@ -1,33 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw_floor_cieling.c                               :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jescully <jescully@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/13 14:55:31 by jescully          #+#    #+#             */
-/*   Updated: 2021/03/13 14:55:37 by jescully         ###   ########.fr       */
+/*   Created: 2020/11/19 10:52:00 by jescully          #+#    #+#             */
+/*   Updated: 2020/11/25 15:02:20 by jescully         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "libft.h"
 
-int		draw_cieling(t_vars *vars, int x, int draw_start)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	int i;
+	int		size;
+	char	*retstr;
+	int		i;
+	int		c;
 
 	i = 0;
-	while (i < draw_start)
-		vars->img->data[i++ * vars->res->w + x] = vars->res->C;
-	return (1);
-}
-
-int		draw_floor(t_vars *vars, int x, int draw_end)
-{
-	int i;
-
-	i = draw_end;
-	while (i < vars->res->h)
-		vars->img->data[i++ * vars->res->w + x] = vars->res->F;
-	return (1);
+	c = 0;
+	size = ft_strlen(s1) + ft_strlen(s2);
+	retstr = (char*)malloc(sizeof(retstr) * (size + 1));
+	if (retstr == NULL)
+		return (NULL);
+	while (s1[i])
+	{
+		retstr[i] = s1[i];
+		i++;
+	}
+	while (s2[c])
+	{
+		retstr[i] = s2[c];
+		i++;
+		c++;
+	}
+	retstr[i] = '\0';
+	return (retstr);
 }

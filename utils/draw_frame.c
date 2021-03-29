@@ -73,7 +73,7 @@ void			fill_buffer(t_vars *vars, t_raycast *r, int y, int tn)
 		r->texy = (int)r->texp & (vars->text[tn]->height - 1);
 		r->texp += r->stp;
 		color = vars->text[tn]->data[vars->text[tn]->width * r->texy + r->texx];
-		vars->buf[y][r->i] = color;
+		vars->img->data[y * vars->res->w + r->i] = color;
 		y++;
 	}
 }
