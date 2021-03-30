@@ -6,7 +6,7 @@
 /*   By: jescully <jescully@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 16:23:04 by jescully          #+#    #+#             */
-/*   Updated: 2021/03/29 22:06:53 by jean             ###   ########.fr       */
+/*   Updated: 2021/03/30 13:04:43 by jescully         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,8 +204,19 @@ int			inv(t_vars *vars, int n)
 
 int			is_end(t_vars *vars, int w, int h)
 {
+	int		ret;
+
+	ret = 0;
 	if (h == 0 || w == vars->collumn[h] || h == (vars->map_h - 1))
-		return (1);
+		ret = 1;
+	if (ret == 1)
+	{
+		if (get_value(vars, h, w) == 7)
+			exit_game(vars, 1, 5);
+		if (get_value(vars, h, w) == 3 && get_value(vars, h, w) == 7)
+			exit_game(vars, 1, 5);
+
+	}
 	return (0);
 }
 
@@ -228,13 +239,14 @@ void		check_map_ends(t_vars *vars)
 	h = -1;
 	while (++h < vars->map_h)
 	{
-		w = -1;
-		while (++w < vars->collumn[h])
+		w = 0;
+		while (w < vars->collumn[h])
 		{
 			if (is_end(vars, w, h) && get_value(vars, h, w) == 3)
 				exit_game(vars, 1, 5);
 			if (is_end(vars, w, h) && get_value(vars, h, w) == 7)
 				exit_game(vars, 1, 5);
+			w++;
 		}
 	}
 }

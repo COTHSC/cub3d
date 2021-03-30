@@ -6,7 +6,7 @@
 /*   By: jean <jescully@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 19:36:54 by jean              #+#    #+#             */
-/*   Updated: 2021/03/28 20:01:11 by jean             ###   ########.fr       */
+/*   Updated: 2021/03/30 10:55:17 by jescully         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,8 @@ int			main(int argc, char **argv)
 
 	vars.save = 0;
 	check_arg(&vars, argc, argv[1], argv[2]);
-	fd = open(argv[1], O_RDONLY);
+	if ((fd = open(argv[1], O_RDONLY)) == -1)
+		exit_game(&vars, 0, 0);
 	vars.keys = malloc(sizeof(t_keys));
 	vars.res = malloc(sizeof(t_res));
 	vars.p = malloc(sizeof(t_pos));
