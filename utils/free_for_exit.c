@@ -6,7 +6,7 @@
 /*   By: jean <jescully@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 20:39:32 by jean              #+#    #+#             */
-/*   Updated: 2021/03/30 12:30:53 by jescully         ###   ########.fr       */
+/*   Updated: 2021/03/30 21:40:48 by jean             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void		little_free(t_vars *vars)
 		free(vars->p);
 	if (vars->keys)
 		free(vars->keys);
-	if (*vars->map == 1 || *vars->map == 3 || *vars->map == 7 || *vars->map == 5)
+	if (vars->to_free->map)
 	{
 		free(vars->map);
 		free(vars->collumn);

@@ -6,7 +6,7 @@
 /*   By: jean <jescully@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 19:36:54 by jean              #+#    #+#             */
-/*   Updated: 2021/03/30 10:55:17 by jescully         ###   ########.fr       */
+/*   Updated: 2021/03/30 21:35:23 by jean             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ int			main(int argc, char **argv)
 	if ((fd = open(argv[1], O_RDONLY)) == -1)
 		exit_game(&vars, 0, 0);
 	vars.keys = malloc(sizeof(t_keys));
+	vars.to_free = malloc(sizeof(t_needs_freedom));
 	vars.res = malloc(sizeof(t_res));
 	vars.p = malloc(sizeof(t_pos));
 	vars.map_h = parse_lines(&vars, fd);

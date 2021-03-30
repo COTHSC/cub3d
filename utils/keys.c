@@ -6,7 +6,7 @@
 /*   By: jescully <jescully@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 14:56:09 by jescully          #+#    #+#             */
-/*   Updated: 2021/03/30 12:10:33 by jescully         ###   ########.fr       */
+/*   Updated: 2021/03/30 21:47:11 by jean             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int			exit_game(t_vars *vars, int bol, int error)
 		little_free(vars);
 	if (bol > 1)
 		big_free(vars);
+    free(vars->to_free);
 	if (error != 7)
 		printf("Error\n %s\n", vars->error[error]);
 	else

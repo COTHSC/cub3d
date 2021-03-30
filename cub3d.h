@@ -120,6 +120,24 @@ typedef struct  s_pos {
 	double          rs;
 }                       t_pos;
 
+typedef struct  s_needs_freedom {
+	int 	    mlx;
+	int 	    win;
+	int 	    p;
+	int 	    img;
+	int 	    text[8];
+	int	        sprite;
+	int         sprites;
+	int 	    keys;
+	int 	    res;
+	int		    map;
+	int		    collumn;
+	int	    	map_h;
+	int	    	save;
+	int	        error;
+	int 	    farray;
+}               t_needs_freedom;
+
 typedef struct  s_vars {
 	void	    *mlx;
 	void	    *win;
@@ -138,6 +156,7 @@ typedef struct  s_vars {
 	int	    	save;
 	char	    **error;
 	char	    **farray;
+	t_needs_freedom	*to_free;
 }               t_vars;
 
 void		pixel_put(t_img *image, int x, int y, int color);
