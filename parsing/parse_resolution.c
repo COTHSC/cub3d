@@ -6,7 +6,7 @@
 /*   By: jescully <jescully@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 16:23:04 by jescully          #+#    #+#             */
-/*   Updated: 2021/03/30 21:31:13 by jean             ###   ########.fr       */
+/*   Updated: 2021/03/31 11:48:51 by jescully         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,7 +206,7 @@ int			is_end(t_vars *vars, int w, int h)
 	int		ret;
 
 	ret = 0;
-	if (h == 0 || w == vars->collumn[h] || h == (vars->map_h - 1))
+	if (h == 0 || w == vars->collumn[h] - 1 || h == (vars->map_h - 1) || w == 0)
     {
 			if (get_value(vars, h, w) == 3)
 				exit_game(vars, 1, 5);
@@ -278,7 +278,6 @@ void		check_map(t_vars *vars)
 		}
         h++;
 	}
-
 }
 
 int			parse_map(t_vars *vars, int fd)
