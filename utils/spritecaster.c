@@ -6,7 +6,7 @@
 /*   By: jescully <jescully@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 14:56:49 by jescully          #+#    #+#             */
-/*   Updated: 2021/03/28 20:06:02 by jean             ###   ########.fr       */
+/*   Updated: 2021/03/31 12:09:15 by jescully         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ static void		dr_sprite(t_vars *vars, t_raysprite *r, int texy, int texx)
 			while (++y < r->dey)
 			{
 				d = (y) * 256 - vars->res->h * 128 + r->sheight * 128;
-				texy = ((d * 64) / r->sheight) / 256;
+				if ((texy = ((d * 64) / r->sheight) / 256) < 0)
+					texy = 0;
 				color = vars->sprite->data[64 * texy + texx];
 				if ((color & 0x00FFFFFF) != 0)
 					vars->img->data[y * vars->res->w + st] = color;

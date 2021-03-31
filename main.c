@@ -6,7 +6,7 @@
 /*   By: jean <jescully@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 19:36:54 by jean              #+#    #+#             */
-/*   Updated: 2021/03/31 11:29:35 by jescully         ###   ########.fr       */
+/*   Updated: 2021/03/31 13:32:39 by jescully         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,20 @@ void		check_arg(t_vars *vars, int argc, char *arg1, char *arg2)
 		vars->save = 1;
 }
 
+int		exit_the_cross(int keycode, t_vars *vars)
+{
+	exit_game(vars, 0, 7);
+	return (1);
+}
+
+void		init_to_zero(t_vars *vars)
+{
+//	vars->res->NO = ft_calloc(9, sizeof(char));
+//	vars->res->SO = ft_calloc(9, sizeof(char));
+//	vars->res->EA = ft_calloc(9, sizeof(char));
+//	vars->res->WE = ft_calloc(9, sizeof(char));
+}
+
 int			main(int argc, char **argv)
 {
 	t_vars	vars;
@@ -91,6 +105,7 @@ int			main(int argc, char **argv)
 		exit_game(&vars, 0, 0);
 	vars.keys = malloc(sizeof(t_keys));
 	vars.res = malloc(sizeof(t_res));
+	init_to_zero(&vars);
 	vars.p = malloc(sizeof(t_pos));
 	vars.map_h = parse_lines(&vars, fd);
 	innit_keys(&vars);
@@ -103,7 +118,7 @@ int			main(int argc, char **argv)
 	vars.win = mlx_new_window(vars.mlx, vars.res->w, vars.res->h, "Cub3d");
 	mlx_hook(vars.win, 2, 1L << 0, &key_press, &vars);
 	mlx_hook(vars.win, 3, 1L << 1, &key_release, &vars);
-	mlx_hook(vars.win, 33, 1L << 17, &exit_game, &vars);
+	mlx_hook(vars.win, 33, 1L << 17, &exit_the_cross, &vars);
 	mlx_loop_hook(vars.mlx, key_hook, &vars);
 	mlx_loop(vars.mlx);
 	return (0);

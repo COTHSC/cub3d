@@ -6,7 +6,7 @@
 /*   By: jescully <jescully@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 14:56:09 by jescully          #+#    #+#             */
-/*   Updated: 2021/03/30 21:47:11 by jean             ###   ########.fr       */
+/*   Updated: 2021/03/31 12:50:46 by jescully         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int			exit_game(t_vars *vars, int bol, int error)
 	if (error != 7)
 		printf("Error\n %s\n", vars->error[error]);
 	else
-		printf("%s\n", vars->error[error]);
+		printf("game exited succesfully\n");
 	exit(0);
 	return (1);
 }
