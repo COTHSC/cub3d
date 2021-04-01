@@ -6,7 +6,7 @@
 /*   By: jean <jescully@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 19:36:54 by jean              #+#    #+#             */
-/*   Updated: 2021/03/31 13:32:39 by jescully         ###   ########.fr       */
+/*   Updated: 2021/04/01 11:07:57 by jescully         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,15 @@ int			cmp_args(char *str, char *str2)
 	count = 0;
 	len = ft_strlen(str);
 	if (!ft_strncmp(&str[len - 4], ".cub", 4))
-		count++;
+		count = 1;
+	else
+		return (0);
 	if (ft_strlen(str2) != 0)
 	{
 		if (!ft_strncmp(str2, "--save", 6) && ft_strlen(str2) == 6)
-			count++;
+			count = 2;
 		else
-			count--;
+			count = 0;
 	}
 	return (count);
 }
@@ -87,10 +89,16 @@ int		exit_the_cross(int keycode, t_vars *vars)
 
 void		init_to_zero(t_vars *vars)
 {
-//	vars->res->NO = ft_calloc(9, sizeof(char));
-//	vars->res->SO = ft_calloc(9, sizeof(char));
-//	vars->res->EA = ft_calloc(9, sizeof(char));
-//	vars->res->WE = ft_calloc(9, sizeof(char));
+	vars->res->NO = 0;
+	vars->res->EA = 0;
+	vars->res->SO = 0;
+	vars->res->WE = 0;
+	vars->res->S = 0;
+}
+
+void		init_free_to_zero(t_vars *vars)
+{
+	vars->to_free->map = 0;
 }
 
 int			main(int argc, char **argv)
@@ -100,6 +108,7 @@ int			main(int argc, char **argv)
 
 	vars.save = 0;
 	vars.to_free = malloc(sizeof(t_needs_freedom));
+	init_free_to_zero(&vars);
 	check_arg(&vars, argc, argv[1], argv[2]);
 	if ((fd = open(argv[1], O_RDONLY)) == -1)
 		exit_game(&vars, 0, 0);
