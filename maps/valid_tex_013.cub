@@ -1,12 +1,12 @@
 R 1080 720
 SO ./wolftex/redbrick.xpm
-EA ./wolftex/wood.xpm  	
+EA ./wolftex/wood.xpm
 NO ./wolftex/greystone.xpm
-WE ./wolftex/wood.xpm		 
+WE ./wolftex/wood.xpm
 S ./wolftex/barrel.xpm
-C 255,200,160	 	 
-F 122,122,122	 
-			  
+C 255,200,160
+F 122,122,122
+
 11111111111111111
 10000000000000001
 10200000200000201

@@ -6,7 +6,7 @@
 /*   By: jean <jescully@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 19:36:54 by jean              #+#    #+#             */
-/*   Updated: 2021/04/01 13:41:48 by jescully         ###   ########.fr       */
+/*   Updated: 2021/04/01 14:33:17 by jescully         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,8 @@ int		exit_the_cross(int keycode, t_vars *vars)
 
 void		init_to_zero(t_vars *vars)
 {
+	vars->to_free->farray = 0;
+	vars->to_free->sprites = 0;
 	vars->res->NO = 0;
 	vars->res->EA = 0;
 	vars->res->SO = 0;
@@ -96,13 +98,14 @@ void		init_to_zero(t_vars *vars)
 	vars->res->S = 0;
 	vars->res->w = -1;
 	vars->res->h = -1;
-	vars->to_free->farray = 0;
-	vars->to_free->sprites = 0;
+
 }
 
 void		init_free_to_zero(t_vars *vars)
 {
 	vars->to_free->map = 0;
+	vars->to_free->farray = 0;
+	vars->to_free->sprites = 0;
 }
 
 int			main(int argc, char **argv)
