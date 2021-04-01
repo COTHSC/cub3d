@@ -6,7 +6,7 @@
 /*   By: jean <jescully@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 20:39:32 by jean              #+#    #+#             */
-/*   Updated: 2021/03/30 21:40:48 by jean             ###   ########.fr       */
+/*   Updated: 2021/04/01 13:39:38 by jescully         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void		big_free(t_vars *vars)
 		mlx_destroy_image(vars->mlx, vars->text[i++]->ptr);
 	mlx_destroy_image(vars->mlx, vars->sprite->ptr);
 	free(vars->sprite);
+	free(vars->sprites);
 	i = 0;
 	while (i < 4)
 		free(vars->text[i++]);

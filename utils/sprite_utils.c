@@ -6,7 +6,7 @@
 /*   By: jescully <jescully@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 14:57:10 by jescully          #+#    #+#             */
-/*   Updated: 2021/03/28 20:03:56 by jean             ###   ########.fr       */
+/*   Updated: 2021/04/01 13:34:55 by jescully         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,10 @@ int				init_sprites(t_vars *vars)
 	int			i;
 	int			num_sprite;
 
+	vars->to_free->sprites = 1;
 	i = 0;
 	num_sprite = count_sprites(vars);
-	vars->sprites = malloc(sizeof(t_sprites) * num_sprite);
+	vars->sprites = malloc(sizeof(t_sprites*) * (num_sprite));
 	i = 0;
 	while (i < num_sprite)
 		vars->sprites[i++] = malloc(sizeof(t_sprites));

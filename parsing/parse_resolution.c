@@ -6,7 +6,7 @@
 /*   By: jescully <jescully@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 16:23:04 by jescully          #+#    #+#             */
-/*   Updated: 2021/04/01 10:41:53 by jescully         ###   ########.fr       */
+/*   Updated: 2021/04/01 14:07:45 by jescully         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,10 @@ void		direct_function(t_vars *vars, fptr functions[8], char *buf)
 		if (!ft_strncmp(&buf[j], vars->farray[c], ft_strlen(vars->farray[c])))
 		{
 			if (!(*functions[c])(vars->res, &buf[j]))
+			{
+				free(buf);
 				exit_game(vars, 1, 3);
+			}
 		}
 		c++;
 	}
@@ -55,18 +58,19 @@ int			parse_lines(t_vars *vars, int fd)
 	vars->res->count = 0;
 	vars->farray = malloc(sizeof(char *) * 8);
 	innit_arrayf(functions, vars);
-    vars->to_free->farray++;
+	vars->to_free->farray++;
 	while (get_next_line(fd, &buf) != 0)
 	{
 		direct_function(vars, functions, buf);
 		if (check_struct(vars->res))
 		{
-			h = parse_map(vars, fd);
 			free(buf);
+			h = parse_map(vars, fd);
 			return (h);
 		}
 		free(buf);
 	}
+	free(buf);
 	exit_game(vars, 1, 1);
 	return (0);
 }
@@ -137,7 +141,11 @@ int			parse_resolution(t_res *res, char *buf)
 	i -= 1;
 	while (buf[++i] && buf[i] != '\n')
 		if (!ft_isspace(buf[i]))
+		{
+			free(buf);
 			return (0);
+		}
+
 	return (1);
 }
 
@@ -197,10 +205,7 @@ int			inv(t_vars *vars, int n)
 {
 	if (n != 3 && n != 5 && n != 7 && n != 21 && \
 			n != 9 && n != 25 && n != 1 && n != 49)
-    {
-//        *ret = -1;
 		exit_game(vars, 1, 5);
-    }
 	return (1);
 }
 
@@ -210,13 +215,13 @@ int			is_end(t_vars *vars, int w, int h)
 
 	ret = 0;
 	if (h == 0 || w == vars->collumn[h] || h == (vars->map_h - 1) || w == 0)
-    {
-			if (get_value(vars, h, w) == 3)
-				exit_game(vars, 1, 5);
-			if (get_value(vars, h, w) == 7)
-				exit_game(vars, 1, 5);
-		    return (1);
-    }
+	{
+		if (get_value(vars, h, w) == 3)
+			exit_game(vars, 1, 5);
+		if (get_value(vars, h, w) == 7)
+			exit_game(vars, 1, 5);
+		return (1);
+	}
 	return (0);
 }
 
@@ -234,7 +239,7 @@ void		check_map_ends(t_vars *vars)
 			if (get_value(vars, h, w) == 3 && w + 1 >= vars->collumn[h - 1])
 				exit_game(vars, 1, 5);
 			inv(vars, get_value(vars, h, w) * get_value(vars, h - 1, w + 1));
-            w++;
+			w++;
 		}
 	}
 	h = -1;
@@ -243,7 +248,7 @@ void		check_map_ends(t_vars *vars)
 		w = 0;
 		while (w <= vars->collumn[h])
 		{
-            is_end(vars, w, h);
+			is_end(vars, w, h);
 			w++;
 		}
 	}
@@ -264,9 +269,9 @@ void		check_map(t_vars *vars)
 			inv(vars, get_value(vars, h, w) * get_value(vars, h - 1, w));
 			inv(vars, get_value(vars, h, w) * get_value(vars, h, w - 1));
 			inv(vars, get_value(vars, h, w) * get_value(vars, h - 1, w - 1));
-            w++;
+			w++;
 		}
-        h++;
+		h++;
 	}
 	h = 0;
 	while (h < (vars->map_h - 1))
@@ -277,11 +282,10 @@ void		check_map(t_vars *vars)
 			inv(vars, get_value(vars, h, w) * get_value(vars, h, w + 1));
 			inv(vars, get_value(vars, h, w) * get_value(vars, h + 1, w));
 			inv(vars, get_value(vars, h, w) * get_value(vars, h + 1, w + 1));
-            w++;
+			w++;
 		}
-        h++;
+		h++;
 	}
-
 }
 
 int			parse_map(t_vars *vars, int fd)
@@ -300,8 +304,8 @@ int			parse_map(t_vars *vars, int fd)
 		{
 			length = ft_strlen(buf);
 			j = realloc_map(vars, length, h);
-            vars->to_free->map = 1;
-            vars->to_free->collumn = 1;
+			vars->to_free->map = 1;
+			vars->to_free->collumn = 1;
 			bol = parse_map_string(vars, buf, h, &j);
 			h++;
 		}
