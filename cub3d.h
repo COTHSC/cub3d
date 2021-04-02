@@ -6,7 +6,7 @@
 /*   By: jescully <jescully@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 10:16:16 by jescully          #+#    #+#             */
-/*   Updated: 2021/04/02 11:22:42 by jescully         ###   ########.fr       */
+/*   Updated: 2021/04/02 11:31:26 by jescully         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,23 +81,23 @@ typedef struct	s_keys {
 typedef struct	s_res {
 	int			w;
 	int			h;
-	char		*NO;
-	char		*SO;
-	char		*WE;
-	char		*EA;
-	char		*S;
-	int			C;
-	int			F;
+	char		*no;
+	char		*so;
+	char		*we;
+	char		*ea;
+	char		*s;
+	int			c;
+	int			f;
 	int			count;
 }				t_res;
 
 typedef int	(*t_fptr)(t_res *, char *);
 
 typedef struct	s_texpath {
-	char		*NO;
-	char		*SO;
-	char		*WE;
-	char		*EA;
+	char		*no;
+	char		*so;
+	char		*we;
+	char		*ea;
 }				t_texpath;
 
 typedef struct	s_sprites {

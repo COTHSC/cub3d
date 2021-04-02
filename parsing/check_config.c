@@ -6,7 +6,7 @@
 /*   By: jescully <jescully@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/14 16:22:32 by jescully          #+#    #+#             */
-/*   Updated: 2021/03/28 21:09:10 by jean             ###   ########.fr       */
+/*   Updated: 2021/04/02 11:34:14 by jescully         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,19 @@ int	check_paths(t_res *res)
 {
 	int fd;
 
-	if ((fd = open(res->NO, O_RDONLY)) == -1)
+	if ((fd = open(res->no, O_RDONLY)) == -1)
 		return (0);
 	else
 		close(fd);
-	if ((fd = open(res->SO, O_RDONLY)) == -1)
+	if ((fd = open(res->so, O_RDONLY)) == -1)
 		return (0);
 	else
 		close(fd);
-	if ((fd = open(res->WE, O_RDONLY)) == -1)
+	if ((fd = open(res->we, O_RDONLY)) == -1)
 		return (0);
 	else
 		close(fd);
-	if ((fd = open(res->EA, O_RDONLY)) == -1)
+	if ((fd = open(res->ea, O_RDONLY)) == -1)
 		return (0);
 	else
 		close(fd);
@@ -41,19 +41,19 @@ int	check_struct(t_res *res)
 		return (0);
 	if (res->h <= 0)
 		return (0);
-	if (res->F < 0)
+	if (res->f < 0)
 		return (0);
-	if (res->C < 0)
+	if (res->c < 0)
 		return (0);
-	if (res->NO == NULL)
+	if (res->no == NULL)
 		return (0);
-	if (res->SO == NULL)
+	if (res->so == NULL)
 		return (0);
-	if (res->WE == NULL)
+	if (res->we == NULL)
 		return (0);
-	if (res->EA == NULL)
+	if (res->ea == NULL)
 		return (0);
-	if (res->S == NULL)
+	if (res->s == NULL)
 		return (0);
 	if (!check_paths(res))
 		return (0);

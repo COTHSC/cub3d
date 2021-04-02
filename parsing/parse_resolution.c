@@ -6,7 +6,7 @@
 /*   By: jescully <jescully@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 16:23:04 by jescully          #+#    #+#             */
-/*   Updated: 2021/04/02 10:39:43 by jescully         ###   ########.fr       */
+/*   Updated: 2021/04/02 11:36:49 by jescully         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,10 @@ int			parse_sprite(t_res *res, char *buf)
 		length++;
 		i++;
 	}
-	if (!res->S)
+	if (!res->s)
 	{
-		res->S = malloc(length + 1);
-		ft_strlcpy(res->S, &buf[start], length + 1);
+		res->s = malloc(length + 1);
+		ft_strlcpy(res->s, &buf[start], length + 1);
 	}
 	return (1);
 }

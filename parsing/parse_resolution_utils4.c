@@ -6,7 +6,7 @@
 /*   By: jean <jescully@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 21:12:59 by jean              #+#    #+#             */
-/*   Updated: 2021/04/02 10:13:38 by jescully         ###   ########.fr       */
+/*   Updated: 2021/04/02 11:37:17 by jescully         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ int			parse_colors(t_res *res, char *buf)
 		return (0);
 	color = ft_get_color(r, g, b);
 	if (ft_strnstr(buf, "F ", 2))
-		res->F = color;
+		res->f = color;
 	else if (ft_strnstr(buf, "C ", 2))
-		res->C = color;
+		res->c = color;
 	return (1);
 }
 

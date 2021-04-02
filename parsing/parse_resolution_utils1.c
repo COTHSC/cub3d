@@ -6,7 +6,7 @@
 /*   By: jescully <jescully@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 16:23:04 by jescully          #+#    #+#             */
-/*   Updated: 2021/04/02 10:40:20 by jescully         ###   ########.fr       */
+/*   Updated: 2021/04/02 11:34:56 by jescully         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ int			innit_arrayf(t_fptr functions[8], t_vars *vars)
 	functions[5] = &parse_sprite;
 	functions[6] = &parse_colors;
 	functions[7] = &parse_colors;
-	vars->res->F = -1;
-	vars->res->C = -1;
+	vars->res->f = -1;
+	vars->res->c = -1;
 	return (1);
 }
 

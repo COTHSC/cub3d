@@ -6,7 +6,7 @@
 /*   By: jescully <jescully@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 11:18:41 by jescully          #+#    #+#             */
-/*   Updated: 2021/04/02 11:24:03 by jescully         ###   ########.fr       */
+/*   Updated: 2021/04/02 11:32:06 by jescully         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,12 @@ int			load_texture(t_vars *vars)
 	while (i < 4)
 		vars->text[i++] = (t_img *)malloc(sizeof(t_img));
 	i = 0;
-	i += load_image(vars, vars->text[0], vars->res->SO);
-	i += load_image(vars, vars->text[1], vars->res->NO);
-	i += load_image(vars, vars->text[2], vars->res->EA);
-	i += load_image(vars, vars->text[3], vars->res->WE);
+	i += load_image(vars, vars->text[0], vars->res->so);
+	i += load_image(vars, vars->text[1], vars->res->no);
+	i += load_image(vars, vars->text[2], vars->res->ea);
+	i += load_image(vars, vars->text[3], vars->res->we);
 	vars->sprite = (t_img *)malloc(sizeof(t_img));
-	i += load_image(vars, vars->sprite, vars->res->S);
+	i += load_image(vars, vars->sprite, vars->res->s);
 	if (i == 5)
 	{
 		init_sprites(vars);
@@ -46,9 +46,10 @@ int			load_texture(t_vars *vars)
 	exit_game(vars, 2, 6);
 	return (0);
 }
-int		exit_the_cross(int keycode, t_vars *vars)
+
+int			exit_the_cross(int keycode, t_vars *vars)
 {
-	int i;
+	int		i;
 
 	i = keycode;
 	exit_game(vars, 0, 7);
@@ -59,11 +60,11 @@ void		init_to_zero(t_vars *vars)
 {
 	vars->to_free->farray = 0;
 	vars->to_free->sprites = 0;
-	vars->res->NO = 0;
-	vars->res->EA = 0;
-	vars->res->SO = 0;
-	vars->res->WE = 0;
-	vars->res->S = 0;
+	vars->res->no = 0;
+	vars->res->ea = 0;
+	vars->res->so = 0;
+	vars->res->we = 0;
+	vars->res->s = 0;
 	vars->res->w = -1;
 	vars->res->h = -1;
 }

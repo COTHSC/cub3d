@@ -6,7 +6,7 @@
 /*   By: jean <jescully@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 20:39:32 by jean              #+#    #+#             */
-/*   Updated: 2021/04/01 13:39:38 by jescully         ###   ########.fr       */
+/*   Updated: 2021/04/02 11:33:01 by jescully         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 
 static void	free_config(t_res *res)
 {
-	if (res->NO)
-		free(res->NO);
-	if (res->EA)
-		free(res->EA);
-	if (res->SO)
-		free(res->SO);
-	if (res->WE)
-		free(res->WE);
-	if (res->S)
-		free(res->S);
+	if (res->no)
+		free(res->no);
+	if (res->ea)
+		free(res->ea);
+	if (res->so)
+		free(res->so);
+	if (res->we)
+		free(res->we);
+	if (res->s)
+		free(res->s);
 }
 
 void		little_free(t_vars *vars)

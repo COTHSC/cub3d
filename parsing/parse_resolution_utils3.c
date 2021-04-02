@@ -6,7 +6,7 @@
 /*   By: jean <jescully@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 21:12:59 by jean              #+#    #+#             */
-/*   Updated: 2021/04/02 10:56:18 by jescully         ###   ########.fr       */
+/*   Updated: 2021/04/02 11:36:12 by jescully         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,25 +16,25 @@
 
 void			path_sorter(t_res *res, char *buf, int start, int length)
 {
-	if (ft_strnstr(buf, "NO", 3) && !res->NO)
+	if (ft_strnstr(buf, "NO", 3) && !res->no)
 	{
-		res->NO = malloc(length + 1);
-		ft_strlcpy(res->NO, &buf[start], length + 1);
+		res->no = malloc(length + 1);
+		ft_strlcpy(res->no, &buf[start], length + 1);
 	}
-	else if (ft_strnstr(buf, "SO", 3) && !res->SO)
+	else if (ft_strnstr(buf, "SO", 3) && !res->so)
 	{
-		res->SO = malloc(length + 1);
-		ft_strlcpy(res->SO, &buf[start], length + 1);
+		res->so = malloc(length + 1);
+		ft_strlcpy(res->so, &buf[start], length + 1);
 	}
-	else if (ft_strnstr(buf, "WE", 3) && !res->WE)
+	else if (ft_strnstr(buf, "WE", 3) && !res->we)
 	{
-		res->WE = malloc(length + 1);
-		ft_strlcpy(res->WE, &buf[start], length + 1);
+		res->we = malloc(length + 1);
+		ft_strlcpy(res->we, &buf[start], length + 1);
 	}
-	else if (ft_strnstr(buf, "EA", 3) && !res->EA)
+	else if (ft_strnstr(buf, "EA", 3) && !res->ea)
 	{
-		res->EA = malloc(length + 1);
-		ft_strlcpy(res->EA, &buf[start], length + 1);
+		res->ea = malloc(length + 1);
+		ft_strlcpy(res->ea, &buf[start], length + 1);
 	}
 }
 
