@@ -6,7 +6,7 @@
 /*   By: jescully <jescully@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 10:16:16 by jescully          #+#    #+#             */
-/*   Updated: 2021/04/02 10:37:06 by jescully         ###   ########.fr       */
+/*   Updated: 2021/04/02 11:22:42 by jescully         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,5 +226,9 @@ void	path_sorter(t_res *res, char *buf, int start, int length);
 int		parse_map_string(t_vars *vars, char *buf, int h, int *j);
 int		ft_advance(char *buf, int *r, int *g, int *b);
 void	i_through_space(char *str, int *i);
+void	init_to_zero(t_vars *vars);
+void	init_free_to_zero(t_vars *vars); 
+int		load_texture(t_vars *vars);
+int     exit_the_cross(int keycode, t_vars *vars);
 
 #endif

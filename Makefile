@@ -25,6 +25,7 @@ SRCS = main.c \
 	get_next_line/get_next_line_utils.c \
 	utils/draw_floor_cieling.c \
 	utils/render_next_frame.c \
+	utils/main_utils.c \
 	save/bmp.c \
 
 OBJS = $(SRCS:.c=.o)
@@ -33,9 +34,9 @@ HEADERS = includes
 
 MLX_REQ_LN = -Lmlx_linux -lmlx_Linux -Imlx_linux -lXext -lX11 -lm -Llibft -lft 
 
-CC = gcc
+CC = clang
 
-CFLAGS = -g -Wall -Wextra
+CFLAGS = -g -Wall -Wextra -Werror
 
 all : $(NAME)
 

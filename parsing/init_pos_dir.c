@@ -6,7 +6,7 @@
 /*   By: jescully <jescully@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 16:23:04 by jescully          #+#    #+#             */
-/*   Updated: 2021/04/01 12:03:47 by jescully         ###   ########.fr       */
+/*   Updated: 2021/04/02 10:58:49 by jescully         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int			save_position(t_vars *vars, char c, int h, int i)
 		rot = M_PI;
 	else if (c == 'E')
 		rot = 3 * M_PI / 2;
-	else if (c == 'W')
+	else
 		rot = M_PI / 2;
 	vars->p->px = (double)h + 0.5;
 	vars->p->py = (double)i - 0.5;
