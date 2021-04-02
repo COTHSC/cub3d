@@ -34,7 +34,7 @@ HEADERS = includes
 
 MLX_REQ_LN = -Lmlx_linux -lmlx_Linux -Imlx_linux -lXext -lX11 -lm -Llibft -lft 
 
-CC = clang
+CC = clang -g
 
 CFLAGS = -g -Wall -Wextra -Werror
 
