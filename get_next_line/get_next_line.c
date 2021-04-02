@@ -6,7 +6,7 @@
 /*   By: jean <jescully@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/27 16:36:29 by jean              #+#    #+#             */
-/*   Updated: 2021/04/02 07:35:03 by jescully         ###   ########.fr       */
+/*   Updated: 2021/04/02 09:17:56 by jescully         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ static char	*leftovers(char *available_string)
 	static char *new_string;
 
 	if (!available_string || ft_strlen(available_string) == 0)
-    {
-        free(available_string);
+	{
+		free(available_string);
 		return (NULL);
-    }
+	}
 	if (!ft_strchr(available_string, '\n'))
 	{
 		free(available_string);

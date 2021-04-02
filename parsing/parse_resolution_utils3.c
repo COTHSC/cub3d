@@ -6,7 +6,7 @@
 /*   By: jean <jescully@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 21:12:59 by jean              #+#    #+#             */
-/*   Updated: 2021/04/01 12:04:59 by jescully         ###   ########.fr       */
+/*   Updated: 2021/04/02 10:12:26 by jescully         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,12 @@ void	path_sorter(t_res *res, char *buf, int start, int length)
 	}
 }
 
+static void				get_out(t_vars *vars, char *buf)
+{
+	free(buf);
+	exit_game(vars, 1, 8);
+}
+
 int				parse_map_string(t_vars *vars, char *buf, int h, int *c)
 {
 	int			i;
@@ -62,12 +68,38 @@ int				parse_map_string(t_vars *vars, char *buf, int h, int *c)
 		else if (buf[i] == ' ')
 			*(vars->map + sia(vars->collumn, h) + j) = 5;
 		else
-		{
-			free(buf);
-			exit_game(vars, 1, 8);
-		}
+			get_out(vars, buf);
 		j++;
 	}
 	*c = j;
 	return (bol);
+}
+
+int		ft_advance(char *buf, int *r, int *g, int *b)
+{
+	int i;
+
+	i = -1;
+	while (!ft_isdigit(buf[++i]))
+		if (!ft_isspace(buf[i]) && buf[i] != 'F' && buf[i] != 'C')
+			return (0);
+	*r = ft_atoi(&buf[i]);
+	while (buf[i] != ',')
+	{
+		if (!ft_isdigit(buf[i]) && !ft_isspace(buf[i]))
+			return (0);
+		i++;
+	}
+	*g = ft_atoi(&buf[i + 1]);
+	while (buf[++i] != ',')
+		if (!ft_isdigit(buf[i]) && !ft_isspace(buf[i]))
+			return (0);
+	if (!ft_isdigit(buf[i + 1]))
+		return (0);
+	*b = ft_atoi(&buf[++i]);
+	while (ft_isdigit(buf[i]))
+		i++;
+	if (!empty_line(&buf[i]))
+		return (0);
+	return (1);
 }

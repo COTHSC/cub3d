@@ -1,7 +1,6 @@
 NAME = cub3D
 
 SRCS = main.c \
-	utils/reset_buffer.c \
 	parsing/parse_resolution.c \
 	parsing/max_size.c \
 	parsing/init_error.c \
@@ -9,8 +8,10 @@ SRCS = main.c \
 	parsing/parse_resolution_utils1.c \
 	parsing/parse_resolution_utils2.c \
 	parsing/parse_resolution_utils3.c \
+	parsing/parse_resolution_utils4.c \
 	parsing/init_pos_dir.c \
 	parsing/check_config.c \
+	parsing/map_checking.c \
 	utils/keys.c \
 	utils/draw.c \
 	utils/draw_frame.c \

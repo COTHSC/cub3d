@@ -6,7 +6,7 @@
 /*   By: jescully <jescully@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 16:23:04 by jescully          #+#    #+#             */
-/*   Updated: 2021/04/01 16:07:13 by jescully         ###   ########.fr       */
+/*   Updated: 2021/04/02 10:40:20 by jescully         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../libft/libft.h"
 #include <fcntl.h>
 
-int			innit_arrayf(fptr functions[8], t_vars *vars)
+int			innit_arrayf(t_fptr functions[8], t_vars *vars)
 {
 	int		i;
 
