@@ -1,0 +1,12 @@
+NO ./wolftex/greystone.xpm
+WE ./wolftex/wood.xpm
+F 122,0,255
+EA ./wolftex/wood.xpm
+S ./wolftex/barrel.xpm
+R 1080 720
+SO ./wolftex/redbrick.xpm
+C 42,0,81
+
+11111
+1N111111111111111111111111
+1111

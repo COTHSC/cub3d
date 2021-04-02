@@ -6,7 +6,7 @@
 /*   By: jescully <jescully@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 16:23:04 by jescully          #+#    #+#             */
-/*   Updated: 2021/04/02 11:36:49 by jescully         ###   ########.fr       */
+/*   Updated: 2021/04/02 13:34:56 by jescully         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int			parse_map(t_vars *vars, int fd)
 
 	bol = 0;
 	h = 0;
-	while (get_next_line(fd, &buf) != 0 || ft_strchr(buf, '1'))
+	while ((get_next_line(fd, &buf)) != 0 || ft_strchr(buf, '1'))
 	{
 		if (buf[0] != '\n' && !empty_line(buf))
 		{

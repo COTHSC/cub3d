@@ -6,7 +6,7 @@
 /*   By: jescully <jescully@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 09:32:09 by jescully          #+#    #+#             */
-/*   Updated: 2021/04/02 09:33:15 by jescully         ###   ########.fr       */
+/*   Updated: 2021/04/02 13:43:22 by jescully         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ void		check_map_ends(t_vars *vars)
 {
 	int		h;
 	int		w;
-
+	
+	vars->collumn[vars->map_h - 1] -= 1;
 	h = 0;
 	while (++h < (vars->map_h))
 	{
