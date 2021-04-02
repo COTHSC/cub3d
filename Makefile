@@ -15,6 +15,7 @@ SRCS = main.c \
 	utils/draw.c \
 	utils/draw_frame.c \
 	utils/spritecaster.c \
+	utils/exit_game.c \
 	utils/key_hook.c \
 	utils/spritefinder.c \
 	utils/sprite_utils.c \

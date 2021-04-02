@@ -6,7 +6,7 @@
 /*   By: jean <jescully@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 19:36:54 by jean              #+#    #+#             */
-/*   Updated: 2021/04/01 14:33:17 by jescully         ###   ########.fr       */
+/*   Updated: 2021/04/02 08:41:50 by jescully         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,6 @@ void		init_to_zero(t_vars *vars)
 	vars->res->S = 0;
 	vars->res->w = -1;
 	vars->res->h = -1;
-
 }
 
 void		init_free_to_zero(t_vars *vars)
