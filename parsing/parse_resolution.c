@@ -6,7 +6,7 @@
 /*   By: jescully <jescully@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 16:23:04 by jescully          #+#    #+#             */
-/*   Updated: 2021/04/02 13:34:56 by jescully         ###   ########.fr       */
+/*   Updated: 2021/04/03 12:32:09 by jean             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void		direct_function(t_vars *vars, t_fptr functions[8], char *buf)
 		}
 		c++;
 	}
+	free(buf);
 }
 
 int			parse_lines(t_vars *vars, int fd)
@@ -54,13 +55,10 @@ int			parse_lines(t_vars *vars, int fd)
 		direct_function(vars, functions, buf);
 		if (check_struct(vars->res))
 		{
-			free(buf);
 			h = parse_map(vars, fd);
 			return (h);
 		}
-		free(buf);
 	}
-	free(buf);
 	exit_game(vars, 1, 1);
 	return (0);
 }

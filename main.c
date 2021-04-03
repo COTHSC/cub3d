@@ -6,7 +6,7 @@
 /*   By: jean <jescully@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 19:36:54 by jean              #+#    #+#             */
-/*   Updated: 2021/04/02 11:20:54 by jescully         ###   ########.fr       */
+/*   Updated: 2021/04/03 12:11:58 by jean             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int			main(int argc, char **argv)
 	int		fd;
 
 	vars.save = 0;
-	vars.to_free = malloc(sizeof(t_needs_freedom));
+	vars.to_free = malloc(sizeof(t_n_free));
 	init_free_to_zero(&vars);
 	fd = check_arg(&vars, argc, argv[1], argv[2]);
 	vars.keys = malloc(sizeof(t_keys));

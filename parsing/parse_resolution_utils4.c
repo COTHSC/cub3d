@@ -6,7 +6,7 @@
 /*   By: jean <jescully@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 21:12:59 by jean              #+#    #+#             */
-/*   Updated: 2021/04/02 11:37:17 by jescully         ###   ########.fr       */
+/*   Updated: 2021/04/03 12:28:07 by jean             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ int			parse_resolution(t_res *res, char *buf)
 	while (buf[++i] && buf[i] != '\n')
 		if (!ft_isspace(buf[i]))
 		{
-			free(buf);
 			return (0);
 		}
 	return (1);
